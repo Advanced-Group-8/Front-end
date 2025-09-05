@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@tailwind utilities;
+
+/*Colorpalette*/
+@theme {
+  --color-primary-1: #26408b;
+  --color-primary-2: #507255;
+
+  --color-accent-1: #abd1b5;
+  --color-accent-2: #ffa630;
+  --color-accent-3: #d32f2f;
+  --color-accent-4: #507255;
+
+  --color-neutral-1: #edf4ed;
+  --color-neutral-2: #000000;
+  --color-neutral-3: #1c1c1c;
+}
