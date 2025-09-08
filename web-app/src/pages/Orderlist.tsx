@@ -28,7 +28,7 @@ const Orderlist = () => {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p className="text-center font-bold p-6">{error}</p>;
   }
 
   return (
