@@ -24,7 +24,7 @@ const Orderlist = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className="text-center font-bold p-6">Loading...</p>;
   }
 
   if (error) {

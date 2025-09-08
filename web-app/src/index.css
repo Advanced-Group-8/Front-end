@@ -1,10 +1,6 @@
 @import "tailwindcss";
 @tailwind utilities;
 
-#root {
-  background-color: var(--color-neutral-3);
-}
-
 /*Colorpalette*/
 @theme {
   --color-primary-1: #26408b;
