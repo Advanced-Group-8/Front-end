@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getPackages } from "../api/api";
-import type { Package } from "../../types/types";
+import type { Package } from "../types/types";
 
 const Orderlist = () => {
   const [packages, setPackages] = useState<Package[]>([]);
