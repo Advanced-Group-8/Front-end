@@ -1,70 +1,57 @@
+export type ApiResponse<T = unknown> = {
+  message?: string;
+  errors?: unknown;
+  data?: T | T[];
+  success?: boolean;
+};
+
 export type Profile = {
-  id?: number;
+  id: number;
   email: string;
-  passwordHash: string;
-  role?: string;
-  companyName?: string;
-  createdAt: string; // ISO timestamp
-  updatedAt: string; // ISO timestamp
+  name: string;
+  role: string;
+  companyName: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type Address = {
-  id?: number;
-  street?: string;
-  city?: string;
-  postalCode?: string;
-  country?: string;
+  id: number;
+  street: string;
+  city: string;
+  postalCode: string;
+  country: string;
 };
 
 export type Package = {
-  id?: number;
-  senderId: number; // FK → Profile.id
-  receiverId: number; // FK → Profile.id
-  senderAddressId: number; // FK → Address.id
-  receiverAddressId: number; // FK → Address.id
-  currentCarrierId: string;
-  status?: string;
-  trackingCode?: string;
-  createdAt: string; // ISO timestamp
-  updatedAt: string; // ISO timestamp
-  eta?: string; // ISO timestamp
+  id: number;
+  sender: Profile;
+  receiver: Profile;
+  currentCarrier: Profile;
+  senderAddress: Address;
+  receiverAddress: Address;
+  deviceId: string;
+  status: PackageStatus;
+  trackingCode: string;
+  createdAt: string;
+  updatedAt: string;
+  eta: string;
+  readings: PackageTracking[];
 };
 
-export type ContactInfo = {
-  id?: number;
-  profileId: number; // FK → Profile.id
-  phone?: string;
-  address?: string;
-};
+export type PackageStatus =
+  | "pending"
+  | "in_transit"
+  | "delivered"
+  | "cancelled"
+  | "out_for_delivery";
 
-export type LocationSensor = {
-  id?: number;
-  packageId: number; // FK → Package.id
-  lat?: number;
-  long?: number;
-  createdAt: string; // ISO timestamp
-};
-
-export type TemperatureSensor = {
-  id?: number;
-  packageId: number; // FK → Package.id
+export type PackageTracking = {
+  id: number;
+  deviceId: string;
+  lat: number;
+  lng: number;
   temperature: number;
-  createdAt: string; // ISO timestamp
-};
-
-export type HumiditySensor = {
-  id?: number;
-  packageId: number; // FK → Package.id
   humidity: number;
   createdAt: string;
-};
-
-export type SensorReading = {
-  id?: number;
-  packageId: number;
-  sensorType: "temperature" | "humidity" | "location";
-  value: number;
-  lat?: number;
-  long?: number;
-  createdAt?: string;
 };
