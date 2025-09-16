@@ -1,27 +1,19 @@
-import { useEffect, useState } from "react";
-import { getPackages } from "../api/api";
-import type { Package } from "../types/types";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchPackages } from "../store/packageSlice";
+import type { RootState, AppDispatch } from "../store/store";
 
 const Orderlist = () => {
-  const [packages, setPackages] = useState<Package[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
+  const {
+    data: packages,
+    loading,
+    error,
+  } = useSelector((state: RootState) => state.packages);
 
   useEffect(() => {
-    const fetchPackages = async () => {
-      try {
-        const data = await getPackages();
-        setPackages(data);
-      } catch (err) {
-        setError("Failed to fetch packages.");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPackages();
-  }, []);
+    dispatch(fetchPackages());
+  }, [dispatch]);
 
   if (loading) {
     return <p className="text-center font-bold p-6">Loading...</p>;
