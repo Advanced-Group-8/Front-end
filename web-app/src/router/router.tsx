@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import Home from "../pages/Home";
-import Orderlist from "../pages/Orderlist";
+import OrderList from "../pages/OrderList.tsx";
 import Layout from "../layout/Layout";
 import NotFound from "../pages/NotFound";
 
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
       },
       {
         path: "orders",
-        element: <Orderlist />,
+        element: <OrderList />,
       },
     ],
   },
