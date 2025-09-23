@@ -21,9 +21,8 @@ const initialState: PackagesState = {
 
 export const fetchPackages = createAsyncThunk(
   "packages/fetchPackages",
-  async () => {
-    const response = await getPackages();
-    return response as Package[];
+  async (params?: { senderId?: number; receiverId?: number }) => {
+    return await getPackages(params?.senderId, params?.receiverId);
   }
 );
 

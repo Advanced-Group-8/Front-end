@@ -15,7 +15,13 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ pkg }) => {
         <strong>Status:</strong> {pkg.status}
       </p>
       <p>
-        <strong>ETA:</strong> {pkg.eta || "N/A"}
+        <strong>ETA:</strong>{" "}
+        {pkg.eta
+          ? new Date(pkg.eta).toLocaleString("sv-SE", {
+              dateStyle: "medium",
+              timeStyle: "short",
+            })
+          : "N/A"}
       </p>
       <p>
         <strong>Sender:</strong> {pkg.sender.name} ({pkg.sender.email})

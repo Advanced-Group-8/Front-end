@@ -18,7 +18,19 @@ const OrderCard: React.FC<OrderCardProps> = ({ pkg, onClick }) => {
         <strong>Status:</strong> {pkg.status}
       </p>
       <p>
-        <strong>Estimated delivery:</strong> {pkg.eta || "N/A"}
+        <strong>Estimated delivery:</strong>{" "}
+        {pkg.eta
+          ? new Date(pkg.eta).toLocaleString("sv-SE", {
+              dateStyle: "medium",
+              timeStyle: "short",
+            })
+          : "N/A"}
+      </p>
+      <p>
+        <strong>ID:</strong> {pkg.id}
+      </p>
+      <p>
+        <strong>Device ID:</strong> {pkg.deviceId}
       </p>
     </div>
   );
