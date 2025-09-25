@@ -27,7 +27,12 @@ const ParcelStatusItem: React.FC<PackageTrackingProps> = ({
       <span>{packageId}</span>
       <span>{latest.temperature}°C</span>
       <span>{latest.humidity}%</span>
-      <span>{new Date(latest.createdAt).toLocaleString()}</span>
+      <span>
+        {new Date(latest.createdAt).toLocaleString("sv-SE", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        })}
+      </span>
     </div>
   );
 };

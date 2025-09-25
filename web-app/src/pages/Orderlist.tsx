@@ -18,7 +18,7 @@ const OrderList = () => {
   const [selectedOrder, setSelectedOrder] = useState<Package | null>(null);
 
   React.useEffect(() => {
-    dispatch(fetchPackages());
+    dispatch(fetchPackages({ senderId: 1, receiverId: 4 }));
   }, [dispatch]);
 
   if (loading) return <p>Loading...</p>;

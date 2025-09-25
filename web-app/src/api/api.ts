@@ -2,14 +2,11 @@ import axios from "axios";
 
 import type { Package } from "../types/types.ts";
 
-const API_BASE_URL = import.meta.env.API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const getPackages = async (senderId?: number, receiverId?: number) => {
+export const getPackages = async (senderId: number, receiverId: number) => {
   try {
-    const params: Record<string, number> = {};
-    if (senderId !== undefined) params.senderId = senderId;
-    if (receiverId !== undefined) params.receiverId = receiverId;
-
+    const params: Record<string, number> = { senderId, receiverId };
     const response = await axios.get(`${API_BASE_URL}/package`, {
       params,
     });
