@@ -5,7 +5,7 @@ const Navbar = () => {
     <nav className="bg-primary-1 text-neutral-1 p-4 flex justify-center list-none">
       <NavLink
         className={
-          "mx-4 text-2xl hover:bg-accent-2 hover:text-neutral-2 p-2 rounded"
+          "mx-4 text-2xl hover:bg-neutral-1 hover:text-neutral-2 p-2 rounded"
         }
         to="/"
       >
@@ -13,7 +13,7 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         className={
-          "mx-4 text-2xl hover:bg-accent-2 hover:text-neutral-2 p-2 rounded"
+          "mx-4 text-2xl hover:bg-neutral-1 hover:text-neutral-2 p-2 rounded"
         }
         to="orders"
       >

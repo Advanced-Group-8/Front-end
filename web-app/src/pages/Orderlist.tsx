@@ -5,7 +5,7 @@ import OrderListItem from "../components/orders/OrderListItem.tsx";
 import OrderDetails from "../components/orders/OrderDetails.tsx";
 import type { RootState, AppDispatch } from "../store/store";
 import type { Package } from "../types/types";
-import ParcelStatusList from "../components/orders/ParcelStatusList/ParcelStatusList.tsx";
+import ClimateStatusList from "../components/orders/OrderClimateStatus/ClimateStatusList.tsx";
 
 const OrderList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,12 +26,12 @@ const OrderList = () => {
 
   if (selectedOrder) {
     return (
-      <div className="p-8 text-center bg-gray-200">
+      <div className="p-8 text-center bg-neutral-1">
         <button
-          className="mb-4 px-4 py-2 bg-gray-300 rounded"
+          className="mb-4 px-4 py-2 bg-primary-1 text-neutral-1 rounded hover:bg-primary-1/60 hover:text-neutral-2"
           onClick={() => setSelectedOrder(null)}
         >
-          Tillbaka
+          Back
         </button>
         <OrderDetails pkg={selectedOrder} />
       </div>
@@ -40,7 +40,7 @@ const OrderList = () => {
 
   return (
     <>
-      <div className="p-8 text-center bg-gray-200">
+      <div className="p-8 text-center bg-neutral-1">
         <h1 className="text-4xl font-bold mb-8">Orderlist</h1>
         <OrderListItem
           packages={packages ?? []}
@@ -51,7 +51,7 @@ const OrderList = () => {
         />
       </div>
       <div>
-        <ParcelStatusList />
+        <ClimateStatusList />
       </div>
     </>
   );
