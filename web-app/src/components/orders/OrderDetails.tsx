@@ -65,7 +65,6 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ pkg }) => {
           </p>
         </div>
       </div>
-      {/* Lägg till mer info här om du vill, t.ex. vikt, storlek, historik */}
     </div>
   );
 };
