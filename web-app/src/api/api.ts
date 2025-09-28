@@ -6,7 +6,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // -------- PACKAGE ENDPOINTS --------
 
-// GET /package (med alla query-parametrar)
+// GET /package (with all query parameters)
 export const getPackages = async (params: {
   senderId: number;
   receiverId: number;
@@ -102,7 +102,7 @@ export const getPackageByDeviceId = async (
 
 // -------- PACKAGE TRACKING ENDPOINTS --------
 
-// GET /package-tracking (alla tracking records grupperade per device)
+// GET /package-tracking (all tracking records grouped by device)
 export const getAllPackageTracking = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/package-tracking`);
@@ -113,7 +113,7 @@ export const getAllPackageTracking = async () => {
   }
 };
 
-// POST /package-tracking (skapa tracking record)
+// POST /package-tracking (create tracking record)
 export const createPackageTracking = async (payload: PackageTracking) => {
   try {
     const response = await axios.post(
@@ -146,9 +146,9 @@ export const getPackageTrackingByDeviceId = async (
   }
 };
 
-// -------- LOGGNING ENDPOINTS --------
+// -------- LOGGING ENDPOINTS --------
 
-// GET /logs (hämta loggfil som text)
+// GET /logs (fetch log file as text)
 export const getLogs = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/logs`, {
@@ -161,7 +161,7 @@ export const getLogs = async () => {
   }
 };
 
-// DELETE /logs (rensa loggfil)
+// DELETE /logs (clear log file)
 export const clearLogs = async () => {
   try {
     const response = await axios.delete(`${API_BASE_URL}/logs`);
