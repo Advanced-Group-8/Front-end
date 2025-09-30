@@ -4,14 +4,21 @@
 /*Colorpalette*/
 @theme {
   --color-primary-1: #26408b;
-  --color-primary-2: #507255;
+  --color-primary-1-80: #4F64A0;
+  --color-primary-1-60: #7988B5;
+  --color-primary-1-40: #A2ADCB;
+  --color-primary-1-20: #CCD1E0;
+  --color-primary-1-10: #EAECF5;
+
+  --color-secondary-1: #EDF4F4;
+  --color-secondary-2: #DEEEEE;
 
   --color-accent-1: #abd1b5;
   --color-accent-2: #ffa630;
   --color-accent-3: #d32f2f;
   --color-accent-4: #507255;
 
-  --color-neutral-1: #edf4ed;
-  --color-neutral-2: #000000;
-  --color-neutral-3: #1c1c1c;
+  --color-neutral-light-1: #EDF4F4;
+  --color-neutral-dark-1: #111623;
+  --color-neutral-dark-2: #1c1c1c;
 }
