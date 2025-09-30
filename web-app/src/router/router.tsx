@@ -5,6 +5,7 @@ import Orderlist from "../pages/Orderlist";
 import Layout from "../layout/Layout";
 import NotFound from "../pages/NotFound";
 import ButtonsPage from "../pages/ButtonsPage";
+import SignaturePage from "../pages/SignaturePage";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "buttons",
         element: <ButtonsPage />
+      },
+      {
+        path: "signature",
+        element: <SignaturePage />,
       }
     ],
   },
