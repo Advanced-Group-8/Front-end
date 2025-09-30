@@ -1,5 +1,3 @@
-// colors.js
-
 // LIGHT THEME
 export const lightTheme = {
   // Primary colors
