@@ -21,8 +21,8 @@ const OrderList = () => {
     dispatch(fetchPackages({ senderId: 1, receiverId: 4 }));
   }, [dispatch]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return <p className="text-center">Loading...</p>;
+  if (error) return <p className="text-center">{error}</p>;
 
   if (selectedOrder) {
     return (
