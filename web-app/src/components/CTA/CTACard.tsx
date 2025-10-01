@@ -24,7 +24,7 @@ const CTACard = ({ onClick }: CTACardProps) => {
       <p className="text-lg text-neutral-dark-1">
         1. Scan QR-code
       </p>
-      <IconButton iconVariant="edit" onClick={handleClick}>
+      <IconButton iconVariant="edit" onClick={() => window.location.href = '/scanner'}>
         Scan
       </IconButton>
       <p className="text-lg text-neutral-dark-1">

@@ -6,6 +6,7 @@ import Layout from "../layout/Layout";
 import NotFound from "../pages/NotFound";
 import ButtonsPage from "../pages/ButtonsPage";
 import SignaturePage from "../pages/SignaturePage";
+import IconButton from "../components/buttons/IconButton";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,17 @@ const router = createBrowserRouter([
       {
         path: "signature",
         element: <SignaturePage />,
+      },
+      {
+        path: "scanner",
+        element: (
+          <div className="flex items-center justify-center">
+            <p>Scanner page - Placeholder</p>
+            <IconButton iconVariant="cancel" className="ml-4" onClick={() => router.navigate(-1)}>
+              Back
+            </IconButton>
+          </div>
+          )
       }
     ],
   },
