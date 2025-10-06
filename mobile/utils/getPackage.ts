@@ -1,15 +1,13 @@
 import { useEffect } from "react";
-// lägg till att hämta profilen med användarnamn osv
-
 // BEWARE: don't know if any of this works...
-const getRole = (URL: string, token: string) => {
+const getPackage = (URL: string, token: string) => {
   const BASE_URL = URL;
 
   useEffect(() => {
+    // Is token needed?
     const userFetch = async (token: string): Promise<any> => {
       try {
-        //  /auth/me might need changing to something else??
-        const response = await fetch(`${BASE_URL}/auth/me`, {
+        const response = await fetch(`${BASE_URL}/package`, {
           method: "GET",
           headers: {
             Authorization: `Bearer${token}`,
@@ -18,9 +16,9 @@ const getRole = (URL: string, token: string) => {
 
         if (!response.ok) throw new Error("Error getting user");
 
-        return await response.json(); //returns profile?
+        return await response.json(); //returns package?
       } catch (error) {
-        console.error("Error getting user", error);
+        console.error("Error getting package", error);
         return null;
       }
     };
@@ -29,4 +27,4 @@ const getRole = (URL: string, token: string) => {
   }, []);
 };
 
-export default getRole;
+export default getPackage;
