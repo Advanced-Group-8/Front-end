@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import type { Package } from "../../types/types";
+import OrderDeliveryStatus from "./OrderDeliveryStatus/OrderDeliveryStatus";
 
 type OrderListItemProps = {
   packages: Package[];
@@ -30,8 +31,8 @@ const OrderListItem: React.FC<OrderListItemProps> = ({
             <div>
               <p className="font-semibold">{pkg.trackingCode}</p>
             </div>
-            <div>
-              <p className="text-right">{pkg.status}</p>
+            <div className="flex justify-end">
+              <OrderDeliveryStatus status={pkg.status} />
             </div>
             {expandedId === pkg.id && (
               <>

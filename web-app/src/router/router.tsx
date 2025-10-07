@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import Home from "../pages/Home";
-import OrderList from "../pages/OrderList.tsx";
+import OrderList from "../pages/Orderlist.tsx";
 import Layout from "../layout/Layout";
 import NotFound from "../pages/NotFound";
 import ButtonsPage from "../pages/ButtonsPage";
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: "buttons",
-        element: <ButtonsPage />
+        element: <ButtonsPage />,
       },
       {
         path: "signature",
@@ -34,12 +34,16 @@ const router = createBrowserRouter([
         element: (
           <div className="flex items-center justify-center">
             <p>Scanner page - Placeholder</p>
-            <IconButton iconVariant="cancel" className="ml-4" onClick={() => router.navigate(-1)}>
+            <IconButton
+              iconVariant="cancel"
+              className="ml-4"
+              onClick={() => router.navigate(-1)}
+            >
               Back
             </IconButton>
           </div>
-          )
-      }
+        ),
+      },
     ],
   },
   {
