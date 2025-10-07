@@ -22,8 +22,8 @@ const OrderDeliveryStatus: React.FC<OrderDeliveryStatusProps> = ({
   status,
 }) => (
   <div className="flex items-center gap-2">
-    <OrderDeliveryStatusIcon status={status} />
     <span className="font-medium">{statusTextMap[status]}</span>
+    <OrderDeliveryStatusIcon status={status} />
   </div>
 );
 
