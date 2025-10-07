@@ -2,10 +2,10 @@ import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav className="bg-primary-1 text-neutral-1 p-4 flex justify-center list-none">
+    <nav className="bg-primary-1 text-neutral-light-1 p-4 flex justify-center list-none">
       <NavLink
         className={
-          "mx-4 text-2xl hover:bg-accent-2 hover:text-neutral-2 p-2 rounded"
+          "mx-4 text-2xl hover:bg-neutral-light-1 hover:text-neutral-dark-1 p-2 rounded"
         }
         to="/"
       >
@@ -13,7 +13,7 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         className={
-          "mx-4 text-2xl hover:bg-accent-2 hover:text-neutral-2 p-2 rounded"
+          "mx-4 text-2xl hover:bg-neutral-light-1 hover:text-neutral-dark-1 p-2 rounded"
         }
         to="orders"
       >
