@@ -36,7 +36,7 @@ const OrderList = () => {
     return (
       <div className="p-8 text-center bg-neutral-1">
         <button
-          className="mb-4 px-4 py-2 bg-primary-1 text-neutral-1 rounded hover:bg-primary-1/60 hover:text-neutral-2"
+          className="mb-4 px-4 py-2 bg-primary-1 text-neutral-light-1 rounded hover:bg-primary-1/60 hover:text-neutral-dark-1"
           onClick={() => setSelectedOrder(null)}
         >
           Back
@@ -66,7 +66,7 @@ const OrderList = () => {
           />
           <button
             onClick={handleSearch}
-            className="px-4 py-1 bg-primary-1 text-neutral-1 rounded hover:bg-primary-1/60 hover:text-neutral-2"
+            className="px-4 py-1 bg-primary-1 text-neutral-light-1 rounded hover:bg-primary-1/60 hover:text-neutral-dark-1"
           >
             Sök
           </button>
