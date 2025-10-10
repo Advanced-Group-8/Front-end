@@ -1,13 +1,10 @@
 import { useEffect } from "react";
 // BEWARE: don't know if any of this works...
-const getRole = (URL: string, token: string) => {
-  const BASE_URL = URL;
-
+const getUser = (url: string, token: string) => {
   useEffect(() => {
-    const userFetch = async (token: string): Promise<any> => {
+    const userFetch = async (url: string, token: string): Promise<any> => {
       try {
-        //  /auth/me might need changing to something else??
-        const response = await fetch(`${BASE_URL}/auth/me`, {
+        const response = await fetch(`${url}/auth/me`, {
           method: "GET",
           headers: {
             Authorization: `Bearer${token}`,
@@ -23,8 +20,8 @@ const getRole = (URL: string, token: string) => {
       }
     };
 
-    userFetch(token);
+    userFetch(url, token);
   }, []);
 };
 
-export default getRole;
+export default getUser;
