@@ -74,7 +74,7 @@ const Navigation = () => {
   return (
     <NavigationContainer theme={customTheme}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={LoginForm} />
+        {/* <Stack.Screen name="Login" component={LoginForm} /> */}
         <Stack.Screen name="RootTabs" component={Tabs} />
       </Stack.Navigator>
     </NavigationContainer>
