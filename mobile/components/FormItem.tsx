@@ -3,29 +3,36 @@ import { Text, TextInput } from "react-native";
 import { View } from "react-native";
 // Identify the types of the props coming in
 type Props = {
+  title: string;
   newValue: string;
   changeValue: any;
   secure: boolean;
 };
 
-const FormItem: React.FC<Props> = ({ newValue, changeValue, secure }) => {
+const FormItem: React.FC<Props> = ({
+  title,
+  newValue,
+  changeValue,
+  secure,
+}) => {
   //   capitalize the first letter of the category's value
-  const capitalizeFirstLetter = (newValue: string) => {
-    return newValue.charAt(0).toUpperCase() + newValue.slice(1);
+  const capitalizeFirstLetter = (title: string) => {
+    return title.charAt(0).toUpperCase() + title.slice(1);
   };
-  const titleValue = capitalizeFirstLetter(newValue);
+  const titleValue = capitalizeFirstLetter(title);
   return (
     <View>
-      <Text>{titleValue}</Text>
+      <Text style={{ fontWeight: 500 }}>{titleValue}</Text>
       <TextInput
-        placeholder={`Enter ${newValue}`}
+        placeholder={`Enter ${title}`}
         placeholderTextColor="#888"
         value={newValue}
         onChangeText={changeValue}
         autoCapitalize="none"
         accessibilityLabel={`${titleValue} input field`}
-        accessibilityHint={`Enter your ${newValue}`}
+        accessibilityHint={`Enter your ${title}`}
         secureTextEntry={secure}
+        style={{ borderColor: "gray", borderWidth: 1, borderRadius: 10 }}
       ></TextInput>
     </View>
   );

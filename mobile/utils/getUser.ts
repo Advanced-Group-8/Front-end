@@ -2,7 +2,7 @@ import { useEffect } from "react";
 // BEWARE: don't know if any of this works...
 const getUser = (url: string, token: string) => {
   useEffect(() => {
-    const userFetch = async (url: string, token: string): Promise<any> => {
+    const userFetch = async (url: string, token: string) => {
       try {
         const response = await fetch(`${url}/auth/me`, {
           method: "GET",
@@ -13,7 +13,8 @@ const getUser = (url: string, token: string) => {
 
         if (!response.ok) throw new Error("Error getting user");
 
-        return await response.json(); //returns profile?
+        const data: object = await response.json(); //returns profile?
+        return data;
       } catch (error) {
         console.error("Error getting user", error);
         return null;

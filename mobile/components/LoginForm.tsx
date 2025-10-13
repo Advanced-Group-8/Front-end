@@ -36,9 +36,24 @@ const LoginForm = () => {
   };
   return (
     <View>
-      <FormItem newValue={username} changeValue={setUsername} secure={false} />
-      <FormItem newValue={email} changeValue={setEmail} secure={false} />
-      <FormItem newValue={password} changeValue={setPassword} secure={true} />
+      <FormItem
+        title="name"
+        newValue={username}
+        changeValue={setUsername}
+        secure={false}
+      />
+      <FormItem
+        title="email"
+        newValue={email}
+        changeValue={setEmail}
+        secure={false}
+      />
+      <FormItem
+        title="password"
+        newValue={password}
+        changeValue={setPassword}
+        secure={true}
+      />
       {/* ***Button-component */}
       <Pressable onPress={() => handleLogin}>
         <Text>Log In</Text>
