@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import url from "./base-url";
 import getUser from "./getUser";
 // BEWARE: don't know if any of this works...
-const login = (loginBody: object) => {
+const login = (loginBody: object): any => {
   useEffect(() => {
-    const loginAuth = async (loginBody: object): Promise<any> => {
+    const loginAuth = async (loginBody: object): Promise<string> | null => {
       try {
         const response = await fetch(`${url}/auth/sign-in`, {
           method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             loginBody,
           }),
@@ -15,8 +16,9 @@ const login = (loginBody: object) => {
 
         if (!response.ok) throw new Error("Error getting user");
 
-        const token = await response.json(); // gets token?
-        const profileInfo = getUser(url, token);
+        const data = await response.json(); // token?
+        const newToken: string = data.token;
+        return newToken;
         // *** Spara profil i context?
       } catch (error) {
         console.error("Error getting user", error);

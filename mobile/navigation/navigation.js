@@ -7,13 +7,14 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CurrentOrders from "../screens/CurrentOrders";
 import OrderTimeline from "../screens/OrderTimeline";
 import OrderTracking from "../screens/OrderTracking";
-import { useTheme } from "../theme/ThemeContext"; 
+import { useTheme } from "../theme/ThemeContext";
+import LoginForm from "../components/LoginForm";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 function Tabs() {
-  const { customTheme } = useTheme(); 
+  const { customTheme } = useTheme();
 
   return (
     <Tab.Navigator
@@ -29,7 +30,11 @@ function Tabs() {
         component={CurrentOrders}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="view-list" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="view-list"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
@@ -38,7 +43,11 @@ function Tabs() {
         component={OrderTimeline}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="clock-outline" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="clock-outline"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
@@ -47,7 +56,11 @@ function Tabs() {
         component={OrderTracking}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="map-marker" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="map-marker"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
@@ -56,11 +69,12 @@ function Tabs() {
 }
 
 const Navigation = () => {
-  const { customTheme } = useTheme(); 
+  const { customTheme } = useTheme();
 
   return (
     <NavigationContainer theme={customTheme}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Login" component={LoginForm} />
         <Stack.Screen name="RootTabs" component={Tabs} />
       </Stack.Navigator>
     </NavigationContainer>

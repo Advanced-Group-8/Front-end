@@ -9,10 +9,12 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   //   const { login, loading, setLoading } = useAuth(); // Hämta login-funktionen från context
 
   const handleLogin = async () => {
     // setLoading(true);
+    setMessage("Button pressed");
     setError("");
     if (email !== "" && username !== "" && password !== "") {
       const loginBody = {
@@ -20,8 +22,10 @@ const LoginForm = () => {
         name: username,
         password: password,
       };
+      setMessage(loginBody.email);
       try {
-        await login(loginBody); // Anropar login från AuthContext
+        const successLogin = login(loginBody);
+        setMessage(successLogin);
       } catch (err) {
         setError(
           "Login failed. Please check your name, email and password and try again."
@@ -35,7 +39,7 @@ const LoginForm = () => {
     }
   };
   return (
-    <View>
+    <View style={{ alignItems: "center" }}>
       <FormItem
         title="name"
         newValue={username}
@@ -55,9 +59,14 @@ const LoginForm = () => {
         secure={true}
       />
       {/* ***Button-component */}
-      <Pressable onPress={() => handleLogin}>
+      <Pressable
+        style={{ paddingHorizontal: 20, paddingVertical: 10 }}
+        onPress={() => handleLogin()}
+      >
         <Text>Log In</Text>
       </Pressable>
+      <Text>Message: {message}</Text>
+      {error !== "" && <Text style={{ color: "red" }}>Error: {error}</Text>}
     </View>
   );
 };
