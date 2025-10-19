@@ -1,8 +1,17 @@
 import axios from "axios";
 
 import type { PackageTracking } from "../types/types.ts";
+import { MOCK_PACKAGE } from "./mockData.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+//! For hardcoded jwt tokens until login feature is in place !
+
+const TOKEN = "<YOUR_JWT_TOKEN_HERE>";
+
+axios.defaults.headers.common["Authorization"] = `Bearer ${TOKEN}`;
+
+// ! ! !
 
 // -------- PACKAGE ENDPOINTS --------
 
@@ -63,10 +72,13 @@ export const getPackageById = async (
     const response = await axios.get(`${API_BASE_URL}/package/${id}`, {
       params: readingsLimit ? { readingsLimit } : undefined,
     });
+    console.log('API response for  getPackageById:', response.data)
     return response.data.data;
   } catch (error) {
     console.error(`Error fetching package with ID ${id}:`, error);
-    throw error;
+    //throw error;
+    console.warn("Using mockdata! API failure so using mockdata instead.")
+    return MOCK_PACKAGE; //fallback when API fails
   }
 };
 
