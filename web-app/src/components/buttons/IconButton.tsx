@@ -1,7 +1,7 @@
 import React from "react";
 
 type IconButtonProps = {
-  onClick: () => void;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children?: React.ReactNode;
   iconVariant?: "save" | "cancel" | "confirm" | "edit" | "check";
   disabled?: boolean;
