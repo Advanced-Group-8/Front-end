@@ -22,21 +22,23 @@ const OrderList = () => {
     loading,
     error,
   } = useSelector((state: RootState) => state.packages);
-
   //MOCK start
-  const [localPackages, setLocalPackages] = useState<Package[] | null>(null);
+  const [localPackages, setLocalPackages] = useState<Package[] | null>(MOCK_PACKAGES);
   const packageArray = localPackages ?? (packages && !Array.isArray(packages) ? [packages] : packages ?? []);
-  const setPackageArrayToMockdata = () => setLocalPackages(MOCK_PACKAGES);
+  let packagesToShow = packageArray.length > 0 ? packageArray : MOCK_PACKAGES;
   //MOCK end
 
   const [selectedOrder, setSelectedOrder] = useState<Package | null>(null);
   const [packageId, setPackageId] = useState("");
   const [inputPackageId, setInputPackageId] = useState(packageId);
+  const [searchedPackage, setSearchedPackage] = useState<Package | null>(null);
 
   const handleSearch = () => {
+    const found = packageArray.find(pkg => pkg.id === Number(inputPackageId));
+    setSearchedPackage(found ?? null);
     setPackageId(inputPackageId);
   };
-
+  
   React.useEffect(() => {
     if (packageId) {
       dispatch(fetchPackageById({ id: packageId }));
@@ -60,7 +62,7 @@ const OrderList = () => {
     );
   }
 
-  
+
   return (
     <>
       <div className="p-8 text-center bg-neutral-1">
@@ -84,9 +86,9 @@ const OrderList = () => {
           </button>
         </div>
         <OrderListItem
-          packages={packageArray}
+          packages={searchedPackage ? [searchedPackage] : packagesToShow}
           onOrderClick={(id) => {
-            const found = packageArray.find((pkg) => pkg.id === Number(id)); // make sure types match
+            const found = packageArray.find((pkg) => pkg.id === Number(id)); 
             if (found) setSelectedOrder(found);
           }}
         />
@@ -94,7 +96,6 @@ const OrderList = () => {
         packageArray.length == 0 ? 
         <div className="place-items-center">
           <p className="text-center">No packages found</p> 
-          <IconButton onClick={() => setPackageArrayToMockdata()} iconVariant="save"> Use Mock Data </IconButton> 
         </div> 
         : null}
       </div>

@@ -1,9 +1,13 @@
 import { useSelector } from "react-redux";
 import ClimateStatusListItem from "./ClimateStatusListItem";
 import type { RootState } from "../../../store/store";
+import { MOCK_PACKAGES } from "../../../api/mockData";
 
 const ClimateStatusList = () => {
-  const packages = useSelector((state: RootState) => state.packages.data ?? []);
+  const packagesFromStore = useSelector((state: RootState) => state.packages.data ?? []);
+
+    //! Use mock data if store is empty
+  const packagesToShow = packagesFromStore.length > 0 ? packagesFromStore : MOCK_PACKAGES;
 
   return (
     <div className="flex flex-col items-center p-4">
@@ -15,7 +19,7 @@ const ClimateStatusList = () => {
         <h2>Updated</h2>
       </div>
       <div className="w-full max-w-3xl">
-        {packages.map((pkg) => (
+        {packagesToShow.map((pkg) => (
           <ClimateStatusListItem
             key={pkg.id}
             packageId={pkg.id}
