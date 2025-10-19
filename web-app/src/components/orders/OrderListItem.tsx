@@ -18,11 +18,11 @@ const OrderListItem: React.FC<OrderListItemProps> = ({
   };
 
   return (
-    <div className="space-y-4 mx-auto max-w-2xl rounded-lg ring-2 ring-primary-1">
+    <div className="space-y-4 mx-auto max-w-2xl rounded-lg">
       {packages.map((pkg) => (
         <div
           key={pkg.id}
-          className={`bg-white text-black p-4 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-all duration-200 ${
+          className={`bg-white text-black p-4 rounded-lg ring-2 ring-primary-1 shadow-md cursor-pointer hover:shadow-lg transition-all duration-200 ${
             expandedId === pkg.id ? "ring-4 ring-primary-1" : ""
           }`}
           onClick={() => handleExpand(pkg.id)}

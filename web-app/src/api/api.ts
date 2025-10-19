@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import type { PackageTracking } from "../types/types.ts";
-import { MOCK_PACKAGE } from "./mockData.ts";
+import { MOCK_PACKAGES } from "./mockData.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -72,15 +72,16 @@ export const getPackageById = async (
     const response = await axios.get(`${API_BASE_URL}/package/${id}`, {
       params: readingsLimit ? { readingsLimit } : undefined,
     });
-    console.log('API response for  getPackageById:', response.data)
     return response.data.data;
   } catch (error) {
     console.error(`Error fetching package with ID ${id}:`, error);
-    //throw error;
-    console.warn("Using mockdata! API failure so using mockdata instead.")
-    return MOCK_PACKAGE; //fallback when API fails
+    console.warn("⚠️ Using mock data instead due to API failure.");
+    // pick the one with the matching id if it exists, otherwise first
+    const pkg = MOCK_PACKAGES.find((p) => p.id === Number(id)) ?? MOCK_PACKAGES[0];
+    return pkg;
   }
 };
+
 
 // PATCH /package/{id} (step status)
 export const stepPackageStatus = async (id: number | string) => {

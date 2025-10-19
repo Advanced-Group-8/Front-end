@@ -10,6 +10,10 @@ import OrderDeliveryStatusTimeline from "../components/orders/OrderDeliveryStatu
 
 //MOCKSTATUS
 import { MOCK_STATUS } from "../components/orders/OrderDeliveryStatus/OrderDeliveryStatusTimeline.tsx";
+import { MOCK_PACKAGES } from "../api/mockData.ts";
+import IconButton from "../components/buttons/IconButton.tsx";
+
+
 
 const OrderList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,8 +23,14 @@ const OrderList = () => {
     error,
   } = useSelector((state: RootState) => state.packages);
 
+  //MOCK start
+  const [localPackages, setLocalPackages] = useState<Package[] | null>(null);
+  const packageArray = localPackages ?? (packages && !Array.isArray(packages) ? [packages] : packages ?? []);
+  const setPackageArrayToMockdata = () => setLocalPackages(MOCK_PACKAGES);
+  //MOCK end
+
   const [selectedOrder, setSelectedOrder] = useState<Package | null>(null);
-  const [packageId, setPackageId] = useState("1");
+  const [packageId, setPackageId] = useState("");
   const [inputPackageId, setInputPackageId] = useState(packageId);
 
   const handleSearch = () => {
@@ -50,9 +60,7 @@ const OrderList = () => {
     );
   }
 
-  const packageArray =
-    packages && !Array.isArray(packages) ? [packages] : packages ?? [];
-
+  
   return (
     <>
       <div className="p-8 text-center bg-neutral-1">
@@ -78,10 +86,17 @@ const OrderList = () => {
         <OrderListItem
           packages={packageArray}
           onOrderClick={(id) => {
-            const found = packageArray.find((pkg) => pkg.id === id);
+            const found = packageArray.find((pkg) => pkg.id === Number(id)); // make sure types match
             if (found) setSelectedOrder(found);
           }}
         />
+        { //* For dev: If no packages are found, allow user to use mock data 
+        packageArray.length == 0 ? 
+        <div className="place-items-center">
+          <p className="text-center">No packages found</p> 
+          <IconButton onClick={() => setPackageArrayToMockdata()} iconVariant="save"> Use Mock Data </IconButton> 
+        </div> 
+        : null}
       </div>
       <div>
         <ClimateStatusList />

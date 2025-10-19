@@ -1,29 +1,30 @@
-import type { Package } from "../types/types";
+import type { Package, PackageStatus } from "../types/types";
 
-export const MOCK_PACKAGE: Package = {
-  id: 1,
+// Helper to quickly clone a package and change ID/status
+const createMockPackage = (id: number, status: PackageStatus): Package => ({
+  id,
   sender: {
-    id: 10,
-    email: "sender@example.com",
-    name: "Alice Sender",
+    id: 10 + id,
+    email: `sender${id}@example.com`,
+    name: `Alice Sender ${id}`,
     role: "sender",
     companyName: "Sender AB",
     createdAt: "2025-10-10T08:00:00Z",
     updatedAt: "2025-10-10T08:00:00Z",
   },
   receiver: {
-    id: 11,
-    email: "receiver@example.com",
-    name: "Bob Receiver",
+    id: 20 + id,
+    email: `receiver${id}@example.com`,
+    name: `Bob Receiver ${id}`,
     role: "receiver",
     companyName: "Receiver AB",
     createdAt: "2025-10-10T08:00:00Z",
     updatedAt: "2025-10-10T08:00:00Z",
   },
   currentCarrier: {
-    id: 12,
-    email: "carrier@example.com",
-    name: "Carl Carrier",
+    id: 30 + id,
+    email: `carrier${id}@example.com`,
+    name: `Carl Carrier ${id}`,
     role: "carrier",
     companyName: "Transport AB",
     createdAt: "2025-10-10T08:00:00Z",
@@ -43,30 +44,28 @@ export const MOCK_PACKAGE: Package = {
     postalCode: "41234",
     country: "Sweden",
   },
-  deviceId: "device-001",
-  status: "in_transit",
-  trackingCode: "ABC123",
+  deviceId: `device-00${id}`,
+  status,
+  trackingCode: `ABC123-${id}`,
   createdAt: "2025-10-10T08:00:00Z",
   updatedAt: "2025-10-10T08:00:00Z",
   eta: "2025-10-20T18:00:00Z",
   readings: [
     {
-      id: 100,
-      deviceId: "device-001",
+      id: id * 100,
+      deviceId: `device-00${id}`,
       lat: 59.3293,
       lng: 18.0686,
-      temperature: 7.3,
-      humidity: 58.2,
+      temperature: 7 + id,
+      humidity: 55 + id,
       createdAt: "2025-10-10T09:00:00Z",
     },
-    {
-      id: 101,
-      deviceId: "device-001",
-      lat: 58.3833,
-      lng: 13.8333,
-      temperature: 8.1,
-      humidity: 56.7,
-      createdAt: "2025-10-11T11:30:00Z",
-    },
   ],
-};
+});
+
+// Export an array of mock packages with different statuses
+export const MOCK_PACKAGES: Package[] = [
+  createMockPackage(1, "in_transit"),
+  createMockPackage(2, "pending"),
+  createMockPackage(3, "delivered"),
+];
