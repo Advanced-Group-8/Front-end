@@ -1,53 +1,121 @@
 import React from "react";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useTheme } from "../theme/ThemeContext";
 
+import HomeScreen from "../screens/HomeScreen";
 import CurrentOrders from "../screens/CurrentOrders";
-import OrderTimeline from "../screens/OrderTimeline";
 import OrderTracking from "../screens/OrderTracking";
-import { useTheme } from "../theme/ThemeContext"; 
+import SettingsScreen from "../screens/SettingsScreen";
+import QRScannerScreen from "../screens/QRScannerScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-function Tabs() {
-  const { customTheme } = useTheme(); 
-
+function CustomTabBarButton({ children, onPress, theme }) {
   return (
+    <TouchableOpacity
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        shadowColor: theme.shadow,
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5,
+      }}
+      onPress={onPress}
+    >
+      <View
+        style={{
+          width: 60,
+          height: 60,
+          borderRadius: 30,
+          backgroundColor: theme.accentGreen,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {children}
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+function Tabs() {
+  const { customTheme } = useTheme();
+  const theme = customTheme.colors;
+  const styles = createStyles(theme);
+
+return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: { backgroundColor: customTheme.colors.tabBar },
-        tabBarActiveTintColor: customTheme.colors.tabBarIconActive,
-        tabBarInactiveTintColor: customTheme.colors.tabBarIcon,
+        tabBarShowLabel: true,
+        tabBarStyle: styles.tabBar,
+        tabBarActiveTintColor: theme.tabBarIconActive,
+        tabBarInactiveTintColor: theme.tabBarIcon,
       }}
     >
+      {/* HOME */}
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home-outline" color={color} size={size} />
+          ),
+        }}
+      />
+
+      {/* ORDERS */}
       <Tab.Screen
         name="Orders"
         component={CurrentOrders}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="view-list" color={color} size={size} />
+            <MaterialCommunityIcons name="clipboard-list-outline" color={color} size={size} />
           ),
         }}
       />
+
+      {/* QR SCAN - center button */}
       <Tab.Screen
-        name="Timeline"
-        component={OrderTimeline}
+        name="Scan"
+        component={QRScannerScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="clock-outline" color={color} size={size} />
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons
+              name="qrcode-scan"
+              color={focused ? theme.tabBarIconActive : theme.iconAccent}
+              size={28}
+            />
           ),
+          tabBarButton: (props) => <CustomTabBarButton {...props} theme={theme} />,
         }}
       />
+
+      {/* TRACKING */}
       <Tab.Screen
         name="Tracking"
         component={OrderTracking}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="map-marker" color={color} size={size} />
+            <MaterialCommunityIcons name="map-marker-outline" color={color} size={size} />
+          ),
+        }}
+      />
+
+      {/* SETTINGS */}
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account-cog-outline" color={color} size={size} />
           ),
         }}
       />
@@ -56,15 +124,24 @@ function Tabs() {
 }
 
 const Navigation = () => {
-  const { customTheme } = useTheme(); 
+  const { customTheme } = useTheme();
 
   return (
-    <NavigationContainer theme={customTheme}>
+    <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="RootTabs" component={Tabs} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
+
+const createStyles = (theme) =>
+  StyleSheet.create({
+    tabBar: {
+      backgroundColor: theme.tabBar,
+      height: 70,
+      borderTopWidth: 0,
+    },
+  });
 
 export default Navigation;
