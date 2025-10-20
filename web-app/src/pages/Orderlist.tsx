@@ -10,6 +10,10 @@ import OrderDeliveryStatusTimeline from "../components/orders/OrderDeliveryStatu
 
 //MOCKSTATUS
 import { MOCK_STATUS } from "../components/orders/OrderDeliveryStatus/OrderDeliveryStatusTimeline.tsx";
+import { MOCK_PACKAGES } from "../api/mockData.ts";
+import IconButton from "../components/buttons/IconButton.tsx";
+
+
 
 const OrderList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -18,15 +22,23 @@ const OrderList = () => {
     loading,
     error,
   } = useSelector((state: RootState) => state.packages);
+  //MOCK start
+  const [localPackages, setLocalPackages] = useState<Package[] | null>(MOCK_PACKAGES);
+  const packageArray = localPackages ?? (packages && !Array.isArray(packages) ? [packages] : packages ?? []);
+  let packagesToShow = packageArray.length > 0 ? packageArray : MOCK_PACKAGES;
+  //MOCK end
 
   const [selectedOrder, setSelectedOrder] = useState<Package | null>(null);
-  const [packageId, setPackageId] = useState("1");
+  const [packageId, setPackageId] = useState("");
   const [inputPackageId, setInputPackageId] = useState(packageId);
+  const [searchedPackage, setSearchedPackage] = useState<Package | null>(null);
 
   const handleSearch = () => {
+    const found = packageArray.find(pkg => pkg.id === Number(inputPackageId));
+    setSearchedPackage(found ?? null);
     setPackageId(inputPackageId);
   };
-
+  
   React.useEffect(() => {
     if (packageId) {
       dispatch(fetchPackageById({ id: packageId }));
@@ -50,8 +62,6 @@ const OrderList = () => {
     );
   }
 
-  const packageArray =
-    packages && !Array.isArray(packages) ? [packages] : packages ?? [];
 
   return (
     <>
@@ -76,12 +86,18 @@ const OrderList = () => {
           </button>
         </div>
         <OrderListItem
-          packages={packageArray}
+          packages={searchedPackage ? [searchedPackage] : packagesToShow}
           onOrderClick={(id) => {
-            const found = packageArray.find((pkg) => pkg.id === id);
+            const found = packageArray.find((pkg) => pkg.id === Number(id)); 
             if (found) setSelectedOrder(found);
           }}
         />
+        { //* For dev: If no packages are found, allow user to use mock data 
+        packageArray.length == 0 ? 
+        <div className="place-items-center">
+          <p className="text-center">No packages found</p> 
+        </div> 
+        : null}
       </div>
       <div>
         <ClimateStatusList />

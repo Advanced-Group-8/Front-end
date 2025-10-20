@@ -1,8 +1,17 @@
 import axios from "axios";
 
 import type { PackageTracking } from "../types/types.ts";
+import { MOCK_PACKAGES } from "./mockData.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+//! For hardcoded jwt tokens until login feature is in place !
+
+const TOKEN = "<YOUR_JWT_TOKEN_HERE>";
+
+axios.defaults.headers.common["Authorization"] = `Bearer ${TOKEN}`;
+
+// ! ! !
 
 // -------- PACKAGE ENDPOINTS --------
 
@@ -66,9 +75,13 @@ export const getPackageById = async (
     return response.data.data;
   } catch (error) {
     console.error(`Error fetching package with ID ${id}:`, error);
-    throw error;
+    console.warn("⚠️ Using mock data instead due to API failure.");
+    // pick the one with the matching id if it exists, otherwise first
+    const pkg = MOCK_PACKAGES.find((p) => p.id === Number(id)) ?? MOCK_PACKAGES[0];
+    return pkg;
   }
 };
+
 
 // PATCH /package/{id} (step status)
 export const stepPackageStatus = async (id: number | string) => {
