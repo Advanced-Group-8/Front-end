@@ -5,4 +5,4 @@ const signInUrl = `${url}/auth/sign-in`;
 const signUpUrl = `${url}/auth/sign-up`;
 const getProfUrl = `${url}/auth/me`;
 
-export { signInUrl, signUpUrl, getProfUrl };
+export { url, signInUrl, signUpUrl, getProfUrl };
