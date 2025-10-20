@@ -1,20 +1,27 @@
 import React, { useState } from "react";
 import type { Package } from "../../types/types";
 import OrderDeliveryStatus from "./OrderDeliveryStatus/OrderDeliveryStatus";
+import OrderDetails from "./OrderDetails";
+import TextButton from "../buttons/TextButton.tsx";
 
 type OrderListItemProps = {
   packages: Package[];
   onOrderClick?: (id: number) => void;
 };
 
-const OrderListItem: React.FC<OrderListItemProps> = ({
-  packages,
-  onOrderClick,
-}) => {
+const OrderListItem: React.FC<OrderListItemProps> = ({ packages }) => {
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [detailsExpandedId, setDetailsExpandedId] = useState<number | null>(
+    null
+  );
 
   const handleExpand = (id: number) => {
     setExpandedId(expandedId === id ? null : id);
+  };
+
+  const handleToggleDetails = (e: React.MouseEvent, id: number) => {
+    e.stopPropagation();
+    setDetailsExpandedId(detailsExpandedId === id ? null : id);
   };
 
   return (
@@ -22,14 +29,14 @@ const OrderListItem: React.FC<OrderListItemProps> = ({
       {packages.map((pkg) => (
         <div
           key={pkg.id}
-          className={`bg-white text-black p-4 rounded-lg ring-2 ring-primary-1 shadow-md cursor-pointer hover:shadow-lg transition-all duration-200 ${
+          className={`bg-neutral-light-1 text-neutral-dark-1 p-4 rounded-lg ring-2 ring-primary-1 shadow-md cursor-pointer hover:shadow-lg transition-all duration-300 ${
             expandedId === pkg.id ? "ring-4 ring-primary-1" : ""
           }`}
           onClick={() => handleExpand(pkg.id)}
         >
-          <div className="grid grid-cols-2 gap-4 items-center">
+          <div className="grid grid-cols-2 gap-2 items-center">
             <div>
-              <p className="font-semibold">{pkg.trackingCode}</p>
+              <p className="font-semibold text-left">{pkg.trackingCode}</p>
             </div>
             <div className="flex justify-end">
               <OrderDeliveryStatus status={pkg.status} />
@@ -48,21 +55,31 @@ const OrderListItem: React.FC<OrderListItemProps> = ({
                   </p>
                 </div>
                 <div className="col-span-2 flex gap-4 mt-4 justify-center">
-                  <button className="w-fit text-neutral-dark-1 font-bold bg-gray-200 rounded-2xl px-4 py-2">
+                  <TextButton
+                    size="medium"
+                    variant="secondary"
+                    disabled
+                    onClick={() => {}}
+                  >
                     Track
-                  </button>
-                  {onOrderClick && (
-                    <button
-                      className="w-fit px-4 py-2 bg-primary-1 text-neutral-light-1 font-bold rounded-2xl hover:bg-primary-1/80"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onOrderClick(pkg.id);
-                      }}
-                    >
-                      More details
-                    </button>
-                  )}
+                  </TextButton>
+
+                  <TextButton
+                    size="medium"
+                    variant="primary"
+                    onClick={(e) => handleToggleDetails(e, pkg.id)}
+                  >
+                    {detailsExpandedId === pkg.id
+                      ? "Hide details"
+                      : "More details"}
+                  </TextButton>
                 </div>
+
+                {detailsExpandedId === pkg.id && (
+                  <div className="col-span-2 mt-4">
+                    <OrderDetails pkg={pkg} />
+                  </div>
+                )}
               </>
             )}
           </div>
