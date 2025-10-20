@@ -2,32 +2,42 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../store/store";
 import { fetchUserProfile } from "../store/userSlice";
-import SignInForm from "../components/auth/SignInForm";
+
 
 const ProfilePage = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const user = useSelector((state: RootState) => state.user.profile);
 
+  const { profile, loading, error } = useSelector((state: RootState) => state.user);
+/* 
+  // Fetch profile once on mount
   useEffect(() => {
     dispatch(fetchUserProfile());
-  }, [dispatch]);
+  }, [dispatch]); */
 
-  if (!user) return (
-  <div>
-    <p>Sign in</p>
-    <SignInForm />  
-  </div>
-  )
+  if (loading) return <p>Loading...</p>;
+/*   if (error) return <p>Error: {error}</p>; */
 
+  if (!profile) {
+    // User not logged in or fetch failed
+    return <div>
+    <p>
+      Please sign in
+      <br />
+      <a href="/sign-in">Sign in</a>
+    </p>
+    </div>;
+  }
 
+  // Now profile is guaranteed to be not null
   return (
     <div>
-      <h1>{user.name}</h1>
-      <p>Email: {user.email}</p>
-      <p>Company: {user.companyName}</p>
-      <p>Role: {user.role}</p>
+      <h1>{profile.name}</h1>
+      <p>Email: {profile.email}</p>
+      <p>Company: {profile.companyName}</p>
+      <p>Role: {profile.role}</p>
     </div>
   );
 };
 
+
 export default ProfilePage;
+
