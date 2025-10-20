@@ -1,3 +1,8 @@
 const url =
   "https://t8-server-d2fee2awcybjcqch.swedencentral-01.azurewebsites.net";
-export default url;
+
+const signInUrl = `${url}/auth/sign-in`;
+const signUpUrl = `${url}/auth/sign-up`;
+const getProfUrl = `${url}/auth/me`;
+
+export { signInUrl, signUpUrl, getProfUrl };
