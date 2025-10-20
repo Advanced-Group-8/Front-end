@@ -7,22 +7,22 @@ const ButtonsPage = () => {
         <div className="bg-white p-4 content-center w-100 gap-10">
           Button sizes:
           {/* SMALL */}
-          <IconButton size="small" onClick={()=> {}} icon={'@'}>Small</IconButton>
+          <IconButton size="small" onClick={()=> {}} iconVariant="save">Small</IconButton>
           {/* MEDIUM */}
-          <IconButton size="medium" onClick={()=> {}} icon={'@'}>Medium </IconButton>
+          <IconButton size="medium" onClick={()=> {}}  >Medium </IconButton>
           {/* LARGE */}
-          <IconButton size="large" onClick={()=> {}} icon={'@'}>Large </IconButton>
+          <IconButton size="large" onClick={()=> {}}  >Large </IconButton>
 
           Variants:
           {/* PRIMARY */}
-          <IconButton onClick={() => {}} icon={'🌚'}> Primary </IconButton>
+          <IconButton onClick={() => {}} iconVariant="save"> Primary </IconButton>
            {/* PRIMARY DISABLED */}
-          <IconButton onClick={() => {}} icon={'🌚'} disabled> Disabled </IconButton>
+          <IconButton onClick={() => {}} iconVariant="save" disabled> Disabled </IconButton>
 
           {/* SECONDARY */}
-          <IconButton onClick={() => {}} icon={'🌚'} variant="secondary"> Secondary </IconButton>
+          <IconButton onClick={() => {}} iconVariant="save" variant="secondary"> Secondary </IconButton>
           {/* SECONDARY DISABLED */}
-          <IconButton onClick={() => {}} icon={'🌚'} disabled variant="secondary"> Secondary Disabled </IconButton>
+          <IconButton onClick={() => {}} iconVariant="save" disabled variant="secondary"> Secondary Disabled </IconButton>
           
         </div>
       </div>

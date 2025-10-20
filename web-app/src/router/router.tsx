@@ -7,6 +7,7 @@ import NotFound from "../pages/NotFound";
 import ButtonsPage from "../pages/ButtonsPage";
 import SignaturePage from "../pages/SignaturePage";
 import IconButton from "../components/buttons/IconButton";
+import ProfilePage from "../pages/ProfilePage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "signature",
         element: <SignaturePage />,
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />,
       },
       {
         path: "scanner",
