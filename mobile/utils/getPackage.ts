@@ -1,20 +1,15 @@
 import { useEffect } from "react";
 // BEWARE: don't know if any of this works...
-const getPackage = (URL: string, token: string) => {
+const getPackage = (URL: string, id: number) => {
   const BASE_URL = URL;
 
   useEffect(() => {
     // Is token needed?
-    const userFetch = async (token: string): Promise<any> => {
+    const userFetch = async (id: number): Promise<any> => {
       try {
-        const response = await fetch(`${BASE_URL}/package`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer${token}`,
-          },
-        });
+        const response = await fetch(`${BASE_URL}/package/{${id}}`);
 
-        if (!response.ok) throw new Error("Error getting user");
+        if (!response.ok) throw new Error("Error getting package");
 
         return await response.json(); //returns package?
       } catch (error) {
@@ -23,7 +18,7 @@ const getPackage = (URL: string, token: string) => {
       }
     };
 
-    userFetch(token);
+    userFetch(id);
   }, []);
 };
 
