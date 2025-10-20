@@ -27,7 +27,7 @@ const OrderList = () => {
   const packageArray = localPackages ?? (packages && !Array.isArray(packages) ? [packages] : packages ?? []);
   let packagesToShow = packageArray.length > 0 ? packageArray : 
   MOCK_PACKAGES
-  console.warn("Using MOCK data");
+
   //MOCK end
 
   const [selectedOrder, setSelectedOrder] = useState<Package | null>(null);
