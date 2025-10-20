@@ -19,6 +19,25 @@ const Navbar = () => {
       >
         Orderlist
       </NavLink>
+      <NavLink
+        className={
+          "mx-4 text-2xl hover:bg-neutral-light-1 hover:text-neutral-dark-1 p-2 rounded"
+        }
+        to="profile"
+      >
+        Profile
+      </NavLink>
+      {
+        localStorage.getItem('signatureRequestInitialized') === 'true' &&
+        <NavLink
+          className={
+            "mx-4 text-2xl hover:bg-neutral-light-1 hover:text-neutral-dark-1 p-2 rounded"
+          }
+          to="signature"
+        >
+          Signature
+        </NavLink>
+      }
     </nav>
   );
 };
