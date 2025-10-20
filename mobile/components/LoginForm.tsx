@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import FormItem from "./FormItem";
-import login from "../utils/login";
+import login from "../utils/fetch/login";
 
 // **** STYLING?????
 const LoginForm = () => {

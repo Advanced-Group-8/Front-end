@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import url from "./base-url";
+import url from "../base-url";
 import getUser from "./getUser";
 // BEWARE: don't know if any of this works...
 const login = (loginBody: object): any => {

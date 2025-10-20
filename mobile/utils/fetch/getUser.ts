@@ -7,6 +7,7 @@ const getUser = (url: string, token: string) => {
         const response = await fetch(`${url}/auth/me`, {
           method: "GET",
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer${token}`,
           },
         });
