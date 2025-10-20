@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+// lägg till att hämta profilen med användarnamn osv
+
 // BEWARE: don't know if any of this works...
 const getUser = (url: string, token: string) => {
   useEffect(() => {
