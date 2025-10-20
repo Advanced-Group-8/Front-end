@@ -11,7 +11,12 @@ const getPackage = (URL: string, id: number) => {
 
         if (!response.ok) throw new Error("Error getting package");
 
-        return await response.json(); //returns package?
+        const fetchedPackage = await response.json(); //gets package?
+        const packageStatus = fetchedPackage.find(
+          (item: { statusCode: number }) => item.statusCode
+        ); //finds the package status?
+        // return packageStatus instead?
+        return fetchedPackage;
       } catch (error) {
         console.error("Error getting package", error);
         return null;
