@@ -1,18 +1,17 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useTheme } from "../theme/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import getUser from "../utils/fetch/getUser";
+import { url } from "../utils/base-url";
 
 const HomeScreen = () => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
-
+  const TOKEN =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjciLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJuYW1lIjoiUmViZWNjYSIsInJvbGUiOiJzZW5kZXIiLCJjb21wYW55TmFtZSI6Ikh1bGEgSG9vcHMgQUIiLCJjcmVhdGVkQXQiOiIyMDI1LTEwLTIwVDEzOjU1OjU3LjkwMVoiLCJ1cGRhdGVkQXQiOiIyMDI1LTEwLTIwVDEzOjU1OjU3LjkwMVoiLCJpYXQiOjE3NjA5ODgwODEsImV4cCI6MTc2MTU5Mjg4MX0.vPf00WmCgvL6Sm0xxqnHv3CLBhlwlI2QKKaJVJLaj1g";
+  const user = getUser(url, TOKEN);
+  console.log(user);
   const driver = {
     name: "Erik Torres Puente",
     experience: "+7 Years",
@@ -26,9 +25,9 @@ const HomeScreen = () => {
       {/* === HEADER === */}
       <View style={styles.header}>
         <Image
-            source={require("../assets/favicon.png")} 
-            style={styles.profileImage}
-          />
+          source={require("../assets/favicon.png")}
+          style={styles.profileImage}
+        />
         <Text style={styles.headerTitle}>HOME</Text>
         <TouchableOpacity onPress={() => alert("Notifications clicked!")}>
           <MaterialCommunityIcons
@@ -44,7 +43,7 @@ const HomeScreen = () => {
         <Text style={styles.signedIn}>Signed in as</Text>
         <View style={styles.cardHeader}>
           <Image
-            source={require("../assets/favicon.png")} 
+            source={require("../assets/favicon.png")}
             style={styles.profileImage}
           />
           <View>
@@ -91,7 +90,7 @@ const HomeScreen = () => {
           </View>
 
           <Image
-            source={require("../assets/favicon.png")} 
+            source={require("../assets/favicon.png")}
             style={styles.truckIcon}
           />
         </View>
@@ -118,13 +117,13 @@ const createStyles = (theme) =>
     },
 
     logo: {
-      width: 32, 
+      width: 32,
       height: 32,
       resizeMode: "contain",
     },
 
     headerTitle: {
-      position: "absolute", 
+      position: "absolute",
       left: 0,
       right: 0,
       textAlign: "center",

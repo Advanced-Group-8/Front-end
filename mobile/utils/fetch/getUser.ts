@@ -17,6 +17,7 @@ const getUser = (url: string, token: string) => {
         if (!response.ok) throw new Error("Error getting user");
 
         const data: object = await response.json(); //returns profile?
+        console.log(data);
         return data;
       } catch (error) {
         console.error("Error getting user", error);
