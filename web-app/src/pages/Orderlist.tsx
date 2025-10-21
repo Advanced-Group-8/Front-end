@@ -20,13 +20,11 @@ const OrderList = () => {
     error,
   } = useSelector((state: RootState) => state.packages);
   //MOCK start
-  const [localPackages, setLocalPackages] = useState<Package[] | null>(
-    MOCK_PACKAGES
-  );
-  const packageArray =
-    localPackages ??
-    (packages && !Array.isArray(packages) ? [packages] : packages ?? []);
-  let packagesToShow = packageArray.length > 0 ? packageArray : MOCK_PACKAGES;
+  const [localPackages, setLocalPackages] = useState<Package[] | null>(MOCK_PACKAGES);
+  const packageArray = localPackages ?? (packages && !Array.isArray(packages) ? [packages] : packages ?? []);
+  let packagesToShow = packageArray.length > 0 ? packageArray : 
+  MOCK_PACKAGES
+
   //MOCK end
 
   const [selectedOrder, setSelectedOrder] = useState<Package | null>(null);
