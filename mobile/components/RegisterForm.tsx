@@ -2,34 +2,43 @@ import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import FormItem from "./FormItem";
 import login from "../utils/fetch/login";
+import registerUser from "../utils/fetch/registerUser";
 
 // **** STYLING?????
-const LoginForm = () => {
+const RegisterForm = () => {
   const [username, setUsername] = useState("");
+  const [company, setCompany] = useState("");
+  const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   //   const { login, loading, setLoading } = useAuth(); // Hämta login-funktionen från context
 
-  const handleLogin = async () => {
+  const handleRegistration = async () => {
     // setLoading(true);
     setMessage("Button pressed");
     setError("");
-    if (email !== "" && username !== "" && password !== "") {
-      const loginBody = {
+    if (
+      email !== "" &&
+      username !== "" &&
+      password !== "" &&
+      role !== "" &&
+      company !== ""
+    ) {
+      const registerBody = {
         email: email,
         name: username,
         password: password,
+        role: role,
+        companyName: company,
       };
-      setMessage(loginBody.email);
+      setMessage(registerBody.role);
       try {
-        const successLogin = login(loginBody);
-        setMessage(successLogin);
+        const successReg = registerUser(registerBody);
+        setMessage(successReg); //token?
       } catch (err) {
-        setError(
-          "Login failed. Please check your name, email and password and try again."
-        );
+        setError("Sign up failed, hold on a second");
       }
       // finally {
       //   setLoading(false);
@@ -39,13 +48,26 @@ const LoginForm = () => {
     }
   };
   return (
-    <View style={{ alignItems: "center" }}>
+    <View aria-label="form" style={{ alignItems: "center" }}>
+      <FormItem
+        title="company"
+        newValue={company}
+        changeValue={setCompany}
+        secure={false}
+      />
+      <FormItem
+        title="role"
+        newValue={role}
+        changeValue={setRole}
+        secure={false}
+      />
       <FormItem
         title="name"
         newValue={username}
         changeValue={setUsername}
         secure={false}
       />
+
       <FormItem
         title="email"
         newValue={email}
@@ -56,14 +78,14 @@ const LoginForm = () => {
         title="password"
         newValue={password}
         changeValue={setPassword}
-        secure={false}
+        secure={true}
       />
       {/* ***Button-component */}
       <Pressable
         style={{ paddingHorizontal: 20, paddingVertical: 10 }}
-        onPress={() => handleLogin()}
+        onPress={() => handleRegistration()}
       >
-        <Text>Log In</Text>
+        <Text>Sign Up</Text>
       </Pressable>
       <Text>Message: {message}</Text>
       {error !== "" && <Text style={{ color: "red" }}>Error: {error}</Text>}
@@ -71,4 +93,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
