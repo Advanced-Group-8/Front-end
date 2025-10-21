@@ -5,13 +5,30 @@ import { MOCK_PACKAGES } from "./mockData.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-//! For hardcoded jwt tokens until login feature is in place !
+const FALLBACK_TOKEN = ""; // *optional hardcoded dev token
 
-const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjciLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJuYW1lIjoiUmViZWNjYSIsInJvbGUiOiJzZW5kZXIiLCJjb21wYW55TmFtZSI6Ikh1bGEgSG9vcHMgQUIiLCJjcmVhdGVkQXQiOiIyMDI1LTEwLTIwVDEzOjU1OjU3LjkwMVoiLCJ1cGRhdGVkQXQiOiIyMDI1LTEwLTIwVDEzOjU1OjU3LjkwMVoiLCJpYXQiOjE3NjA5ODgwODEsImV4cCI6MTc2MTU5Mjg4MX0.vPf00WmCgvL6Sm0xxqnHv3CLBhlwlI2QKKaJVJLaj1g";
+// 🔐 Setup Axios instance
+const api = axios.create({
+  baseURL: API_BASE_URL,
+});
 
-axios.defaults.headers.common["Authorization"] = `Bearer ${TOKEN}`;
+// interceptor to always attach token before requests
+api.interceptors.request.use(
+  (config) => {
+    const storedToken = localStorage.getItem("token");
+    const token = storedToken || FALLBACK_TOKEN;
 
-// ! ! !
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    } else {
+      delete config.headers.Authorization;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 
 // -------- PACKAGE ENDPOINTS --------
 
@@ -27,7 +44,7 @@ export const getPackages = async (params: {
   readingsLimit?: number;
 }) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/package`, { params });
+    const response = await api.get(`${API_BASE_URL}/package`, { params });
     return response.data.data;
   } catch (error) {
     console.error("Error fetching packages:", error);
@@ -55,7 +72,7 @@ export const createPackage = async (payload: {
   };
 }) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/package`, payload);
+    const response = await api.post(`${API_BASE_URL}/package`, payload);
     return response.data.data;
   } catch (error) {
     console.error("Error creating package:", error);
@@ -69,7 +86,7 @@ export const getPackageById = async (
   readingsLimit?: number
 ) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/package/${id}`, {
+    const response = await api.get(`${API_BASE_URL}/package/${id}`, {
       params: readingsLimit ? { readingsLimit } : undefined,
     });
     return response.data.data;
@@ -86,7 +103,7 @@ export const getPackageById = async (
 // PATCH /package/{id} (step status)
 export const stepPackageStatus = async (id: number | string) => {
   try {
-    const response = await axios.patch(`${API_BASE_URL}/package/${id}`);
+    const response = await api.patch(`${API_BASE_URL}/package/${id}`);
     return response.data.data;
   } catch (error) {
     console.error(`Error stepping status for package with ID ${id}:`, error);
@@ -100,7 +117,7 @@ export const getPackageByDeviceId = async (
   readingsLimit?: number
 ) => {
   try {
-    const response = await axios.get(
+    const response = await api.get(
       `${API_BASE_URL}/package/device/${deviceId}`,
       {
         params: readingsLimit ? { readingsLimit } : undefined,
@@ -118,7 +135,7 @@ export const getPackageByDeviceId = async (
 // GET /package-tracking (all tracking records grouped by device)
 export const getAllPackageTracking = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/package-tracking`);
+    const response = await api.get(`${API_BASE_URL}/package-tracking`);
     return response.data.data;
   } catch (error) {
     console.error("Error fetching all package tracking:", error);
@@ -129,7 +146,7 @@ export const getAllPackageTracking = async () => {
 // POST /package-tracking (create tracking record)
 export const createPackageTracking = async (payload: PackageTracking) => {
   try {
-    const response = await axios.post(
+    const response = await api.post(
       `${API_BASE_URL}/package-tracking`,
       payload
     );
@@ -146,7 +163,7 @@ export const getPackageTrackingByDeviceId = async (
   latest?: boolean
 ) => {
   try {
-    const response = await axios.get(
+    const response = await api.get(
       `${API_BASE_URL}/package-tracking/${deviceId}`,
       {
         params: latest !== undefined ? { latest } : undefined,
@@ -164,7 +181,7 @@ export const getPackageTrackingByDeviceId = async (
 // GET /logs (fetch log file as text)
 export const getLogs = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/logs`, {
+    const response = await api.get(`${API_BASE_URL}/logs`, {
       responseType: "text",
     });
     return response.data;
@@ -177,7 +194,7 @@ export const getLogs = async () => {
 // DELETE /logs (clear log file)
 export const clearLogs = async () => {
   try {
-    const response = await axios.delete(`${API_BASE_URL}/logs`);
+    const response = await api.delete(`${API_BASE_URL}/logs`);
     return response.data;
   } catch (error) {
     console.error("Error clearing logs:", error);
