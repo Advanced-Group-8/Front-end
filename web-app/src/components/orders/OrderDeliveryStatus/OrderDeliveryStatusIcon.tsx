@@ -53,7 +53,7 @@ const OrderDeliveryStatusIcon: React.FC<OrderDeliveryStatusIconProps> = ({
 
   return (
     <span
-      className="inline-flex items-center justify-center rounded-full w-8 h-8 bg-white"
+      className="inline-flex items-center justify-center rounded-full w-8 h-8 bg-neutral-light-1"
       title={statusInfo.label}
     >
       {statusInfo.icon}

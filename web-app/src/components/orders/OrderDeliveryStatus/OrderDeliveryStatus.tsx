@@ -1,21 +1,10 @@
-import React from "react";
+import { statusTextMap } from "./statusTextMap";
 import OrderDeliveryStatusIcon from "./OrderDeliveryStatusIcon";
 
-type OrderDeliveryStatusProps = {
-  status:
-    | "pending"
-    | "in_transit"
-    | "delivered"
-    | "cancelled"
-    | "out_for_delivery";
-};
+import type { Status } from "./statusTextMap";
 
-const statusTextMap: Record<OrderDeliveryStatusProps["status"], string> = {
-  pending: "Pending",
-  in_transit: "In transit",
-  delivered: "Delivered",
-  cancelled: "Cancelled",
-  out_for_delivery: "Out for delivery",
+export type OrderDeliveryStatusProps = {
+  status: Status;
 };
 
 const OrderDeliveryStatus: React.FC<OrderDeliveryStatusProps> = ({
