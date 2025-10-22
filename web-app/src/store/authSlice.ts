@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "./store";
+import type { Role } from "../types/types.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -16,7 +17,7 @@ export interface UserProfile {
   id: number;
   email: string;
   name: string;
-  role: string;
+  role: Role;
   companyName: string;
   createdAt: string;
   updatedAt: string;
@@ -42,7 +43,10 @@ export const login = createAsyncThunk(
   "auth/login",
   async (credentials: LoginRequest, { rejectWithValue }) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/auth/sign-in`, credentials);
+      const response = await axios.post(
+        `${API_BASE_URL}/auth/sign-in`,
+        credentials
+      );
 
       return response.data;
     } catch (error: any) {
@@ -70,7 +74,7 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-            // After login succeeds
+        // After login succeeds
         localStorage.setItem("token", action.payload.token);
         state.token = action.payload.token;
         state.profile = action.payload.data; // assuming user info is in data

@@ -2,18 +2,22 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Home from "../pages/Home";
 import OrderList from "../pages/Orderlist.tsx";
-import Layout from "../layout/Layout";
 import NotFound from "../pages/NotFound";
 import ButtonsPage from "../pages/ButtonsPage";
 import SignaturePage from "../pages/SignaturePage";
 import IconButton from "../components/buttons/IconButton";
 import ProfilePage from "../pages/ProfilePage.tsx";
 import SignInPage from "../pages/SignInPage/SignInPage.tsx";
+import RoleGuard from "./RoleGuard";
+import RoleBasedLayout from "../layout/RoleBasedLayout.tsx";
+import AdminPage from "../pages/AdminPage.tsx";
+import CarrierPage from "../pages/CarrierPage.tsx";
+import UnAuthorized from "../pages/UnAuthorized.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <RoleBasedLayout />,
     children: [
       {
         index: true,
@@ -37,7 +41,11 @@ const router = createBrowserRouter([
       },
       {
         path: "sign-in",
-        element:<SignInPage/>,
+        element: <SignInPage />,
+      },
+      {
+        path: "unauthorized",
+        element: <UnAuthorized />,
       },
       {
         path: "scanner",
@@ -52,6 +60,22 @@ const router = createBrowserRouter([
               Back
             </IconButton>
           </div>
+        ),
+      },
+      {
+        path: "admin",
+        element: (
+          <RoleGuard allowed={["admin"]}>
+            <AdminPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "carrier",
+        element: (
+          <RoleGuard allowed={["carrier"]}>
+            <CarrierPage />
+          </RoleGuard>
         ),
       },
     ],
