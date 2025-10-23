@@ -19,9 +19,9 @@ main {
   justify-content: flex-start;
   padding: 16px;
   gap: 8px;
-  background-color: white;
   margin: auto;
   min-width: 300px;
+  max-width: 1200px;
 }
 
 

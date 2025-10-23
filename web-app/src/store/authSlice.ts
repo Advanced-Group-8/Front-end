@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "./store";
+import type { Profile } from "../types/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -16,7 +17,7 @@ export interface UserProfile {
   id: number;
   email: string;
   name: string;
-  role: string;
+  role: Profile["role"];
   companyName: string;
   createdAt: string;
   updatedAt: string;

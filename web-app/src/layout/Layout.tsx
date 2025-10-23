@@ -7,7 +7,7 @@ const Layout = () => {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="max-w-[1000px]">
         <Outlet />
       </main>
       <Footer />
