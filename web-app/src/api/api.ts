@@ -34,8 +34,8 @@ api.interceptors.request.use(
 
 // GET /package (with all query parameters)
 export const getPackages = async (params: {
-  senderId: number;
-  receiverId: number;
+  senderId?: number;
+  receiverId?: number;
   currentCarrierId?: number;
   status?: string;
   senderAddress?: string;
@@ -44,7 +44,7 @@ export const getPackages = async (params: {
   readingsLimit?: number;
 }) => {
   try {
-    const response = await api.get(`${API_BASE_URL}/package`, { params });
+    const response = await api.get(`/package`, { params });
     return response.data.data;
   } catch (error) {
     console.error("Error fetching packages:", error);
@@ -92,10 +92,8 @@ export const getPackageById = async (
     return response.data.data;
   } catch (error) {
     console.error(`Error fetching package with ID ${id}:`, error);
-    console.warn("⚠️ Using mock data instead due to API failure.");
     // pick the one with the matching id if it exists, otherwise first
-    const pkg = MOCK_PACKAGES.find((p) => p.id === Number(id)) ?? MOCK_PACKAGES[0];
-    return pkg;
+    return error
   }
 };
 

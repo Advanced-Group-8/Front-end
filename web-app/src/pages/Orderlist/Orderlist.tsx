@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPackageById } from "../../store/packageSlice.ts";
+import { fetchPackageById, fetchPackagesForUser } from "../../store/packageSlice.ts";
 import OrderListItem from "../../components/orders/OrderListItem.tsx";
-import OrderDetails from "../../components/orders/OrderDetails.tsx";
+/* import OrderDetails from "../../components/orders/OrderDetails.tsx"; */
 import type { RootState, AppDispatch } from "../../store/store.ts";
 import type { Package } from "../../types/types.ts";
 import ClimateStatusList from "../../components/orders/OrderClimateStatus/ClimateStatusList.tsx";
@@ -18,39 +18,68 @@ const OrderList = () => {
     loading,
     error,
   } = useSelector((state: RootState) => state.packages);
+  const user = useSelector((state: RootState) => state.auth.profile);
+  console.log("packages in Orderlist", packages);
 
-  const [selectedOrder, setSelectedOrder] = useState<Package | null>(null);
-  const [packageId, setPackageId] = useState("");
-  const [inputPackageId, setInputPackageId] = useState(packageId);
+  const [inputPackageId, setInputPackageId] = useState("");
   const [searchedPackage, setSearchedPackage] = useState<Package | null>(null);
-  const packageArray = packages && !Array.isArray(packages) ? [packages] : packages ?? [];
+  const [packagesToShow, setPackagesToShow] = useState<Package[]>([]);
+  const [userPackages, setUserPackages] = useState<Package[]>([]);
 
-  const handleSearch = () => {
-    const found = packageArray.find((pkg) => pkg.id === Number(inputPackageId));
-    setSearchedPackage(found ?? null);
-    setPackageId(inputPackageId);
-  };
-
+ 
   React.useEffect(() => {
-    if (packageId) {
-      dispatch(fetchPackageById({ id: packageId }));
+    if (user) {
+      dispatch(fetchPackagesForUser({ userId: user.id, role: user.role }));
     }
-  }, [dispatch, packageId]);
+  }, [dispatch, user]);
 
-  if (loading) return <p className="text-center">Loading...</p>;
-  if (error) return <p className="text-center">{error}</p>;
+/*   React.useEffect(() => {
+    if (user) {
+      setUserPackages(packages.filter((pkg: Package) => pkg.sender.id === user.id));
+    }
+    const userPackages = packages.filter((pkg: Package) => pkg.sender.id === user?.id);
+  }, [packages, user]); */
 
-  if (selectedOrder) {
-    return (
-      <div className="p-8 text-center bg-neutral-1">
-        <OrderDetails pkg={selectedOrder} />
-      </div>
-    );
-  }
+  const packageArray = packages.filter((pkg: Package) => pkg.sender.id !== user?.id);
+
+  // Handle manual search (optional)
+  const handleSearch = async () => {
+      if (!inputPackageId.trim()) {
+      // Reset search if input is empty
+      setSearchedPackage(null);
+      setPackagesToShow(packageArray);
+      return;
+    }
+    console.log("inputPackageId in handleSearch", inputPackageId);
+     try {
+          const response = await dispatch(fetchPackageById({ id: inputPackageId }));
+          const fetchedPackage = response.payload;
+
+          if (!fetchedPackage || !fetchedPackage.id) {
+            console.error("Failed to fetch package by ID in Orderlist");
+            setSearchedPackage(null);
+            setPackagesToShow([]);
+            return;
+          }
+
+          setSearchedPackage(fetchedPackage);
+          setPackagesToShow([fetchedPackage]);
+        } catch (err) {
+          console.error("Error fetching package by ID:", err);
+          setSearchedPackage(null);
+          setPackagesToShow([]);
+      }
+
+    };
+
+    
+    if (loading) return <p className="text-center">Loading...</p>;
+    if (error) return <p className="text-center">{error}</p>;
+
 
   return (
     <>
-      <div className="p-1 text-center bg-neutral-1">
+      <div className="p-1 text-center bg-neutral-1 w-fit">
         <h1 className="text-3xl font-bold mb-8">Orderlist</h1>
         <div className="mb-4 flex justify-center gap-2">
           <input
@@ -70,24 +99,29 @@ const OrderList = () => {
             Search ID
           </button>
         </div>
-        <OrderListItem onOrderClick={setSelectedOrder}
-          packages={searchedPackage ? [searchedPackage] : packageArray}
-        />
+
+        <div className="space-y-4">
+        {packagesToShow.length > 0 ? (
+          packagesToShow.map((pkg) => <OrderListItem key={pkg.id} pkg={pkg} />)
+        ) : (
+          <p>No packages found</p>
+        )}
+      </div>
         {
-          //* For dev: If no packages are found, allow user to use mock data
           packageArray.length == 0 ? (
             <div className="place-items-center">
               <p className="text-center">No packages found</p>
             </div>
           ) : null
         }
-      </div>
       <div>
         <ClimateStatusList />
       <OrderDeliveryStatusTimeline status={MOCK_STATUS} />
+      </div>
       </div>
     </>
   );
 };
 
 export default OrderList;
+

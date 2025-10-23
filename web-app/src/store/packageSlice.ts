@@ -60,6 +60,21 @@ export const fetchPackageById = createAsyncThunk(
   }
 );
 
+export const fetchPackagesForUser = createAsyncThunk(
+  "packages/fetchPackagesForUser",
+  async (params: { userId: number; role: "sender" | "carrier" | "receiver" }) => {
+    const { userId, role } = params;
+
+    // Map role to the API query parameter
+    const query: Record<string, number> = {};
+    if (role === "sender") query.senderId = userId;
+    if (role === "carrier") query.currentCarrierId = userId;
+    if (role === "receiver") query.receiverId = userId;
+
+    return await getPackages(query); // getPackages returns an array of packages
+  }
+);
+
 // Create a new package
 export const createNewPackage = createAsyncThunk(
   "packages/createNewPackage",
@@ -162,7 +177,27 @@ const packagesSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || "Failed to fetch packages.";
       })
+      .addCase(fetchPackagesForUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchPackagesForUser.fulfilled, (state, action) => {
+        state.loading = false;
+        const incomingPackages: Package[] = action.payload;
 
+        incomingPackages.forEach((pkg) => {
+          const index = state.data.findIndex((p) => p.id === pkg.id);
+          if (index >= 0) {
+            state.data[index] = pkg; // update existing
+          } else {
+            state.data.push(pkg); // add new
+          }
+        });
+      })
+      .addCase(fetchPackagesForUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Failed to fetch packages for user.";
+      })
       .addCase(fetchPackageById.fulfilled, (state, action) => {
         const packageIndex = state.data.findIndex(
           (pkg) => pkg.id === action.payload.id

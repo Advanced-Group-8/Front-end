@@ -1,38 +1,45 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import type { Package } from "../../types/types";
 import OrderDeliveryStatus from "./OrderDeliveryStatus/OrderDeliveryStatus";
-import OrderDetails from "./OrderDetails";
 import TextButton from "../buttons/TextButton.tsx";
+import { useSearchParams } from "react-router-dom";
 
 type OrderListItemProps = {
-  packages: Package[];
-  onOrderClick?: (id: number) => void;
+  pkg: Package;
 };
 
-const OrderListItem: React.FC<OrderListItemProps> = ({ packages }) => {
-  const [expandedId, setExpandedId] = useState<number | null>(null);
-  const [detailsExpandedId, setDetailsExpandedId] = useState<number | null>(
-    null
-  );
 
-  const handleExpand = (id: number) => {
-    setExpandedId(expandedId === id ? null : id);
-  };
+const OrderListItem: React.FC<OrderListItemProps> = ({ pkg }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [expanded, setExpanded] = useState(false);
 
-  const handleToggleDetails = (e: React.MouseEvent, id: number) => {
+  const handleExpand = () => setExpanded(!expanded);
+
+const handleToggleDetails = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setDetailsExpandedId(detailsExpandedId === id ? null : id);
-  };
+    const current = searchParams.get("orderId");
 
+    if (current === pkg.id.toString()) {
+      // Remove param
+      searchParams.delete("orderId");
+      setSearchParams(searchParams);
+      console.log("Hide details for orderId", searchParams.get("orderId"));
+    } else {
+      // Set param
+      setSearchParams({ orderId: pkg.id.toString() });
+      console.log("Show details for orderId", searchParams.get("orderId"));
+    }
+  };
+  
+  
   return (
     <div className="space-y-4 mx-auto max-w-2xl rounded-lg">
-      {packages.map((pkg) => (
         <div
           key={pkg.id}
           className={`bg-neutral-light-1 text-neutral-dark-1 p-4 rounded-lg ring-2 ring-primary-1 shadow-md cursor-pointer hover:shadow-lg transition-all duration-300 ${
-            expandedId === pkg.id ? "ring-4 ring-primary-1" : ""
+            expanded ? "ring-4 ring-primary-1" : ""
           }`}
-          onClick={() => handleExpand(pkg.id)}
+          onClick={handleExpand}
         >
           <div className="grid grid-cols-2 gap-2 items-center">
             <div>
@@ -41,7 +48,7 @@ const OrderListItem: React.FC<OrderListItemProps> = ({ packages }) => {
             <div className="flex justify-end">
               <OrderDeliveryStatus status={pkg.status} />
             </div>
-            {expandedId === pkg.id && (
+            {expanded && (
               <>
                 <div className="col-span-2">
                   <p>
@@ -67,26 +74,20 @@ const OrderListItem: React.FC<OrderListItemProps> = ({ packages }) => {
                   <TextButton
                     size="medium"
                     variant="primary"
-                    onClick={(e) => handleToggleDetails(e, pkg.id)}
+                    onClick={(e) => handleToggleDetails(e)}
                   >
-                    {detailsExpandedId === pkg.id
+                    {searchParams.get("orderId") === pkg.id.toString()
                       ? "Hide details"
                       : "More details"}
                   </TextButton>
                 </div>
-
-                {detailsExpandedId === pkg.id && (
-                  <div className="col-span-2 mt-4">
-                    <OrderDetails pkg={pkg} />
-                  </div>
-                )}
               </>
             )}
           </div>
         </div>
-      ))}
     </div>
   );
 };
 
 export default OrderListItem;
+

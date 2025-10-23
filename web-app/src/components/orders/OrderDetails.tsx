@@ -6,6 +6,8 @@ type OrderDetailsProps = {
 };
 
 const OrderDetails: React.FC<OrderDetailsProps> = ({ pkg }) => {
+  console.log("pkg in OrderDetails", pkg);
+  
   const statusLabel =
     statusTextMap[pkg.status as keyof typeof statusTextMap] ?? pkg.status;
 

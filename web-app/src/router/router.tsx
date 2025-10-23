@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import Home from "../pages/Home";
-import OrderList from "../pages/Orderlist.tsx";
+import OrderList from "../pages/Orderlist/Orderlist.tsx";
 import Layout from "../layout/Layout";
 import NotFound from "../pages/NotFound";
 import ButtonsPage from "../pages/ButtonsPage";
@@ -9,6 +9,8 @@ import SignaturePage from "../pages/SignaturePage";
 import IconButton from "../components/buttons/IconButton";
 import ProfilePage from "../pages/ProfilePage.tsx";
 import SignInPage from "../pages/SignInPage/SignInPage.tsx";
+import LayoutWithTwoColumns from "../pages/Orderlist/LayoutWithTwoColumns.tsx";
+import OrderDetailsPage from "../pages/OrderDetailsPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +23,11 @@ const router = createBrowserRouter([
       },
       {
         path: "orders",
-        element: <OrderList />,
+        element: <LayoutWithTwoColumns />,
+        children: [
+          { index: true, element: <p>Select a package</p> },
+          { path: ":id", element: <OrderDetailsPage /> }, // will handle details
+        ],
       },
       {
         path: "buttons",
