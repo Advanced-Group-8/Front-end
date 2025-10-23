@@ -78,10 +78,10 @@ const OrderList = () => {
 
 
   return (
-    <>
-      <div className="p-1 text-center bg-neutral-1 w-fit">
+    <div className="">
+      <div className="p-1 text-center bg-neutral-1 w-100%">
         <h1 className="text-3xl font-bold mb-8">Orderlist</h1>
-        <div className="mb-4 flex justify-center gap-2">
+        <div className="mb-4 flex justify-center gap-2 w-full">
           <input
             type="text"
             placeholder="Package-ID (Temporary)"
@@ -119,7 +119,7 @@ const OrderList = () => {
       <OrderDeliveryStatusTimeline status={MOCK_STATUS} />
       </div>
       </div>
-    </>
+    </div>
   );
 };
 

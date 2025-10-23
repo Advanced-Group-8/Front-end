@@ -39,7 +39,7 @@ function LayoutWithTwoColumns() {
 
   return (
     <div className="grid grid-cols-2 gap-4 p-4">
-      <div className="flex border-r pr-4 bg-white">
+      <div className="p-4 bg-white">
         <OrderList />
       </div>
 

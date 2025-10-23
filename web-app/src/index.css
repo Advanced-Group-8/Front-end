@@ -21,6 +21,7 @@ main {
   gap: 8px;
   margin: auto;
   min-width: 300px;
+  max-width: 1200px;
 }
 
 

@@ -12,7 +12,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ pkg }) => {
     statusTextMap[pkg.status as keyof typeof statusTextMap] ?? pkg.status;
 
   return (
-    <div className="bg-neutral-light-1 text-neutral-dark-1 p-2 rounded-xl max-w-xl mx-auto mt-8">
+    <div className="bg-neutral-light-1 text-neutral-dark-1 p-6 rounded-xl max-w-xl mx-auto mt-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
           <p className="mb-2">
