@@ -47,10 +47,24 @@ export const login = createAsyncThunk(
         `${API_BASE_URL}/auth/sign-in`,
         credentials
       );
-
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+    } catch (error: unknown) {
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "response" in error &&
+        typeof (error as { response?: unknown }).response === "object" &&
+        (error as { response?: { data?: { message?: string } } }).response?.data
+          ?.message
+      ) {
+        return rejectWithValue(
+          (error as { response: { data: { message: string } } }).response.data
+            .message
+        );
+      }
+      return rejectWithValue(
+        error instanceof Error ? error.message : "Unknown error"
+      );
     }
   }
 );

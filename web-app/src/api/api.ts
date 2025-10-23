@@ -5,14 +5,6 @@ import { MOCK_PACKAGES } from "./mockData.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-//! For hardcoded jwt tokens until login feature is in place !
-
-const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjciLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJuYW1lIjoiUmViZWNjYSIsInJvbGUiOiJzZW5kZXIiLCJjb21wYW55TmFtZSI6Ikh1bGEgSG9vcHMgQUIiLCJjcmVhdGVkQXQiOiIyMDI1LTEwLTIwVDEzOjU1OjU3LjkwMVoiLCJ1cGRhdGVkQXQiOiIyMDI1LTEwLTIwVDEzOjU1OjU3LjkwMVoiLCJpYXQiOjE3NjA5ODgwODEsImV4cCI6MTc2MTU5Mjg4MX0.vPf00WmCgvL6Sm0xxqnHv3CLBhlwlI2QKKaJVJLaj1g";
-
-axios.defaults.headers.common["Authorization"] = `Bearer ${TOKEN}`;
-
-// ! ! !
-
 // -------- PACKAGE ENDPOINTS --------
 
 // GET /package (with all query parameters)
@@ -77,11 +69,11 @@ export const getPackageById = async (
     console.error(`Error fetching package with ID ${id}:`, error);
     console.warn("⚠️ Using mock data instead due to API failure.");
     // pick the one with the matching id if it exists, otherwise first
-    const pkg = MOCK_PACKAGES.find((p) => p.id === Number(id)) ?? MOCK_PACKAGES[0];
+    const pkg =
+      MOCK_PACKAGES.find((p) => p.id === Number(id)) ?? MOCK_PACKAGES[0];
     return pkg;
   }
 };
-
 
 // PATCH /package/{id} (step status)
 export const stepPackageStatus = async (id: number | string) => {

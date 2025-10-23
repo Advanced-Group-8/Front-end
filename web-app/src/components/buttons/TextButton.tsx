@@ -7,6 +7,7 @@ type TextButtonProps = {
   disabled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children: React.ReactNode;
+  type?: "button" | "submit" | "reset";
 };
 
 const TextButton: React.FC<TextButtonProps> = ({
@@ -15,6 +16,7 @@ const TextButton: React.FC<TextButtonProps> = ({
   disabled = false,
   onClick,
   children,
+  type = "button",
 }) => {
   const baseStyles =
     "rounded-md font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200";
@@ -32,6 +34,7 @@ const TextButton: React.FC<TextButtonProps> = ({
 
   return (
     <button
+      type={type}
       className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${
         disabled ? disabledStyles : ""
       }`}

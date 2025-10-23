@@ -8,11 +8,12 @@ import SignaturePage from "../pages/SignaturePage";
 import IconButton from "../components/buttons/IconButton";
 import ProfilePage from "../pages/ProfilePage.tsx";
 import SignInPage from "../pages/SignInPage/SignInPage.tsx";
+import SignUpPage from "../pages/SignUpPage/SignUpPage.tsx";
 import RoleGuard from "./RoleGuard";
 import RoleBasedLayout from "../layout/RoleBasedLayout.tsx";
 import AdminPage from "../pages/AdminPage.tsx";
 import CarrierPage from "../pages/CarrierPage.tsx";
-import UnAuthorized from "../pages/UnAuthorized.tsx";
+import Unauthorized from "../pages/Unauthorized.tsx";
 
 const router = createBrowserRouter([
   {
@@ -40,12 +41,16 @@ const router = createBrowserRouter([
         element: <ProfilePage />,
       },
       {
+        path: "sign-up",
+        element: <SignUpPage />,
+      },
+      {
         path: "sign-in",
         element: <SignInPage />,
       },
       {
         path: "unauthorized",
-        element: <UnAuthorized />,
+        element: <Unauthorized />,
       },
       {
         path: "scanner",

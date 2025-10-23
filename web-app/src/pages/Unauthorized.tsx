@@ -1,4 +1,4 @@
-const UnAuthorized = () => {
+const Unauthorized = () => {
   return (
     <div>
       <h1>Unauthorized</h1>
@@ -7,4 +7,4 @@ const UnAuthorized = () => {
   );
 };
 
-export default UnAuthorized;
+export default Unauthorized;
