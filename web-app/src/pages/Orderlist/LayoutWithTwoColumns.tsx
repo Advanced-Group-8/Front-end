@@ -6,6 +6,7 @@ import type { Package } from "../../types/types";
 import type { AppDispatch, RootState } from "../../store/store";
 import { fetchPackageById } from "../../store/packageSlice";
 import React from "react";
+import OrderDetailsPage from "../OrderDetailsPage";
 /* import type { AppDispatch, RootState } from "../../store/store";
 import { fetchPackageById } from "../../store/packageSlice";
 import { useEffect } from "react"; */
@@ -16,6 +17,13 @@ function LayoutWithTwoColumns() {
   const dispatch = useDispatch<AppDispatch>();
   const packages = useSelector((state: RootState) => state.packages);
   console.log("packages in LayoutWithTwoColumns", packages.data);
+  const [isMobile, setIsMobile] = React.useState(window.innerWidth < 768);
+
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
  
   const selectedIdAsNumber = selectedId ? Number(selectedId) : null;
    console.log("selectedIdAsNumber in LayoutWithTwoColumns", selectedIdAsNumber);
@@ -37,17 +45,28 @@ function LayoutWithTwoColumns() {
   console.log("selectedId in LayoutWithTwoColumns", selectedId);
   console.log("packageData in LayoutWithTwoColumns", packageData);
 
-  return (
+  return isMobile ? (
+  // Mobile: single column, separate pages for list/details
+  <div className="p-4">
+    {packageData ? (
+      <OrderDetails pkg={packageData} />
+    ) : (
+      <OrderList />
+    )}
+  </div>
+) : (
     <div className="grid grid-cols-2 gap-4 p-4">
-      <div className="p-4 bg-white">
+      <div >
         <OrderList />
       </div>
 
-      <div className="flex-1 bg-white p-4">
+      <div >
         {packageData ? (
           <OrderDetails pkg={packageData} />
         ) : (
-          <p>Select a package to see details</p>
+          <div className="bg-white rounded-lg p-4 h-full flex items-center justify-center">
+            <p>Select a package to see details</p>
+          </div>
         )}
       </div>
     </div>

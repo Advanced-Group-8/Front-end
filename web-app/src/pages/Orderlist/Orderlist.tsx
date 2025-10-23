@@ -78,7 +78,7 @@ const OrderList = () => {
 
 
   return (
-    <div className="">
+    <div className="bg-white rounded-lg p-4">
       <div className="p-1 text-center bg-neutral-1 w-100%">
         <h1 className="text-3xl font-bold mb-8">Orderlist</h1>
         <div className="mb-4 flex justify-center gap-2 w-full">
