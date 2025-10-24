@@ -30,14 +30,14 @@ function SignInForm() {
     setLoading(true);
 
     const isEmail = identifier.includes("@");
-    const payload: LoginRequest = {
-      email: isEmail ? identifier.trim() : "",
-      name: !isEmail ? identifier.trim() : "",
-      password,
+    const trimmedIdentifier = identifier.trim();
+    const payload = {
+      password: password.trim(),
+      ...(isEmail ? { email: trimmedIdentifier } : { name: trimmedIdentifier }),
     };
 
     try {
-      await dispatch(login(payload)).unwrap();
+      await dispatch(login(payload as LoginRequest)).unwrap();
       setLoading(false);
       navigate("/");
     } catch (err) {

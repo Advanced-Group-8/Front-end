@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "./store";
-import type { Role } from "../types/types.ts";
+import type { Profile } from "../types/types.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -12,20 +12,9 @@ export type LoginRequest = {
   password: string;
 };
 
-// Type for the user/profile returned by the API
-export type UserProfile = {
-  id: number;
-  email: string;
-  name: string;
-  role: Role;
-  companyName: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
 // Slice state type
 export type AuthState = {
-  profile: UserProfile | null;
+  profile: Profile | null;
   token: string | null;
   loading: boolean;
   error: string | null;
@@ -59,7 +48,7 @@ export const login = createAsyncThunk(
 
       return {
         token,
-        profile: profileResp.data,
+        profile: profileResp.data.data,
       };
     } catch (error: unknown) {
       if (
@@ -78,6 +67,22 @@ export const login = createAsyncThunk(
       return rejectWithValue(
         error instanceof Error ? error.message : "Unknown error"
       );
+    }
+  }
+);
+
+export const fetchProfile = createAsyncThunk(
+  "auth/fetchProfile",
+  async (_, { rejectWithValue }) => {
+    const token = localStorage.getItem("token");
+    if (!token) return rejectWithValue("No token");
+    try {
+      const response = await axios.get(`${API_BASE_URL}/auth/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data.data as Profile;
+    } catch {
+      return rejectWithValue("Failed to fetch profile");
     }
   }
 );
@@ -108,6 +113,9 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(fetchProfile.fulfilled, (state, action) => {
+        state.profile = action.payload;
       });
   },
 });
