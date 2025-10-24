@@ -3,7 +3,7 @@ import type { RootState } from "../store/store";
 import { Link } from "react-router-dom";
 
 const ProfilePage = () => {
-  const { profile, loading } = useSelector((state: RootState) => state.user);
+  const { profile, loading } = useSelector((state: RootState) => state.auth);
 
   if (loading) return <p>Loading...</p>;
 

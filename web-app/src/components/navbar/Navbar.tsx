@@ -6,7 +6,7 @@ import { logout } from "../../store/authSlice";
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state: RootState) => !!state.user.profile);
+  const isLoggedIn = useSelector((state: RootState) => !!state.auth.profile);
 
   const handleSignOut = () => {
     dispatch(logout());

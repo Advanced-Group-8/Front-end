@@ -6,14 +6,14 @@ import type { Role } from "../types/types.ts";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Type for the login request body
-interface LoginRequest {
+export type LoginRequest = {
   email: string;
   name: string;
   password: string;
-}
+};
 
 // Type for the user/profile returned by the API
-export interface UserProfile {
+export type UserProfile = {
   id: number;
   email: string;
   name: string;
@@ -21,15 +21,15 @@ export interface UserProfile {
   companyName: string;
   createdAt: string;
   updatedAt: string;
-}
+};
 
 // Slice state type
-interface AuthState {
+export type AuthState = {
   profile: UserProfile | null;
   token: string | null;
   loading: boolean;
   error: string | null;
-}
+};
 
 const initialState: AuthState = {
   profile: null,
@@ -47,7 +47,20 @@ export const login = createAsyncThunk(
         `${API_BASE_URL}/auth/sign-in`,
         credentials
       );
-      return response.data;
+      const { token } = response.data;
+      if (!token) throw new Error("No token returned from login");
+
+      localStorage.setItem("token", token);
+
+      // Get profile with token
+      const profileResp = await axios.get(`${API_BASE_URL}/auth/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      return {
+        token,
+        profile: profileResp.data,
+      };
     } catch (error: unknown) {
       if (
         typeof error === "object" &&
@@ -73,11 +86,12 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout: (state) => {
+    loginSuccess(state, action) {
+      state.profile = action.payload;
+    },
+    logout(state) {
       state.profile = null;
-      state.token = null;
-      state.loading = false;
-      state.error = null;
+      localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
@@ -88,10 +102,8 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        // After login succeeds
-        localStorage.setItem("token", action.payload.token);
         state.token = action.payload.token;
-        state.profile = action.payload.data; // assuming user info is in data
+        state.profile = action.payload.profile;
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;

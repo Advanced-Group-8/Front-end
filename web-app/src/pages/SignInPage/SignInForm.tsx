@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "../../store/store";
-import { fetchUserProfile } from "../../store/userSlice";
-import api from "../../api/axios";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import TextButton from "../../components/buttons/TextButton";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/authSlice.ts";
+import type { AppDispatch } from "../../store/store.ts";
+import type { LoginRequest } from "../../store/authSlice.ts";
 
 type ApiIssue = { path?: string[]; message?: string };
 type ApiErrorResponse = {
@@ -27,34 +27,20 @@ function SignInForm() {
     e.preventDefault();
     setErrors([]);
     setFieldErrors({});
-    if (!identifier.trim() || !password) {
-      const missing: string[] = [];
-      if (!identifier.trim()) missing.push("Email or username is required");
-      if (!password) missing.push("Password is required");
-      setErrors(missing);
-      return;
-    }
+    setLoading(true);
 
     const isEmail = identifier.includes("@");
-    const payload: Record<string, string> = {
+    const payload: LoginRequest = {
+      email: isEmail ? identifier.trim() : "",
+      name: !isEmail ? identifier.trim() : "",
       password,
     };
-    if (isEmail) {
-      payload.email = identifier.trim();
-    } else {
-      payload.name = identifier.trim();
-    }
 
     try {
-      setLoading(true);
-      const response = await api.post("/auth/sign-in", payload);
-
-      localStorage.setItem("token", response.data.token);
-      await dispatch(fetchUserProfile());
+      await dispatch(login(payload)).unwrap();
       setLoading(false);
-
       navigate("/");
-    } catch (err: unknown) {
+    } catch (err) {
       setLoading(false);
 
       const respData = axios.isAxiosError(err)

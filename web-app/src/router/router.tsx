@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import Home from "../pages/Home";
 import OrderList from "../pages/Orderlist.tsx";
 import NotFound from "../pages/NotFound";
 import ButtonsPage from "../pages/ButtonsPage";
@@ -11,9 +10,10 @@ import SignInPage from "../pages/SignInPage/SignInPage.tsx";
 import SignUpPage from "../pages/SignUpPage/SignUpPage.tsx";
 import RoleGuard from "./RoleGuard";
 import RoleBasedLayout from "../layout/RoleBasedLayout.tsx";
-import AdminPage from "../pages/AdminPage.tsx";
-import CarrierPage from "../pages/CarrierPage.tsx";
+import AdminDashboard from "../pages/RoleDashboards/AdminDashboard.tsx";
+import CarrierDashboard from "../pages/RoleDashboards/CarrierDashboard.tsx";
 import Unauthorized from "../pages/Unauthorized.tsx";
+import DashboardRouter from "./DashBoardRouter.tsx";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <DashboardRouter />,
       },
       {
         path: "orders",
@@ -71,7 +71,7 @@ const router = createBrowserRouter([
         path: "admin",
         element: (
           <RoleGuard allowed={["admin"]}>
-            <AdminPage />
+            <AdminDashboard />
           </RoleGuard>
         ),
       },
@@ -79,7 +79,7 @@ const router = createBrowserRouter([
         path: "carrier",
         element: (
           <RoleGuard allowed={["carrier"]}>
-            <CarrierPage />
+            <CarrierDashboard />
           </RoleGuard>
         ),
       },
