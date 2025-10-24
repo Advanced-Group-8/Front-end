@@ -15,10 +15,9 @@ const ProfilePage = () => {
   }, [dispatch]);
 
   if (loading) return <p>Loading...</p>;
-/*   if (error) return <p>Error: {error}</p>; */
+  if (error) return <p>Error: {error}</p>;
 
   if (!profile) {
-    // User not logged in or fetch failed
     return <div>
     <p>
       Please sign in
@@ -28,7 +27,6 @@ const ProfilePage = () => {
     </div>;
   }
 
-  // Now profile is guaranteed to be not null
   return (
     <div>
       <h1>{profile.name}</h1>

@@ -1,5 +1,6 @@
 import React from "react";
 import type { Package } from "../../types/types";
+import CTACard from "../CTA/CTACard";
 import { statusTextMap } from "./OrderDeliveryStatus/statusTextMap";
 import OrderDetailsItem from "./OrderDetailsItem";
 import CTACard from "../CTA/CTACard";
