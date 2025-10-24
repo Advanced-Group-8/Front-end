@@ -1,6 +1,7 @@
 import type { Package } from "../../types/types";
 import CTACard from "../CTA/CTACard";
 import { statusTextMap } from "./OrderDeliveryStatus/statusTextMap";
+import OrderDeliveryStatusTimeline, { MOCK_STATUS } from "../../components/orders/OrderDeliveryStatus/OrderDeliveryStatusTimeline.tsx";
 
 type OrderDetailsProps = {
   pkg: Package;
@@ -62,6 +63,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ pkg }) => {
         </div>
       </div>
       <CTACard></CTACard>
+      <OrderDeliveryStatusTimeline status={MOCK_STATUS} />
     </div>
   );
 };
