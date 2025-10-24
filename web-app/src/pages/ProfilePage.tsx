@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../store/store";
 import { fetchUserProfile } from "../store/userSlice";
@@ -6,12 +6,13 @@ import { fetchUserProfile } from "../store/userSlice";
 
 const ProfilePage = () => {
 
+  const dispatch = useDispatch<AppDispatch>();
   const { profile, loading, error } = useSelector((state: RootState) => state.user);
-/* 
-  // Fetch profile once on mount
+
   useEffect(() => {
-    dispatch(fetchUserProfile());
-  }, [dispatch]); */
+    const token = localStorage.getItem("token");
+    if (!profile && token) dispatch(fetchUserProfile());
+  }, [dispatch]);
 
   if (loading) return <p>Loading...</p>;
 /*   if (error) return <p>Error: {error}</p>; */
