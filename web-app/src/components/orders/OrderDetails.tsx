@@ -1,4 +1,5 @@
 import type { Package } from "../../types/types";
+import CTACard from "../CTA/CTACard";
 import { statusTextMap } from "./OrderDeliveryStatus/statusTextMap";
 
 type OrderDetailsProps = {
@@ -12,7 +13,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ pkg }) => {
     statusTextMap[pkg.status as keyof typeof statusTextMap] ?? pkg.status;
 
   return (
-      <div className="flex flex-col items-center p-4 bg-white min-h-screen rounded-lg">
+      <div className="flex flex-col items-center p-4 bg-white min-h-screen rounded-lg gap-4">
       <div className="bg-neutral-light-1 text-neutral-dark-1 p-6 rounded-xl max-w-xl mx-auto mt-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
@@ -60,6 +61,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ pkg }) => {
           </div>
         </div>
       </div>
+      <CTACard></CTACard>
     </div>
   );
 };
