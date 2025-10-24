@@ -1,16 +1,40 @@
 import axios from "axios";
 
 import type { PackageTracking } from "../types/types.ts";
-import { MOCK_PACKAGES } from "./mockData.ts";
+/* import { MOCK_PACKAGES } from "./mockData.ts"; */
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+const FALLBACK_TOKEN = ""; // *optional hardcoded dev token
+
+// 🔐 Setup Axios instance
+const api = axios.create({
+  baseURL: API_BASE_URL,
+});
+
+// interceptor to always attach token before requests
+api.interceptors.request.use(
+  (config) => {
+    const storedToken = localStorage.getItem("token");
+    const token = storedToken || FALLBACK_TOKEN;
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    } else {
+      delete config.headers.Authorization;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 // -------- PACKAGE ENDPOINTS --------
 
 // GET /package (with all query parameters)
 export const getPackages = async (params: {
-  senderId: number;
-  receiverId: number;
+  senderId?: number;
+  receiverId?: number;
   currentCarrierId?: number;
   status?: string;
   senderAddress?: string;
@@ -19,7 +43,7 @@ export const getPackages = async (params: {
   readingsLimit?: number;
 }) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/package`, { params });
+    const response = await api.get(`/package`, { params });
     return response.data.data;
   } catch (error) {
     console.error("Error fetching packages:", error);
@@ -47,7 +71,7 @@ export const createPackage = async (payload: {
   };
 }) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/package`, payload);
+    const response = await api.post(`${API_BASE_URL}/package`, payload);
     return response.data.data;
   } catch (error) {
     console.error("Error creating package:", error);
@@ -61,24 +85,21 @@ export const getPackageById = async (
   readingsLimit?: number
 ) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/package/${id}`, {
+    const response = await api.get(`${API_BASE_URL}/package/${id}`, {
       params: readingsLimit ? { readingsLimit } : undefined,
     });
     return response.data.data;
   } catch (error) {
     console.error(`Error fetching package with ID ${id}:`, error);
-    console.warn("⚠️ Using mock data instead due to API failure.");
     // pick the one with the matching id if it exists, otherwise first
-    const pkg =
-      MOCK_PACKAGES.find((p) => p.id === Number(id)) ?? MOCK_PACKAGES[0];
-    return pkg;
+    return error;
   }
 };
 
 // PATCH /package/{id} (step status)
 export const stepPackageStatus = async (id: number | string) => {
   try {
-    const response = await axios.patch(`${API_BASE_URL}/package/${id}`);
+    const response = await api.patch(`${API_BASE_URL}/package/${id}`);
     return response.data.data;
   } catch (error) {
     console.error(`Error stepping status for package with ID ${id}:`, error);
@@ -92,7 +113,7 @@ export const getPackageByDeviceId = async (
   readingsLimit?: number
 ) => {
   try {
-    const response = await axios.get(
+    const response = await api.get(
       `${API_BASE_URL}/package/device/${deviceId}`,
       {
         params: readingsLimit ? { readingsLimit } : undefined,
@@ -110,7 +131,7 @@ export const getPackageByDeviceId = async (
 // GET /package-tracking (all tracking records grouped by device)
 export const getAllPackageTracking = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/package-tracking`);
+    const response = await api.get(`${API_BASE_URL}/package-tracking`);
     return response.data.data;
   } catch (error) {
     console.error("Error fetching all package tracking:", error);
@@ -121,7 +142,7 @@ export const getAllPackageTracking = async () => {
 // POST /package-tracking (create tracking record)
 export const createPackageTracking = async (payload: PackageTracking) => {
   try {
-    const response = await axios.post(
+    const response = await api.post(
       `${API_BASE_URL}/package-tracking`,
       payload
     );
@@ -138,7 +159,7 @@ export const getPackageTrackingByDeviceId = async (
   latest?: boolean
 ) => {
   try {
-    const response = await axios.get(
+    const response = await api.get(
       `${API_BASE_URL}/package-tracking/${deviceId}`,
       {
         params: latest !== undefined ? { latest } : undefined,
@@ -156,7 +177,7 @@ export const getPackageTrackingByDeviceId = async (
 // GET /logs (fetch log file as text)
 export const getLogs = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/logs`, {
+    const response = await api.get(`${API_BASE_URL}/logs`, {
       responseType: "text",
     });
     return response.data;
@@ -169,7 +190,7 @@ export const getLogs = async () => {
 // DELETE /logs (clear log file)
 export const clearLogs = async () => {
   try {
-    const response = await axios.delete(`${API_BASE_URL}/logs`);
+    const response = await api.delete(`${API_BASE_URL}/logs`);
     return response.data;
   } catch (error) {
     console.error("Error clearing logs:", error);

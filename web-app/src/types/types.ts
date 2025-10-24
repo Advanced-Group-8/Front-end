@@ -9,7 +9,7 @@ export type Profile = {
   id: number;
   email: string;
   name: string;
-  role: string;
+  role: "sender" | "receiver" | "carrier" ;
   companyName: string;
   createdAt: string;
   updatedAt: string;

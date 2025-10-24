@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import OrderList from "../pages/Orderlist.tsx";
 import NotFound from "../pages/NotFound";
 import ButtonsPage from "../pages/ButtonsPage";
 import SignaturePage from "../pages/SignaturePage";
@@ -14,6 +13,8 @@ import AdminDashboard from "../pages/RoleDashboards/AdminDashboard.tsx";
 import CarrierDashboard from "../pages/RoleDashboards/CarrierDashboard.tsx";
 import Unauthorized from "../pages/Unauthorized.tsx";
 import DashboardRouter from "./DashBoardRouter.tsx";
+import LayoutWithTwoColumns from "../pages/Orderlist/LayoutWithTwoColumns.tsx";
+import OrderDetailsPage from "../pages/OrderDetailsPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,11 @@ const router = createBrowserRouter([
       },
       {
         path: "orders",
-        element: <OrderList />,
+        element: <LayoutWithTwoColumns />,
+        children: [
+          { index: true, element: <p>Select a package</p> },
+          { path: ":id", element: <OrderDetailsPage /> }, // will handle details
+        ],
       },
       {
         path: "buttons",
