@@ -1,25 +1,29 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import Home from "../pages/Home";
-import OrderList from "../pages/Orderlist/Orderlist.tsx";
-import Layout from "../layout/Layout";
 import NotFound from "../pages/NotFound";
 import ButtonsPage from "../pages/ButtonsPage";
 import SignaturePage from "../pages/SignaturePage";
 import IconButton from "../components/buttons/IconButton";
 import ProfilePage from "../pages/ProfilePage.tsx";
 import SignInPage from "../pages/SignInPage/SignInPage.tsx";
+import SignUpPage from "../pages/SignUpPage/SignUpPage.tsx";
+import RoleGuard from "./RoleGuard";
+import RoleBasedLayout from "../layout/RoleBasedLayout.tsx";
+import AdminDashboard from "../pages/RoleDashboards/AdminDashboard.tsx";
+import CarrierDashboard from "../pages/RoleDashboards/CarrierDashboard.tsx";
+import Unauthorized from "../pages/Unauthorized.tsx";
+import DashboardRouter from "./DashBoardRouter.tsx";
 import LayoutWithTwoColumns from "../pages/Orderlist/LayoutWithTwoColumns.tsx";
 import OrderDetailsPage from "../pages/OrderDetailsPage.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <RoleBasedLayout />,
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <DashboardRouter />,
       },
       {
         path: "orders",
@@ -42,8 +46,16 @@ const router = createBrowserRouter([
         element: <ProfilePage />,
       },
       {
+        path: "sign-up",
+        element: <SignUpPage />,
+      },
+      {
         path: "sign-in",
-        element:<SignInPage/>,
+        element: <SignInPage />,
+      },
+      {
+        path: "unauthorized",
+        element: <Unauthorized />,
       },
       {
         path: "scanner",
@@ -58,6 +70,22 @@ const router = createBrowserRouter([
               Back
             </IconButton>
           </div>
+        ),
+      },
+      {
+        path: "admin",
+        element: (
+          <RoleGuard allowed={["admin"]}>
+            <AdminDashboard />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "carrier",
+        element: (
+          <RoleGuard allowed={["carrier"]}>
+            <CarrierDashboard />
+          </RoleGuard>
         ),
       },
     ],

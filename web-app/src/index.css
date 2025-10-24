@@ -5,18 +5,20 @@
   background-color: var(--color-secondary-1);
 }
 
-html, body, #root {
+html,
+body,
+#root {
   width: 100%;
   min-width: 350px;
   min-height: 100vh;
-/*   height: 100%; */
+  /*   height: 100%; */
   display: flex;
   flex-direction: column; /* stack header, main, footer */
 }
 
-main {
+/* main {
   flex: 1; /* expand to fill available space */
-  display: flex;
+/* display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding: 16px;
@@ -26,29 +28,29 @@ main {
   max-width: 1200px;
 }
 
-
+*/
 .card {
-  @apply  rounded-[8px] p-6 shadow-md flex flex-col gap-4 items-center text-center min-w-[300px] max-w-[600px];
+  @apply rounded-[8px] p-6 shadow-md flex flex-col gap-4 items-center text-center min-w-[300px] max-w-[600px];
 }
 
 /*Colorpalette*/
 @theme {
   --color-primary-1: #26408b;
-  --color-primary-1-80: #4F64A0;
-  --color-primary-1-60: #7988B5;
-  --color-primary-1-40: #A2ADCB;
-  --color-primary-1-20: #CCD1E0;
-  --color-primary-1-10: #EAECF5;
+  --color-primary-1-80: #4f64a0;
+  --color-primary-1-60: #7988b5;
+  --color-primary-1-40: #a2adcb;
+  --color-primary-1-20: #ccd1e0;
+  --color-primary-1-10: #eaecf5;
 
-  --color-secondary-1: #EDF4F4;
-  --color-secondary-2: #DEEEEE;
+  --color-secondary-1: #edf4f4;
+  --color-secondary-2: #deeeee;
 
   --color-accent-1: #abd1b5;
   --color-accent-2: #ffa630;
   --color-accent-3: #d32f2f;
   --color-accent-4: #507255;
 
-  --color-neutral-light-1: #EDF4F4;
+  --color-neutral-light-1: #edf4f4;
   --color-neutral-dark-1: #111623;
   --color-neutral-dark-2: #1c1c1c;
 }
