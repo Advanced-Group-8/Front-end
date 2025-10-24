@@ -1,23 +1,15 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../store/store";
-import { fetchUserProfile } from "../store/userSlice";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
 
 
 const ProfilePage = () => {
 
   const { profile, loading, error } = useSelector((state: RootState) => state.user);
-/* 
-  // Fetch profile once on mount
-  useEffect(() => {
-    dispatch(fetchUserProfile());
-  }, [dispatch]); */
 
   if (loading) return <p>Loading...</p>;
-/*   if (error) return <p>Error: {error}</p>; */
+  if (error) return <p>Error: {error}</p>;
 
   if (!profile) {
-    // User not logged in or fetch failed
     return <div>
     <p>
       Please sign in
@@ -27,7 +19,6 @@ const ProfilePage = () => {
     </div>;
   }
 
-  // Now profile is guaranteed to be not null
   return (
     <div>
       <h1>{profile.name}</h1>
