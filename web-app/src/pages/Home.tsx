@@ -6,12 +6,14 @@ import { useEffect } from "react";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const user = useSelector((state: RootState) => state.user.profile);
+  const { profile: user, loading } = useSelector((state: RootState) => state.user);
 
-    // Fetch profile once on mount
+    // Fetch profile once on mount if not already fetched
   useEffect(() => {
-    dispatch(fetchUserProfile());
-  }, [dispatch]);
+    if (!user && !loading) {
+      dispatch(fetchUserProfile());
+      }
+  }, [dispatch, user, loading]);
 
   return (
     <>
