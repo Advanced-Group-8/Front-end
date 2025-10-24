@@ -3,7 +3,6 @@ import type { Package } from "../../types/types";
 import CTACard from "../CTA/CTACard";
 import { statusTextMap } from "./OrderDeliveryStatus/statusTextMap";
 import OrderDetailsItem from "./OrderDetailsItem";
-import CTACard from "../CTA/CTACard";
 
 type OrderDetailsProps = {
   pkg: Package;
@@ -65,7 +64,6 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ pkg }) => {
       </div>
 
       <CTACard onClick={() => {}}></CTACard>
-      
     </div>
   );
 };
