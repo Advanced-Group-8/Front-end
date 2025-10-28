@@ -55,3 +55,5 @@ export type PackageTracking = {
   humidity: number;
   createdAt: string;
 };
+
+export type Role = "sender" | "receiver" | "carrier" | "admin";
