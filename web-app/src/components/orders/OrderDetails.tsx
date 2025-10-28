@@ -1,4 +1,5 @@
 import type { Package } from "../../types/types";
+import ReadingsList from "../readingsList/ReadingsList-test";
 import { statusTextMap } from "./OrderDeliveryStatus/statusTextMap";
 
 type OrderDetailsProps = {
@@ -12,8 +13,9 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ pkg }) => {
     statusTextMap[pkg.status as keyof typeof statusTextMap] ?? pkg.status;
 
   return (
-      <div className="flex flex-col items-center p-4 bg-white min-h-screen rounded-lg">
+      <div>
       <div className="bg-neutral-light-1 text-neutral-dark-1 p-6 rounded-xl max-w-xl mx-auto mt-8">
+        <h2 className="text-center text-2xl font-bold mb-4">Order Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
             <p className="mb-2">
