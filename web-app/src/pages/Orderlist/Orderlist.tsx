@@ -6,10 +6,7 @@ import OrderListItem from "../../components/orders/OrderListItem.tsx";
 import type { RootState, AppDispatch } from "../../store/store.ts";
 import type { Package } from "../../types/types.ts";
 import ClimateStatusList from "../../components/orders/OrderClimateStatus/ClimateStatusList.tsx";
-import OrderDeliveryStatusTimeline from "../../components/orders/OrderDeliveryStatus/OrderDeliveryStatusTimeline.tsx";
 
-//MOCKSTATUS
-import { MOCK_STATUS } from "../../components/orders/OrderDeliveryStatus/OrderDeliveryStatusTimeline.tsx";
 
 const OrderList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -80,7 +77,7 @@ const OrderList = () => {
 
 
   return (
-    <div className="bg-white rounded-lg p-4">
+    <div className="bg-white rounded-lg p-2 pt-4 h-100%">
       <div className="p-1 text-center bg-neutral-1 w-100%">
         <h1 className="text-3xl font-bold mb-8">Orderlist</h1>
         <div className="mb-4 flex justify-center gap-2 w-full">
@@ -118,7 +115,6 @@ const OrderList = () => {
         }
       <div>
         <ClimateStatusList />
-      <OrderDeliveryStatusTimeline status={MOCK_STATUS} />
       </div>
       </div>
     </div>

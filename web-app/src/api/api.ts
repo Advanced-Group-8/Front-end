@@ -29,7 +29,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-
 // -------- PACKAGE ENDPOINTS --------
 
 // GET /package (with all query parameters)
@@ -93,10 +92,9 @@ export const getPackageById = async (
   } catch (error) {
     console.error(`Error fetching package with ID ${id}:`, error);
     // pick the one with the matching id if it exists, otherwise first
-    return error
+    return error;
   }
 };
-
 
 // PATCH /package/{id} (step status)
 export const stepPackageStatus = async (id: number | string) => {
