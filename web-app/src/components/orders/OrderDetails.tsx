@@ -32,15 +32,32 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ pkg }) => {
       <div>
       <div className="bg-neutral-light-1 text-neutral-dark-1 p-6 rounded-xl max-w-xl mx-auto mt-8">
         <h2 className="text-center text-2xl font-bold mb-4">Order Details</h2>
-        <div className="flex-col mb-4">
-          {/* Map through the info items */}
-          {packageInfo.map((item, index) => (
-            <OrderDetailsItem
-              key={index}
-              title={item.title}
-              input={item.input}
-            />
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <p className="mb-2">
+              <span className="font-semibold">Tracking Code:</span>
+              <span className="ml-2">{pkg.trackingCode}</span>
+            </p>
+            <p className="mb-2">
+              <span className="font-semibold">Status:</span>
+              <span className="ml-2">{statusLabel}</span>
+            </p>
+            <p className="mb-2"></p>
+          </div>
+          <div>
+            <p className="mb-2">
+              <span className="font-semibold">Sender:</span>
+              <span className="ml-2">
+                {pkg.sender?.name} ({pkg.sender?.email})
+              </span>
+            </p>
+            <p className="mb-2">
+              <span className="font-semibold">Receiver:</span>
+              <span className="ml-2">
+                {pkg.receiver?.name} ({pkg.receiver?.email})
+              </span>
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
