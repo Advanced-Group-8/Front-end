@@ -3,7 +3,8 @@ import axios from "axios";
 import type { RootState } from "./store";
 import type { Profile } from "../types/types.ts";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL =
+  window.env?.VITE_API_BASE_URL || import.meta.env.VITE_API_BASE_URL;
 
 // Type for the login request body
 export type LoginRequest = {
