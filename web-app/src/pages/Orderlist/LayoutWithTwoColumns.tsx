@@ -49,7 +49,7 @@ function LayoutWithTwoColumns() {
   // Mobile: single column, separate pages for list/details
   <div className="p-4">
     {packageData ? (
-      <OrderDetails pkg={packageData} />
+      <OrderDetailsPage pkg={packageData}/>
     ) : (
       <OrderList />
     )}
@@ -62,7 +62,7 @@ function LayoutWithTwoColumns() {
 
       <div >
         {packageData ? (
-          <OrderDetails pkg={packageData} />
+          <OrderDetailsPage pkg={packageData}/>
         ) : (
           <div className="bg-white rounded-lg p-2 h-full flex items-center justify-center">
             <p>Select a package to see details</p>

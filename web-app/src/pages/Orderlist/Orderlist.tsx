@@ -69,6 +69,8 @@ const OrderList = () => {
 
     };
 
+    console.log("packagesToShow in Orderlist", packagesToShow);
+
     
     if (loading) return <p className="text-center">Loading...</p>;
     if (error) return <p className="text-center">{error}</p>;
