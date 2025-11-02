@@ -62,7 +62,10 @@ export const fetchPackageById = createAsyncThunk(
 
 export const fetchPackagesForUser = createAsyncThunk(
   "packages/fetchPackagesForUser",
-  async (params: { userId: number; role: "sender" | "carrier" | "receiver" }) => {
+  async (params: {
+    userId: number;
+    role: "sender" | "receiver" | "carrier" | "admin";
+  }) => {
     const { userId, role } = params;
 
     // Map role to the API query parameter
@@ -196,7 +199,8 @@ const packagesSlice = createSlice({
       })
       .addCase(fetchPackagesForUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || "Failed to fetch packages for user.";
+        state.error =
+          action.error.message || "Failed to fetch packages for user.";
       })
       .addCase(fetchPackageById.fulfilled, (state, action) => {
         const packageIndex = state.data.findIndex(
