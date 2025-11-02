@@ -1,6 +1,5 @@
 import React from "react";
 import type { Package } from "../../types/types";
-import ReadingsList from "../readingsList/ReadingsList-test";
 import CTACard from "../CTA/CTACard";
 import { statusTextMap } from "./OrderDeliveryStatus/statusTextMap";
 import OrderDetailsItem from "./OrderDetailsItem";
@@ -29,7 +28,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ pkg }) => {
   ];
 
   return (
-      <div>
+    <div>
       <div className="bg-neutral-light-1 text-neutral-dark-1 p-6 rounded-xl max-w-xl mx-auto mt-8">
         <h2 className="text-center text-2xl font-bold mb-4">Order Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -58,19 +57,19 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ pkg }) => {
               </span>
             </p>
           </div>
-    <div className="flex flex-col items-center p-4 bg-white min-h-screen rounded-lg">
-      <h3 className="text-3xl font-bold">Package Details</h3>
+      <div className="flex flex-col items-center p-4 bg-white min-h-screen rounded-lg">
+        <h3 className="text-3xl font-bold">Package Details</h3>
 
-      <div className="bg-neutral-light-1 text-neutral-dark-1 p-6 rounded-xl max-w-xl mx-auto mt-8">
-        <div className="flex-col mb-4">
-          {/* Map through the info items */}
-          {packageInfo.map((item, index) => (
-            <OrderDetailsItem
-              key={index}
-              title={item.title}
-              input={item.input}
-            />
-          ))}
+        <div className="bg-neutral-light-1 text-neutral-dark-1 p-6 rounded-xl max-w-xl mx-auto mt-8">
+          <div className="flex-col mb-4">
+            {/* Map through the info items */}
+            {packageInfo.map((item, index) => (
+              <OrderDetailsItem
+                key={index}
+                title={item.title}
+                input={item.input}
+              />
+            ))}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -93,9 +92,14 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ pkg }) => {
         </div>
       </div>
 
-      <CTACard onClick={() => {}}></CTACard>
+      <CTACard></CTACard>
+    </div>
+    </div>
+    </div>
     </div>
   );
 };
+
+
 
 export default OrderDetails;

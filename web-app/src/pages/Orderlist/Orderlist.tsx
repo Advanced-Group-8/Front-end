@@ -15,7 +15,7 @@ const OrderList = () => {
     loading,
     error,
   } = useSelector((state: RootState) => state.packages);
-  const user = useSelector((state: RootState) => state.user.profile);
+  const user = useSelector((state: RootState) => state.auth.profile);
   console.log("packages in Orderlist", packages);
   console.log("user in Orderlist", user);
 
