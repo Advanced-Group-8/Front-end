@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchPackageById } from "../store/packageSlice";
+
 import OrderDetails from "../components/orders/OrderDetails.tsx";
-import type { RootState, AppDispatch } from "../store/store";
 import ReadingsList from "../components/readingsList/ReadingsList-test.tsx";
 import type { Package } from "../types/types.ts";
+import IconButton from "../components/buttons/IconButton.tsx";
 
 const OrderDetailsPage = (packageData: {pkg: Package}) => {
 /*   const { id } = useParams<{ id: string }>();

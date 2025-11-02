@@ -24,10 +24,10 @@ const router = createBrowserRouter([
       {
         path: "orders",
         element: <LayoutWithTwoColumns />,
-        children: [
+/*         children: [
           { index: true, element: <p>Select a package</p> },
           { path: ":id", element: <OrderDetailsPage /> }, // will handle details
-        ],
+        ], */
       },
       {
         path: "buttons",

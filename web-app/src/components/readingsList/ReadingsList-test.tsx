@@ -1,4 +1,4 @@
-import ReadingItem from "./readingItem"
+import ReadingItem from "./ReadingItem"
 import type { Package, PackageTracking } from "../../types/types"
 
 type ReadingsListProps = {

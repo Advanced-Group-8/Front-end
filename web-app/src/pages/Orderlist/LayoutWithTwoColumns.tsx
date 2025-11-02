@@ -7,6 +7,7 @@ import type { AppDispatch, RootState } from "../../store/store";
 import { fetchPackageById } from "../../store/packageSlice";
 import React from "react";
 import OrderDetailsPage from "../OrderDetailsPage";
+import IconButton from "../../components/buttons/IconButton";
 /* import type { AppDispatch, RootState } from "../../store/store";
 import { fetchPackageById } from "../../store/packageSlice";
 import { useEffect } from "react"; */
@@ -49,7 +50,9 @@ function LayoutWithTwoColumns() {
   // Mobile: single column, separate pages for list/details
   <div className="p-4">
     {packageData ? (
+      <><IconButton iconVariant="cancel" onClick={() => window.history.back()}>Go back</IconButton>
       <OrderDetailsPage pkg={packageData}/>
+      </>
     ) : (
       <OrderList />
     )}

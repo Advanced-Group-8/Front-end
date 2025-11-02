@@ -18,8 +18,9 @@ const OrderList = () => {
     loading,
     error,
   } = useSelector((state: RootState) => state.packages);
-  const user = useSelector((state: RootState) => state.auth.profile);
+  const user = useSelector((state: RootState) => state.user.profile);
   console.log("packages in Orderlist", packages);
+  console.log("user in Orderlist", user);
 
   const [inputPackageId, setInputPackageId] = useState("");
   const [searchedPackage, setSearchedPackage] = useState<Package | null>(null);
@@ -30,6 +31,7 @@ const OrderList = () => {
   React.useEffect(() => {
     if (user) {
       dispatch(fetchPackagesForUser({ userId: user.id, role: user.role }));
+      console.log("user in Orderlist inside useEffect", user);
     }
   }, [dispatch, user]);
 
@@ -40,7 +42,8 @@ const OrderList = () => {
     const userPackages = packages.filter((pkg: Package) => pkg.sender.id === user?.id);
   }, [packages, user]); */
 
-  const packageArray = packages.filter((pkg: Package) => pkg.sender.id !== user?.id);
+  const packageArray = packages;
+  console.log("packageArray in Orderlist", packageArray);
 
   // Handle manual search (optional)
   const handleSearch = async () => {
