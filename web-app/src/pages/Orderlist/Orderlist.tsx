@@ -25,19 +25,13 @@ const OrderList = () => {
   const [searchedPackage, setSearchedPackage] = useState<Package | null>(null);
   const [packagesToShow, setPackagesToShow] = useState<Package[]>([]);
 
- 
+ /* !! NOT WORKING !!! */
 /*   React.useEffect(() => {
     if (user) {
       dispatch(fetchPackagesForUser({ userId: user.id, role: user.role }));
     }
   }, [dispatch, user]); */
 
-/*   React.useEffect(() => {
-    if (user) {
-      setUserPackages(packages.filter((pkg: Package) => pkg.sender.id === user.id));
-    }
-    const userPackages = packages.filter((pkg: Package) => pkg.sender.id === user?.id);
-  }, [packages, user]); */
 
   const packageArray = packages.filter((pkg: Package) => pkg.sender.id !== user?.id);
 
