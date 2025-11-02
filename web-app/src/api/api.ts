@@ -3,7 +3,8 @@ import axios from "axios";
 import type { PackageTracking } from "../types/types.ts";
 /* import { MOCK_PACKAGES } from "./mockData.ts"; */
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL =
+  window.env?.VITE_API_BASE_URL || import.meta.env.VITE_API_BASE_URL;
 
 const FALLBACK_TOKEN = ""; // *optional hardcoded dev token
 
