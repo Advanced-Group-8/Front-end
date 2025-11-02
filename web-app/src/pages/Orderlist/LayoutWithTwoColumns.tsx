@@ -58,7 +58,7 @@ function LayoutWithTwoColumns() {
     )}
   </div>
 ) : (
-    <div className="grid grid-cols-2 gap-4 p-4">
+    <div className="grid grid-cols-2 gap-4 p-1 lg:p-4">
       <div >
         <OrderList />
       </div>
@@ -67,7 +67,7 @@ function LayoutWithTwoColumns() {
         {packageData ? (
           <OrderDetailsPage pkg={packageData}/>
         ) : (
-          <div className="bg-white rounded-lg p-4 h-full flex items-center justify-center">
+          <div className="bg-white rounded-lg p-2 h-full flex items-center justify-center">
             <p>Select a package to see details</p>
           </div>
         )}
