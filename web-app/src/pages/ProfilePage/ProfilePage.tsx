@@ -23,13 +23,40 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="text-center bg-neutral-300 p-2">
+    <div className="text-center p-4 gap-4 flex flex-col items-center">
+      <h1 className="text-4xl font-bold text-primary-1 opacity-50">Profile Information</h1>
       <UserGreetings user={profile} />
-      <h1>{profile.name}</h1>
-      <p>Email: {profile.email}</p>
-      <p>Company: {profile.companyName}</p>
-      <p>Role: {profile.role}</p>
-      <p>ID: {profile.id}</p>
+      
+      <div className="flex flex-col items-center gap-4 p-4 bg-white rounded-lg">
+        <p className="font-mono text-primary-1">User ID: {profile.id}</p>
+        <div>
+           <h3 className="font-semibold text-primary-1">User Information</h3>
+          <p>Name: {profile.name}</p>
+          <p>Email: {profile.email}</p>
+          
+        </div>
+        <div>
+           <h3 className="font-semibold text-primary-1">Account Information</h3>
+          <p>
+            Created:{" "}
+            {new Intl.DateTimeFormat("sv-SE", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            }).format(new Date(profile.createdAt))}
+          </p>
+          <p>Updated: {profile.updatedAt || "N/A"}</p>
+        </div>
+
+        <div>
+          <h3 className="font-semibold text-primary-1">Company Information</h3>
+          <p>Company: {profile.companyName}</p>
+          <p>Role: {profile.role}</p>
+        </div>
+
+      </div>
     </div>
   );
 };
