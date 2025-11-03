@@ -15,7 +15,6 @@ const ReadingsList = (props: ReadingsListProps) => {
     : [];
   const [page, setPage] = useState(0);
 
-  // Visa de senaste först
   const sortedReadings = [...readingsArray].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
@@ -41,7 +40,7 @@ const ReadingsList = (props: ReadingsListProps) => {
             disabled={page === 0}
             size="small"
             variant="primary"
-            iconVariant="arrow-left" // Vänsterpil
+            iconVariant="arrow-left"
           />
           <span>
             Sida {page + 1} av {totalPages}
@@ -51,7 +50,7 @@ const ReadingsList = (props: ReadingsListProps) => {
             disabled={page >= totalPages - 1}
             size="small"
             variant="primary"
-            iconVariant="arrow-right" // Högerpil
+            iconVariant="arrow-right"
           />
         </div>
       )}
