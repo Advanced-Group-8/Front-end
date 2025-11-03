@@ -3,7 +3,7 @@ import React from "react";
 type IconButtonProps = {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children?: React.ReactNode;
-  iconVariant?: "save" | "cancel" | "confirm" | "edit" | "check";
+  iconVariant?: "save" | "cancel" | "confirm" | "edit" | "check" | "search";
   disabled?: boolean;
   size?: "large" | "medium" | "small";
   type?: "button" | "submit" | "reset";
@@ -37,6 +37,11 @@ const icons = {
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5h6l3 3v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5h6z" />
     </svg>
   ),
+  search: (
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+  )
 };
 
 const IconButton = ({

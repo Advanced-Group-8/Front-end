@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
-import type { RootState } from "../store/store";
+import type { RootState } from "../../store/store";
 import { Link } from "react-router-dom";
+import { UserGreetings } from "../../components/user/UserGreetings";
 
 const ProfilePage = () => {
   const { profile, loading } = useSelector((state: RootState) => state.auth);
@@ -23,6 +24,7 @@ const ProfilePage = () => {
 
   return (
     <div className="text-center bg-neutral-300 p-2">
+      <UserGreetings user={profile} />
       <h1>{profile.name}</h1>
       <p>Email: {profile.email}</p>
       <p>Company: {profile.companyName}</p>
