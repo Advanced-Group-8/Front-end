@@ -10,6 +10,7 @@ type CTACardProps = {
 const CTACard: React.FC<CTACardProps> = () => {
   // default behavior if no onClick is passed
   const user = useSelector((state: RootState) => state.auth.profile);
+  const currentPackage = useSelector((state: RootState) => state.packages.current);
 
   if (!user) {
     return <p>You are not logged in.</p>;
@@ -32,7 +33,7 @@ const CTACard: React.FC<CTACardProps> = () => {
     }
   };
 
-  if (user.role === "sender") {
+  if (user.role === "sender" && currentPackage?.status === "pending") {
     return (
       <section className="bg-neutral-light-1 card border-2 border-primary-1">
         <h2 className="text-2xl font-bold">Register Order</h2>
@@ -58,21 +59,29 @@ const CTACard: React.FC<CTACardProps> = () => {
     return 
   }
 
+  if (user.role === "carrier" && currentPackage?.status === "out_for_delivery") {
+    return (
+      <section className="bg-neutral-light-1 card border-2 border-primary-1">
+        <h2 className="text-2xl font-bold">Complete Delivery</h2>
+        <p className="text-lg text-neutral-dark-1">1. Scan QR-code</p>
+        <IconButton
+          iconVariant="edit"
+          onClick={() => (window.location.href = "/scanner")}
+        >
+          Scan
+        </IconButton>
+        <p className="text-lg text-neutral-dark-1">2. Repeat for each parcel</p>
+        <p className="text-lg text-neutral-dark-1">3. Receive signature</p>
+        <IconButton iconVariant="edit" onClick={handleClick}>
+          Request Signature
+        </IconButton>
+      </section>
+    );
+  }
+  
   return (
     <section className="bg-neutral-light-1 card border-2 border-primary-1">
-      <h2 className="text-2xl font-bold">Complete Delivery</h2>
-      <p className="text-lg text-neutral-dark-1">1. Scan QR-code</p>
-      <IconButton
-        iconVariant="edit"
-        onClick={() => (window.location.href = "/scanner")}
-      >
-        Scan
-      </IconButton>
-      <p className="text-lg text-neutral-dark-1">2. Repeat for each parcel</p>
-      <p className="text-lg text-neutral-dark-1">3. Receive signature</p>
-      <IconButton iconVariant="edit" onClick={handleClick}>
-        Request Signature
-      </IconButton>
+      <h2 className="text-2xl font-bold">No action required</h2>
     </section>
   );
 };
