@@ -11,7 +11,8 @@ type IconButtonProps = {
     | "check"
     | "arrow-left"
     | "arrow-right"
-    | "search";
+    | "search"
+    | "truck";
   disabled?: boolean;
   size?: "large" | "medium" | "small";
   type?: "button" | "submit" | "reset";
@@ -94,7 +95,20 @@ const icons = {
     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
     </svg>
-  )
+  ),
+  truck: (
+  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M3 7h10v10H3V7zM13 10h4l3 3v4h-7v-7z"
+    />
+    <circle cx="7.5" cy="17.5" r="1.5" fill="currentColor" />
+    <circle cx="17.5" cy="17.5" r="1.5" fill="currentColor" />
+  </svg>
+),
+  
 };
 
 const IconButton = ({
