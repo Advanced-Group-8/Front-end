@@ -11,7 +11,7 @@ const SenderShell: React.FC<{ children?: React.ReactNode }> = ({
 }) => (
   <div className="min-h-screen flex-col flex">
     <Header />
-    <main className="grow w-full mx-auto px-4">{children}</main>
+    <main className="grow max-w-[1200px] w-full mx-auto px-4">{children}</main>
     <Footer />
   </div>
 );
@@ -21,7 +21,7 @@ const ReceiverShell: React.FC<{ children?: React.ReactNode }> = ({
 }) => (
    <div className="min-h-screen flex-col flex">
     <Header />
-    <main className="grow w-full mx-auto px-4">{children}</main>
+    <main className="grow max-w-[1200px] w-full mx-auto px-4">{children}</main>
     <Footer />
   </div>
 );
@@ -31,7 +31,7 @@ const CarrierShell: React.FC<{ children?: React.ReactNode }> = ({
 }) => (
   <div className="min-h-screen flex-col flex bg-gray-50">
     <Header />
-    <main className="grow w-full mx-auto px-4">{children}</main>
+    <main className="grow max-w-[1200px] w-full mx-auto px-4">{children}</main>
     <Footer />
   </div>
 );
@@ -39,7 +39,7 @@ const CarrierShell: React.FC<{ children?: React.ReactNode }> = ({
 const AdminShell: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
   <div className="min-h-screen flex-col flex bg-neutral-100">
     <Header />
-    <main className="grow w-full mx-auto px-4">{children}</main>
+    <main className="grow max-w-[1200px] w-full mx-auto px-4">{children}</main>
     <Footer />
   </div>
 );
