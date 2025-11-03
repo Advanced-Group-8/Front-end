@@ -2,15 +2,16 @@ import React from "react";
 import IconButton from "../buttons/IconButton";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
+import type { Package } from "../../types/types";
 
 type CTACardProps = {
   onClick?: () => void;
+  currentPackage: Package;
 };
 
-const CTACard: React.FC<CTACardProps> = () => {
+const CTACard: React.FC<CTACardProps> = ( { onClick, currentPackage }) => {
   // default behavior if no onClick is passed
   const user = useSelector((state: RootState) => state.auth.profile);
-  const currentPackage = useSelector((state: RootState) => state.packages.current);
 
   if (!user) {
     return <p>You are not logged in.</p>;
