@@ -3,15 +3,23 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useTheme } from "../theme/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import get from "../utils/fetch/get";
-import { getProfUrl } from "../utils/base-url";
+import { getProfUrl, url } from "../utils/base-url";
+import getPackageById from "../utils/fetch/getPackageById";
+import { getPackStatus } from "../utils/getPackStatus";
 
 const HomeScreen = () => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
   const TOKEN =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5IiwiZW1haWwiOiJyZWJlY2NhQHRlc3QuYWIiLCJuYW1lIjoiQmV4Iiwicm9sZSI6InNlbmRlciIsImNvbXBhbnlOYW1lIjoiVGVzdCBBQiIsImNyZWF0ZWRBdCI6IjIwMjUtMTEtMDJUMTg6Mjc6MjMuNzkzWiIsInVwZGF0ZWRBdCI6IjIwMjUtMTEtMDJUMTg6Mjc6MjMuNzkzWiIsImlhdCI6MTc2MjEwODA1MiwiZXhwIjoxNzYyNzEyODUyfQ.DwQT_U-bZezbZrtcD9I1Zn4WbTac0KOQjK7xlkMjZ2Q";
-  const user = get(getProfUrl, TOKEN, "user");
-  console.log(user);
+
+  // test for fetching user
+  // const user = get(getProfUrl, TOKEN, "user");
+  // console.log(user);
+
+  //test for fetching package by id
+  // const status = getPackStatus(14, TOKEN);
+  // console.log(status);
   const driver = {
     name: "Erik Torres Puente",
     experience: "+7 Years",
