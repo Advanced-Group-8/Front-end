@@ -19,12 +19,18 @@ const OrderList = () => {
   const [searchError, setSearchError] = useState<string | null>(null);
 
  /* !! NOT WORKING !!! */
-/*   React.useEffect(() => {
+  React.useEffect(() => {
     if (user) {
       dispatch(fetchPackagesForUser({ userId: user.id, role: user.role }));
+      console.log("fetchPackagesForUser in Orderlist");
     }
-  }, [dispatch, user]); */
+  }, [dispatch, user]);
 
+  React.useEffect(() => {
+    if (packages) {
+      setPackagesToShow(packages);
+    }
+  }, [packages]);
 
   const packageArray = packages.filter((pkg: Package | null | undefined) =>
     pkg && pkg.sender && pkg.sender.id !== user?.id
