@@ -3,14 +3,14 @@ import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store.ts";
 import type { Role } from "../types/types.ts";
-import Navbar from "../components/navbar/Navbar.tsx";
 import Footer from "../components/footer/Footer.tsx";
+import Header from "../components/header/Header.tsx";
 
 const SenderShell: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => (
   <div className="min-h-screen flex-col flex">
-    <Navbar />
+    <Header />
     <main className="grow w-full mx-auto px-4">{children}</main>
     <Footer />
   </div>
@@ -20,7 +20,7 @@ const ReceiverShell: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => (
    <div className="min-h-screen flex-col flex">
-    <Navbar />
+    <Header />
     <main className="grow w-full mx-auto px-4">{children}</main>
     <Footer />
   </div>
@@ -30,7 +30,7 @@ const CarrierShell: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => (
   <div className="min-h-screen flex-col flex bg-gray-50">
-    <Navbar />
+    <Header />
     <main className="grow w-full mx-auto px-4">{children}</main>
     <Footer />
   </div>
@@ -38,7 +38,7 @@ const CarrierShell: React.FC<{ children?: React.ReactNode }> = ({
 
 const AdminShell: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
   <div className="min-h-screen flex-col flex bg-neutral-100">
-    <Navbar />
+    <Header />
     <main className="grow w-full mx-auto px-4">{children}</main>
     <Footer />
   </div>

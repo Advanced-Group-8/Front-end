@@ -16,7 +16,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-primary-1 text-neutral-light-1 p-4 flex justify-center items-center list-none">
+    <nav className="text-neutral-light-1 flex-1 p-4 flex justify-center items-center list-none">
       <NavLink
         className={
           "mx-4 text-2xl hover:bg-neutral-light-1 hover:text-neutral-dark-1 p-2 rounded"
