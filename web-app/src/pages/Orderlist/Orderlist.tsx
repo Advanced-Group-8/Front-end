@@ -26,12 +26,18 @@ const OrderList = () => {
   const [packagesToShow, setPackagesToShow] = useState<Package[]>([]);
 
  /* !! NOT WORKING !!! */
-/*   React.useEffect(() => {
+  React.useEffect(() => {
     if (user) {
       dispatch(fetchPackagesForUser({ userId: user.id, role: user.role }));
+      console.log("fetchPackagesForUser in Orderlist");
     }
-  }, [dispatch, user]); */
+  }, [dispatch, user]);
 
+  React.useEffect(() => {
+    if (packages) {
+      setPackagesToShow(packages);
+    }
+  }, [packages]);
 
   const packageArray = packages.filter((pkg: Package) => pkg.sender.id !== user?.id);
 
@@ -43,7 +49,7 @@ const OrderList = () => {
       setPackagesToShow(packageArray);
       return;
     }
-    console.log("inputPackageId in handleSearch", inputPackageId);
+   /*  console.log("inputPackageId in handleSearch", inputPackageId); */
      try {
           const response = await dispatch(fetchPackageById({ id: inputPackageId }));
           const fetchedPackage = response.payload;
@@ -64,8 +70,6 @@ const OrderList = () => {
       }
 
     };
-
-    console.log("packagesToShow in Orderlist", packagesToShow);
 
     
     if (loading) return <p className="text-center">Loading...</p>;
