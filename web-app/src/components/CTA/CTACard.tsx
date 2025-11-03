@@ -16,6 +16,9 @@ const CTACard: React.FC<CTACardProps> = () => {
     return <p>You are not logged in.</p>;
   }
 
+  console.log ("user role:", user.role);
+  console.log("package status:", currentPackage?.status);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (user.role === "carrier") {
       event.preventDefault();
@@ -55,8 +58,34 @@ const CTACard: React.FC<CTACardProps> = () => {
     );
   }
 
-  if (user.role === "receiver") {
-    return 
+  if (user.role === "receiver" && currentPackage?.status === "out_for_delivery") {
+    return (
+      <section className="bg-neutral-light-1 card border-2 border-primary-1">
+        <h2 className="text-2xl font-bold">Track Order</h2>
+        <p className="text-lg text-neutral-dark-1"> Your package is out for delivery. You can follow the delivery live.</p>
+        <IconButton
+          iconVariant="truck"
+          onClick={() => {handleClick}}
+        >
+          Follow Live Location
+        </IconButton>
+      </section>
+    )
+  }
+
+  if (user.role === "receiver" && currentPackage?.status === "in_transit") {
+    return (
+      <section className="bg-neutral-light-1 card border-2 border-primary-1">
+        <h2 className="text-2xl font-bold">Track Order</h2>
+        <p className="text-lg text-neutral-dark-1"> Your package is being handed over to the carrier. <br/><br/> Once the carrier picks it up, you can follow the delivery live.</p>
+        <IconButton
+          iconVariant="truck" disabled={true}
+          onClick={() => {handleClick}}
+        >
+          Follow Live Location
+        </IconButton>
+      </section>
+    )
   }
 
   if (user.role === "carrier" && currentPackage?.status === "out_for_delivery") {
