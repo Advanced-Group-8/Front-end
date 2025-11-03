@@ -28,7 +28,6 @@ const SenderDashboard = () => {
       <h1 className="text-4xl font-bold text-primary-1 opacity-50">Sender Dashboard </h1>
       <UserGreetings user={profile} />
         <div className="flex flex-col items-center gap-4 p-4 bg-white rounded-lg">
-          <p>Sender Dashboard</p>
         <IconButton iconVariant="search" onClick={() => (window.location.href = "/orders")}> Search for packages</IconButton>
         </div>
     </div>
