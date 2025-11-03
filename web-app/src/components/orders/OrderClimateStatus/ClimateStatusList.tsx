@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
 import ClimateStatusListItem from "./ClimateStatusListItem";
 import type { RootState } from "../../../store/store";
-import { MOCK_PACKAGES } from "../../../api/mockData";
 
 const ClimateStatusList = () => {
-  const packagesFromStore = useSelector((state: RootState) => state.packages.data ?? []);
+  const { data, current } = useSelector((s: RootState) => s.packages);
 
-    //! Use mock data if store is empty
-  const packagesToShow = packagesFromStore.length > 0 ? packagesFromStore : MOCK_PACKAGES;
+  // If a current package exists (last searched), prefer that; otherwise show the latest in the list
+  const source = current ? [current] : (data ?? []).slice(-1);
+
+  if (source.length === 0) return null; // or show a friendly empty state
 
   return (
     <div className="flex flex-col items-center p-4">
@@ -19,9 +20,9 @@ const ClimateStatusList = () => {
         <h2>Updated</h2>
       </div>
       <div className="w-full max-w-3xl">
-        {packagesToShow.map((pkg) => (
+        {source.map((pkg) => (
           <ClimateStatusListItem
-            key={pkg.trackingCode}
+            key={pkg.id}
             packageId={pkg.id}
             readings={pkg.readings ?? []}
           />

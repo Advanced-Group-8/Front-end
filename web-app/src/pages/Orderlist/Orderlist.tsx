@@ -5,11 +5,6 @@ import OrderListItem from "../../components/orders/OrderListItem.tsx";
 /* import OrderDetails from "../../components/orders/OrderDetails.tsx"; */
 import type { RootState, AppDispatch } from "../../store/store.ts";
 import type { Package } from "../../types/types.ts";
-import ClimateStatusList from "../../components/orders/OrderClimateStatus/ClimateStatusList.tsx";
-import OrderDeliveryStatusTimeline from "../../components/orders/OrderDeliveryStatus/OrderDeliveryStatusTimeline.tsx";
-
-//MOCKSTATUS
-import { MOCK_STATUS } from "../../components/orders/OrderDeliveryStatus/OrderDeliveryStatusTimeline.tsx";
 
 const OrderList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,7 +12,6 @@ const OrderList = () => {
   const packages = data ?? [];            // <= default to []
   const user = useSelector((s: RootState) => s.auth.profile);
 
-  console.log("packages in Orderlist", packages);
 
   const [inputPackageId, setInputPackageId] = useState("");
   const [searchedPackage, setSearchedPackage] = useState<Package | null>(null);
@@ -55,6 +49,8 @@ const OrderList = () => {
 
   try {
     const fetched = await dispatch(fetchPackageById({ id: q })).unwrap();
+    console.log('hello!: ', fetched);
+
     if (!fetched || !fetched.id) {
       setPackagesToShow([]);
       setSearchError("No package found with that ID.");
@@ -67,7 +63,6 @@ const OrderList = () => {
   }
 };
 
-    console.log("packagesToShow in Orderlist", packagesToShow);
 
     
     if (loading) return <p className="text-center">Loading...</p>;
@@ -75,7 +70,7 @@ const OrderList = () => {
 
 
   return (
-    <div className="bg-white rounded-lg p-4">
+    <div className="bg-white rounded-lg p-32 h-full">
       <div className="p-1 text-center bg-neutral-1 w-full">
         <h1 className="text-3xl font-bold mb-8">Orderlist</h1>
         <div className="mb-4 flex justify-center gap-2 w-full">
@@ -105,17 +100,17 @@ const OrderList = () => {
     ) : packagesToShow.length === 0 ? (
       <p className="text-center">No results match your search</p>
     ) : (
-      <div className="space-y-4">
+      <div className="space-y-4 pt-6">
         {packagesToShow.map((pkg) => (
           <OrderListItem key={pkg.id} pkg={pkg} />
         ))}
       </div>
     )}
 
-      <div>
+      {/* <div>
         <ClimateStatusList />
       <OrderDeliveryStatusTimeline status={MOCK_STATUS} />
-      </div>
+      </div> */}
       </div>
     </div>
   );
