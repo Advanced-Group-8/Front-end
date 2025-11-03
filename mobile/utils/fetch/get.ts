@@ -20,7 +20,7 @@ const get = (url: string, token: string, article: string) => {
         if (!response.ok) throw new Error(`Error getting ${article}`);
 
         const data = await response.json();
-        console.log(data);
+        console.log(data.data);
         setGetValue(data);
       } catch (err) {
         console.error(`Error getting ${article}`, err);

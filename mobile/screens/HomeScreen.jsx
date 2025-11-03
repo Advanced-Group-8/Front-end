@@ -9,7 +9,7 @@ const HomeScreen = () => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
   const TOKEN =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkiLCJlbWFpbCI6InJlYmVjY2FAdGVzdC5jb20iLCJuYW1lIjoiUmViZWNjYSIsInJvbGUiOiJzZW5kZXIiLCJjb21wYW55TmFtZSI6IlRlc3RhcmUgQUIiLCJjcmVhdGVkQXQiOiIyMDI1LTEwLTIxVDExOjQ1OjIxLjIwOVoiLCJ1cGRhdGVkQXQiOiIyMDI1LTEwLTIxVDExOjQ1OjIxLjIwOVoiLCJpYXQiOjE3NjEwNTI4OTcsImV4cCI6MTc2MTY1NzY5N30.jpEVRcozifN9RABMqDGTEnrXGoFWjJRnoo9Z0mlG88U";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5IiwiZW1haWwiOiJyZWJlY2NhQHRlc3QuYWIiLCJuYW1lIjoiQmV4Iiwicm9sZSI6InNlbmRlciIsImNvbXBhbnlOYW1lIjoiVGVzdCBBQiIsImNyZWF0ZWRBdCI6IjIwMjUtMTEtMDJUMTg6Mjc6MjMuNzkzWiIsInVwZGF0ZWRBdCI6IjIwMjUtMTEtMDJUMTg6Mjc6MjMuNzkzWiIsImlhdCI6MTc2MjEwODA1MiwiZXhwIjoxNzYyNzEyODUyfQ.DwQT_U-bZezbZrtcD9I1Zn4WbTac0KOQjK7xlkMjZ2Q";
   const user = get(getProfUrl, TOKEN, "user");
   console.log(user);
   const driver = {
