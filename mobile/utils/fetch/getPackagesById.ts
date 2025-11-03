@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 // BEWARE: don't know if any of this works...
-const getPackageById = (url: string, id: number, token: string) => {
-  const [pack, setPack] = useState<object | null>(null);
+const getPackagesById = (
+  url: string,
+  id: number,
+  token: string,
+  article: string
+) => {
+  const [pack, setPack] = useState<object | Array<object> | null>(null);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
-    const getSinglePackage = async () => {
+    const getPackage = async () => {
       try {
-        const response = await fetch(`${url}/package/${id}`, {
+        const response = await fetch(`${url}/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -16,7 +21,7 @@ const getPackageById = (url: string, id: number, token: string) => {
 
         if (!response.ok) throw new Error("Error getting package");
 
-        const data = await response.json(); //returns profile?
+        const data = await response.json();
         setPack(data.data);
       } catch (err) {
         console.error("Error getting package", err);
@@ -24,8 +29,8 @@ const getPackageById = (url: string, id: number, token: string) => {
       }
     };
 
-    getSinglePackage();
-  }, [url, id, token]);
+    getPackage();
+  }, [url, id, token, article]);
   if (error) {
     return null;
   } else {
@@ -33,4 +38,4 @@ const getPackageById = (url: string, id: number, token: string) => {
   }
 };
 
-export default getPackageById;
+export default getPackagesById;

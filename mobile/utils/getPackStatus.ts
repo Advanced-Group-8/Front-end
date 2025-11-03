@@ -1,8 +1,8 @@
-import { url } from "./base-url";
-import getPackageById from "./fetch/getPackageById";
+import { packByIdUrl } from "./base-url";
+import getPackagesById from "./fetch/getPackagesById";
 
 export const getPackStatus = (id: number, token: string) => {
-  const pack = getPackageById(url, id, token);
+  const pack = getPackagesById(packByIdUrl, id, token, "package by id");
   if (pack) {
     // the line below works even if it's marked red
     const packStatus = pack.status;

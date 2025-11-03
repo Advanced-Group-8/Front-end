@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useTheme } from "../theme/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import get from "../utils/fetch/get";
-import { getProfUrl, url } from "../utils/base-url";
-import getPackageById from "../utils/fetch/getPackageById";
+import { carrPacksUrl, getProfUrl, url } from "../utils/base-url";
+import getPackageById from "../utils/fetch/getPackagesById";
 import { getPackStatus } from "../utils/getPackStatus";
 
 const HomeScreen = () => {
@@ -17,9 +17,18 @@ const HomeScreen = () => {
   // const user = get(getProfUrl, TOKEN, "user");
   // console.log(user);
 
-  //test for fetching package by id
+  //test for fetching package by id and the status specifically
   // const status = getPackStatus(14, TOKEN);
   // console.log(status);
+
+  // test for fetching packages by carrierid
+  const carrPacks = getPackageById(
+    carrPacksUrl,
+    4,
+    TOKEN,
+    "packages by carrier id"
+  );
+  console.log(carrPacks);
   const driver = {
     name: "Erik Torres Puente",
     experience: "+7 Years",
