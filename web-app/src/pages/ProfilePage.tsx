@@ -27,6 +27,7 @@ const ProfilePage = () => {
       <p>Email: {profile.email}</p>
       <p>Company: {profile.companyName}</p>
       <p>Role: {profile.role}</p>
+      <p>ID: {profile.id}</p>
     </div>
   );
 };
