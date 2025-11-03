@@ -14,7 +14,6 @@ import CarrierDashboard from "../pages/RoleDashboards/CarrierDashboard.tsx";
 import Unauthorized from "../pages/Unauthorized.tsx";
 import DashboardRouter from "./DashBoardRouter.tsx";
 import LayoutWithTwoColumns from "../pages/Orderlist/LayoutWithTwoColumns.tsx";
-import OrderDetailsPage from "../pages/OrderDetailsPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +27,7 @@ const router = createBrowserRouter([
       {
         path: "orders",
         element: <LayoutWithTwoColumns />,
-/*         children: [
+        /*         children: [
           { index: true, element: <p>Select a package</p> },
           { path: ":id", element: <OrderDetailsPage /> }, // will handle details
         ], */
