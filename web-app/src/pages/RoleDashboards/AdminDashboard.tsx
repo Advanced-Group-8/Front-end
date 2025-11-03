@@ -24,7 +24,7 @@ const AdminDashboard = () => {
   }
   
   return (
-    <div className="p-4 flex flex-col items-center flex-wrap gap-4 max-w-[1000px]">
+    <div className="p-4 flex flex-col items-center flex-wrap gap-4">
       <h1 className="text-4xl font-bold text-primary-1 opacity-50">Receiver Dashboard </h1>
       <UserGreetings user={profile} />
         <div className="flex flex-col items-center gap-4 p-4 bg-white rounded-lg">
