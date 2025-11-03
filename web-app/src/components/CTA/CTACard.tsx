@@ -55,7 +55,7 @@ const CTACard: React.FC<CTACardProps> = () => {
   }
 
   if (user.role === "receiver") {
-    <p>To be implemented</p>;
+    return 
   }
 
   return (
