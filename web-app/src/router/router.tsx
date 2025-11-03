@@ -4,7 +4,7 @@ import NotFound from "../pages/NotFound";
 import ButtonsPage from "../pages/ButtonsPage";
 import SignaturePage from "../pages/SignaturePage";
 import IconButton from "../components/buttons/IconButton";
-import ProfilePage from "../pages/ProfilePage.tsx";
+import ProfilePage from "../pages/ProfilePage/ProfilePage.tsx";
 import SignInPage from "../pages/SignInPage/SignInPage.tsx";
 import SignUpPage from "../pages/SignUpPage/SignUpPage.tsx";
 import RoleGuard from "./RoleGuard";
