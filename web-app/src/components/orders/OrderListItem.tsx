@@ -3,6 +3,8 @@ import type { Package } from "../../types/types";
 import OrderDeliveryStatus from "./OrderDeliveryStatus/OrderDeliveryStatus";
 import TextButton from "../buttons/TextButton.tsx";
 import { useSearchParams } from "react-router-dom";
+import ProblemIcon from "../../assets/svg/problem-!-red.svg";
+import WarningIcon from "../../assets/svg/problem-!-yellow.svg";
 
 type OrderListItemProps = {
   pkg: Package;
@@ -30,6 +32,26 @@ const OrderListItem: React.FC<OrderListItemProps> = ({ pkg }) => {
     }
   };
 
+  const latestReading = pkg.readings?.slice(-1)[0];
+
+  const temperature = latestReading?.temperature ?? null;
+/*   const humidity = latestReading?.humidity ?? null; */
+  const updatedAt = new Date(latestReading?.createdAt ?? "");
+  const now = new Date();
+
+  const isOutOfRange =
+    typeof temperature === "number" &&
+    (temperature < 2 || temperature > 8);
+
+  // mock duration: how long it's been out of range
+  const minutesOutOfRange = isOutOfRange
+    ? now.getTime() - updatedAt.getTime() / 60000
+    : 0;
+
+    const isProblem = isOutOfRange && minutesOutOfRange >= 5;
+    const isWarning = isOutOfRange && minutesOutOfRange < 5;
+ 
+
   return (
     <div className="space-y-4 mx-auto max-w-2xl rounded-lg">
       <div
@@ -45,6 +67,8 @@ const OrderListItem: React.FC<OrderListItemProps> = ({ pkg }) => {
           </div>
           <div className="flex justify-end">
             <OrderDeliveryStatus status={pkg.status} />
+            {isProblem && <img src={ProblemIcon} alt="problem icon" width={32} height={32} />}
+            {isWarning && <img src={WarningIcon} alt="warning icon" width={32} height={32} />}
           </div>
           {expanded && (
             <>
