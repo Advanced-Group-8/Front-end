@@ -76,7 +76,7 @@ const OrderList = () => {
 
 
   return (
-    <div className="bg-white rounded-lg p-32 h-full">
+    <div className="bg-white rounded-lg p-4 pt-[10%] h-full">
       <div className="p-1 text-center bg-neutral-1 w-full">
         <h1 className="text-3xl font-bold mb-8">Orderlist</h1>
         <div className="mb-4 flex justify-center gap-2 w-full">
