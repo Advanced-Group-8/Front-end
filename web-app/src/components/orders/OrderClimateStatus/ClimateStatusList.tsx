@@ -21,7 +21,7 @@ const ClimateStatusList = () => {
       <div className="w-full max-w-3xl">
         {packagesToShow.map((pkg) => (
           <ClimateStatusListItem
-            key={pkg.id}
+            key={pkg.trackingCode}
             packageId={pkg.id}
             readings={pkg.readings ?? []}
           />
