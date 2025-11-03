@@ -7,16 +7,15 @@ type ReadingsListProps = {
 };
 const readingItem = (props: ReadingsListProps) => {
   const { reading } = props;
-  console.log("reading in readingItem", reading);
 
   return (
-    <div className="bg-white p-2 font-light">
+    <div className="bg-white p-4 font-light">
       <div className="flex justify-between text-neutral-dark-2 opacity-80 hover:opacity-100">
         <p>{new Date(reading.createdAt).toLocaleDateString()}</p>
         <p>{new Date(reading.createdAt).toLocaleTimeString()}</p>
         {/* <h4>#{reading.id}</h4> */}
       </div>
-      <div className="flex justify-around">
+      <div className="flex justify-around pb-4">
         <div className="flex items-center">
           <p className="flex place-items-center p-2 gap-1">
             <img

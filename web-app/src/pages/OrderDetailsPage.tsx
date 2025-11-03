@@ -6,6 +6,13 @@ import OrderDetails from "../components/orders/OrderDetails.tsx";
 import type { RootState, AppDispatch } from "../store/store";
 import ReadingsList from "../components/readingsList/ReadingsList-test.tsx";
 import type { Package } from "../types/types.ts";
+import ClimateStatusList from "../components/orders/OrderClimateStatus/ClimateStatusList.tsx";
+import OrderDeliveryStatusTimeline from "../components/orders/OrderDeliveryStatus/OrderDeliveryStatusTimeline.tsx";
+
+//MOCKSTATUS
+import { MOCK_STATUS } from "../components/orders/OrderDeliveryStatus/OrderDeliveryStatusTimeline.tsx";
+
+
 
 const OrderDetailsPage = (packageData: {pkg: Package}) => {
 /*   const { id } = useParams<{ id: string }>();
@@ -26,8 +33,10 @@ console.log("packageData in OrderDetailsPage", packageData.pkg);
   if (!packages) return <p className="text-center">No order found</p>; */
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4 bg-white min-h-screen rounded-lg">
+    <div className="flex flex-col items-center gap-4 p-4 bg-white h-full rounded-lg">
       <OrderDetails pkg={packageData.pkg} />
+      <ClimateStatusList />
+      <OrderDeliveryStatusTimeline status={MOCK_STATUS} />
       <ReadingsList pkgReadings={packageData.pkg.readings}/>
     </div>
   );

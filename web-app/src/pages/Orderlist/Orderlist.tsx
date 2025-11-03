@@ -5,25 +5,18 @@ import OrderListItem from "../../components/orders/OrderListItem.tsx";
 /* import OrderDetails from "../../components/orders/OrderDetails.tsx"; */
 import type { RootState, AppDispatch } from "../../store/store.ts";
 import type { Package } from "../../types/types.ts";
-import ClimateStatusList from "../../components/orders/OrderClimateStatus/ClimateStatusList.tsx";
-import OrderDeliveryStatusTimeline from "../../components/orders/OrderDeliveryStatus/OrderDeliveryStatusTimeline.tsx";
-
-//MOCKSTATUS
-import { MOCK_STATUS } from "../../components/orders/OrderDeliveryStatus/OrderDeliveryStatusTimeline.tsx";
 
 const OrderList = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    data: packages,
-    loading,
-    error,
-  } = useSelector((state: RootState) => state.packages);
-  const user = useSelector((state: RootState) => state.auth.profile);
-  console.log("packages in Orderlist", packages);
+  const { data, loading, error } = useSelector((s: RootState) => s.packages);
+  const packages = data ?? [];            // <= default to []
+  const user = useSelector((s: RootState) => s.auth.profile);
+
 
   const [inputPackageId, setInputPackageId] = useState("");
   const [searchedPackage, setSearchedPackage] = useState<Package | null>(null);
   const [packagesToShow, setPackagesToShow] = useState<Package[]>([]);
+  const [searchError, setSearchError] = useState<string | null>(null);
 
  /* !! NOT WORKING !!! */
   React.useEffect(() => {
@@ -39,37 +32,43 @@ const OrderList = () => {
     }
   }, [packages]);
 
-  const packageArray = packages.filter((pkg: Package) => pkg.sender.id !== user?.id);
+  const packageArray = packages.filter((pkg: Package | null | undefined) =>
+    pkg && pkg.sender && pkg.sender.id !== user?.id
+  );
 
-  // Handle manual search (optional)
   const handleSearch = async () => {
-      if (!inputPackageId.trim()) {
-      // Reset search if input is empty
-      setSearchedPackage(null);
-      setPackagesToShow(packageArray);
+  setSearchError(null);
+
+  const q = inputPackageId.trim();
+
+  if (!q) {
+    setPackagesToShow(packageArray);
+    return;
+  }
+
+  // validate format (digits only)
+  if (!/^\d+$/.test(q)) {
+    setPackagesToShow([]);
+    setSearchError("Package ID must be numeric.");
+    return;
+  }
+
+  try {
+    const fetched = await dispatch(fetchPackageById({ id: q })).unwrap();
+    console.log('hello!: ', fetched);
+
+    if (!fetched || !fetched.id) {
+      setPackagesToShow([]);
+      setSearchError("No package found with that ID.");
       return;
     }
-   /*  console.log("inputPackageId in handleSearch", inputPackageId); */
-     try {
-          const response = await dispatch(fetchPackageById({ id: inputPackageId }));
-          const fetchedPackage = response.payload;
+    setPackagesToShow([fetched]);
+  } catch (e) {
+    setPackagesToShow([]);
+    setSearchError("Couldn’t fetch that package. Please try again.");
+  }
+};
 
-          if (!fetchedPackage || !fetchedPackage.id) {
-            console.error("Failed to fetch package by ID in Orderlist");
-            setSearchedPackage(null);
-            setPackagesToShow([]);
-            return;
-          }
-
-          setSearchedPackage(fetchedPackage);
-          setPackagesToShow([fetchedPackage]);
-        } catch (err) {
-          console.error("Error fetching package by ID:", err);
-          setSearchedPackage(null);
-          setPackagesToShow([]);
-      }
-
-    };
 
     
     if (loading) return <p className="text-center">Loading...</p>;
@@ -77,8 +76,8 @@ const OrderList = () => {
 
 
   return (
-    <div className="bg-white rounded-lg p-4">
-      <div className="p-1 text-center bg-neutral-1 w-100%">
+    <div className="bg-white rounded-lg p-32 h-full">
+      <div className="p-1 text-center bg-neutral-1 w-full">
         <h1 className="text-3xl font-bold mb-8">Orderlist</h1>
         <div className="mb-4 flex justify-center gap-2 w-full">
           <input
@@ -99,24 +98,25 @@ const OrderList = () => {
           </button>
         </div>
 
-        <div className="space-y-4">
-        {packagesToShow.length > 0 ? (
-          packagesToShow.map((pkg) => <OrderListItem key={pkg.id} pkg={pkg} />)
-        ) : (
-          <p>No packages found</p>
-        )}
+        {/* Priority: searchError > no packages at all > no matches > list */}
+    {searchError ? (
+      <p className="text-center text-red-600">{searchError}</p>
+    ) : packageArray.length === 0 ? (
+      <p className="text-center">No packages found</p>
+    ) : packagesToShow.length === 0 ? (
+      <p className="text-center">No results match your search</p>
+    ) : (
+      <div className="space-y-4 pt-6">
+        {packagesToShow.map((pkg) => (
+          <OrderListItem key={pkg.id} pkg={pkg} />
+        ))}
       </div>
-        {
-          packageArray.length == 0 ? (
-            <div className="place-items-center">
-              <p className="text-center">No packages found</p>
-            </div>
-          ) : null
-        }
-      <div>
+    )}
+
+      {/* <div>
         <ClimateStatusList />
       <OrderDeliveryStatusTimeline status={MOCK_STATUS} />
-      </div>
+      </div> */}
       </div>
     </div>
   );

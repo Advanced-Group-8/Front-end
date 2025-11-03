@@ -15,6 +15,7 @@ import type { Package, PackageTracking } from "../types/types.ts";
 
 type PackagesState = {
   data: Package[];
+  current: Package | null;
   loading: boolean;
   error: string | null;
   logs: string;
@@ -24,6 +25,7 @@ type PackagesState = {
 const initialState: PackagesState = {
   data: [],
   loading: false,
+  current: null,
   error: null,
   logs: "",
   tracking: {},
@@ -203,14 +205,18 @@ const packagesSlice = createSlice({
           action.error.message || "Failed to fetch packages for user.";
       })
       .addCase(fetchPackageById.fulfilled, (state, action) => {
-        const packageIndex = state.data.findIndex(
-          (pkg) => pkg.id === action.payload.id
-        );
-        if (packageIndex >= 0) {
-          state.data[packageIndex] = action.payload;
-        } else {
-          state.data.push(action.payload);
+        const payload = action.payload as Package | undefined;
+        if (!payload) return;
+
+        const idx = state.data.findIndex(p => p.id === payload.id);
+        if (idx >= 0) {
+          // replace and move to end so it’s treated as “latest”
+          state.data.splice(idx, 1);
         }
+        state.data.push(payload);
+
+        // track last searched explicitly
+        state.current = payload;
       })
 
       .addCase(createNewPackage.fulfilled, (state, action) => {
