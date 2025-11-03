@@ -8,31 +8,48 @@ import {
   StyleSheet,
 } from "react-native";
 import { EXPO_PUBLIC_API_URL } from "@env";
-import { useTheme } from "../theme/ThemeContext"; // Hämta nuvarande tema
+import { useTheme } from "../theme/ThemeContext"; 
 
 export default function CurrentOrders() {
-  const { theme } = useTheme(); // Ger tillgång till light/dark
-  const styles = createStyles(theme);
+  const { theme } = useTheme(); 
 
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await fetch(`${EXPO_PUBLIC_API_URL}/package`);
-        const data = await response.json();
-        console.log("API-svar:", data); 
-        setOrders(data);
-      } catch (error) {
-        console.error("Fel vid hämtning av ordrar:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  const fetchOrders = async () => {
+    try {
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkiLCJlbWFpbCI6InJlYmVjY2FAdGVzdC5jb20iLCJuYW1lIjoiUmViZWNjYSIsInJvbGUiOiJzZW5kZXIiLCJjb21wYW55TmFtZSI6IlRlc3RhcmUgQUIiLCJjcmVhdGVkQXQiOiIyMDI1LTEwLTIxVDExOjQ1OjIxLjIwOVoiLCJ1cGRhdGVkQXQiOiIyMDI1LTEwLTIxVDExOjQ1OjIxLjIwOVoiLCJpYXQiOjE3NjEwNTI4OTcsImV4cCI6MTc2MTY1NzY5N30.jpEVRcozifN9RABMqDGTEnrXGoFWjJRnoo9Z0mlG88U";
+      
+      const senderId = 9;
+      const receiverId = 2; // Test receiverid until further notice
 
-    fetchOrders();
-  }, []);
+  const response = await fetch(
+    `${EXPO_PUBLIC_API_URL}/package?senderId=${senderId}&receiverId=${receiverId}`,
+    {
+      method: "GET",
+      headers: {
+       "Authorization": `Bearer ${token}`,
+       "Content-Type": "application/json",
+     },
+    }
+  );
+
+
+  const data = await response.json();
+  console.log("API-svar:", data);
+
+  setOrders(data.data || []); 
+
+    } catch (error) {
+      console.error("Fel vid hämtning av ordrar:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchOrders();
+}, []);
 
   if (loading) {
     return (
