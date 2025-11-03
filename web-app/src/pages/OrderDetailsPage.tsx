@@ -9,9 +9,9 @@ const OrderDetailsPage = (packageData: { pkg: Package }) => {
   return (
     <div className="flex flex-col items-center gap-4 p-4 bg-white h-full rounded-lg">
       <OrderDetails pkg={packageData.pkg} />
-      <ClimateStatusList />
       <CTACard />
       <OrderDeliveryStatusTimeline status={packageData.pkg.status} />
+      <ClimateStatusList />
       <ReadingsList pkgReadings={packageData.pkg.readings} />
     </div>
   );
