@@ -10,7 +10,8 @@ type IconButtonProps = {
     | "edit"
     | "check"
     | "arrow-left"
-    | "arrow-right";
+    | "arrow-right"
+    | "search";
   disabled?: boolean;
   size?: "large" | "medium" | "small";
   type?: "button" | "submit" | "reset";
