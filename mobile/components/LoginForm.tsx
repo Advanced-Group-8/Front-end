@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import FormItem from "./FormItem";
-import login from "../utils/fetch/login";
+
 import post from "../utils/fetch/post";
 import { getProfUrl, signInUrl } from "../utils/base-url";
 import get from "../utils/fetch/get";
 import * as SecureStore from "expo-secure-store";
 import { saveUser } from "../utils/saveSecure";
+import { saveLoggedIn } from "../utils/saveAsync";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -14,10 +15,8 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState("");
-  //   const { login, loading, setLoading } = useAuth(); // Hämta login-funktionen från context
 
   const handleLogin = async () => {
-    // setLoading(true);
     setError(null);
     if (email !== "" && username !== "" && password !== "") {
       const loginBody = {
@@ -27,19 +26,23 @@ const LoginForm = () => {
       };
 
       try {
+        console.log(loginBody);
         const newToken = post(signInUrl, loginBody, "login");
         console.log(newToken);
+        if (!newToken) throw new Error("can't login");
+
         const userInfo = get(getProfUrl, newToken, "user");
         console.log(userInfo);
+        if (!newToken) throw new Error("can't get userinfo");
+
         saveUser(userInfo);
+        saveLoggedIn(true);
       } catch (err) {
         setError(
           "Login failed. Please check your name, email and password and try again."
         );
+        console.error("problem with logging in", err);
       }
-      // finally {
-      //   setLoading(false);
-      // }
     } else {
       setError("Please fill in all fields");
     }
@@ -48,19 +51,19 @@ const LoginForm = () => {
     <View style={{ alignItems: "center" }}>
       <FormItem
         title="name"
-        newValue={username}
+        newValue={"John Doe"}
         changeValue={setUsername}
         secure={false}
       />
       <FormItem
         title="email"
-        newValue={email}
+        newValue={"john.doe@example.com"}
         changeValue={setEmail}
         secure={false}
       />
       <FormItem
         title="password"
-        newValue={password}
+        newValue={"$2b$10$abcdefghijklmnopqrstuvwxyz"}
         changeValue={setPassword}
         secure={false}
       />

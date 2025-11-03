@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
+import { saveToken } from "../saveSecure";
 // BEWARE: don't know if any of this works...
 
-const post = (url: string, incomingBody: object, calling: string): any => {
-  const [getToken, setGetToken] = useState<string | null>(null);
+const post = (url: string, incomingBody: object, calling: string) => {
+  const [getToken, setGetToken] = useState("");
   const [error, setError] = useState<string | null>(null);
+  console.log("inside post");
 
-  const saveToken = async (token: string) => {
-    await SecureStore.setItemAsync("token", token);
-  };
   useEffect(() => {
     const postFunc = async () => {
       try {
+        console.log("inside post try");
         const response = await fetch(url, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -19,12 +19,13 @@ const post = (url: string, incomingBody: object, calling: string): any => {
             incomingBody,
           }),
         });
-
+        console.log(response);
         if (!response.ok) throw new Error(`Error with ${calling}`);
 
         const data = await response.json(); // token?
         console.log(data);
         setGetToken(data);
+        console.log(getToken);
         saveToken(getToken);
       } catch (err) {
         console.error(`Error with ${calling}`, error);
@@ -34,10 +35,11 @@ const post = (url: string, incomingBody: object, calling: string): any => {
 
     postFunc();
   }, [url, incomingBody, calling]);
+
   if (error) {
     return null;
   } else {
-    return { getToken };
+    return getToken;
   }
 };
 

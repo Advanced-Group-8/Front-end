@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import FormItem from "./FormItem";
-import login from "../utils/fetch/login";
-import registerUser from "../utils/fetch/registerUser";
 import { signUpUrl } from "../utils/base-url";
 import { saveUser } from "../utils/saveSecure";
 import post from "../utils/fetch/post";
@@ -36,7 +34,7 @@ const RegisterForm = () => {
       };
 
       try {
-        const newToken = post(signUpUrl, registerBody, "registration");
+        const newToken = await post(signUpUrl, registerBody, "registration");
         console.log(newToken);
         saveUser(registerBody);
       } catch (err) {

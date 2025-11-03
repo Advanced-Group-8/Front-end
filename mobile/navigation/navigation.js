@@ -11,6 +11,8 @@ import CurrentOrders from "../screens/CurrentOrders";
 import OrderTracking from "../screens/OrderTracking";
 import SettingsScreen from "../screens/SettingsScreen";
 import QRScannerScreen from "../screens/QRScannerScreen";
+import LoginScreen from "../screens/LoginScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -50,7 +52,7 @@ function Tabs() {
   const theme = customTheme.colors;
   const styles = createStyles(theme);
 
-return (
+  return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
@@ -66,7 +68,11 @@ return (
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home-outline" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="home-outline"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
@@ -77,7 +83,11 @@ return (
         component={CurrentOrders}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="clipboard-list-outline" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="clipboard-list-outline"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
@@ -94,7 +104,9 @@ return (
               size={28}
             />
           ),
-          tabBarButton: (props) => <CustomTabBarButton {...props} theme={theme} />,
+          tabBarButton: (props) => (
+            <CustomTabBarButton {...props} theme={theme} />
+          ),
         }}
       />
 
@@ -104,7 +116,11 @@ return (
         component={OrderTracking}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="map-marker-outline" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="map-marker-outline"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
@@ -115,21 +131,30 @@ return (
         component={SettingsScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account-cog-outline" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="account-cog-outline"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
     </Tab.Navigator>
   );
 }
-
+const loggedIn = AsyncStorage.getItem("loggedIn") || null;
 const Navigation = () => {
   const { customTheme } = useTheme();
 
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="RootTabs" component={Tabs} />
+        {/* below is supposed to be !loggedIn but the login doesn't work yet*/}
+        {loggedIn ? (
+          <Stack.Screen name="RootTabs" component={Tabs} />
+        ) : (
+          <Stack.Screen name="Login" component={LoginScreen} />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
