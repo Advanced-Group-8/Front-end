@@ -9,9 +9,9 @@ import Footer from "../components/footer/Footer.tsx";
 const SenderShell: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => (
-  <div className="min-h-screen">
+  <div className="min-h-screen flex-col flex">
     <Navbar />
-    <main>{children}</main>
+    <main className="grow w-full mx-auto px-4">{children}</main>
     <Footer />
   </div>
 );
@@ -19,9 +19,9 @@ const SenderShell: React.FC<{ children?: React.ReactNode }> = ({
 const ReceiverShell: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => (
-  <div className="min-h-screen">
+   <div className="min-h-screen flex-col flex">
     <Navbar />
-    <main>{children}</main>
+    <main className="grow w-full mx-auto px-4">{children}</main>
     <Footer />
   </div>
 );
@@ -29,17 +29,17 @@ const ReceiverShell: React.FC<{ children?: React.ReactNode }> = ({
 const CarrierShell: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => (
-  <div className="min-h-screen bg-gray-50">
+  <div className="min-h-screen flex-col flex bg-gray-50">
     <Navbar />
-    <main>{children}</main>
+    <main className="grow w-full mx-auto px-4">{children}</main>
     <Footer />
   </div>
 );
 
 const AdminShell: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
-  <div className="min-h-screen bg-neutral-100">
+  <div className="min-h-screen flex-col flex bg-neutral-100">
     <Navbar />
-    <main>{children}</main>
+    <main className="grow w-full mx-auto px-4">{children}</main>
     <Footer />
   </div>
 );
