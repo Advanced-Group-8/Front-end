@@ -95,20 +95,18 @@ const OrderList = () => {
           </button>
         </div>
 
-        <div className="space-y-4">
-        {packagesToShow.length > 0 ? (
-          packagesToShow.map((pkg) => <OrderListItem key={pkg.id} pkg={pkg} />)
+        {packageArray.length === 0 ? (
+          <p className="text-center">No packages found</p>
+        ) : packagesToShow.length === 0 ? (
+          <p className="text-center">No results match your search</p>
         ) : (
-          <p>No packages found</p>
+          <div className="space-y-4">
+            {packagesToShow.map((pkg) => (
+              <OrderListItem key={pkg.id} pkg={pkg} />
+            ))}
+          </div>
         )}
-      </div>
-        {
-          packageArray.length == 0 ? (
-            <div className="place-items-center">
-              <p className="text-center">No packages found</p>
-            </div>
-          ) : null
-        }
+
       <div>
         <ClimateStatusList />
       <OrderDeliveryStatusTimeline status={MOCK_STATUS} />
