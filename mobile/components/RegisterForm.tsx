@@ -3,6 +3,9 @@ import { Pressable, Text, TextInput, View } from "react-native";
 import FormItem from "./FormItem";
 import login from "../utils/fetch/login";
 import registerUser from "../utils/fetch/registerUser";
+import { signUpUrl } from "../utils/base-url";
+import { saveUser } from "../utils/saveSecure";
+import post from "../utils/fetch/post";
 
 // **** STYLING?????
 const RegisterForm = () => {
@@ -16,9 +19,7 @@ const RegisterForm = () => {
   //   const { login, loading, setLoading } = useAuth(); // Hämta login-funktionen från context
 
   const handleRegistration = async () => {
-    // setLoading(true);
-    setMessage("Button pressed");
-    setError("");
+    setError(null);
     if (
       email !== "" &&
       username !== "" &&
@@ -33,10 +34,11 @@ const RegisterForm = () => {
         role: role,
         companyName: company,
       };
-      setMessage(registerBody.role);
+
       try {
-        const successReg = registerUser(registerBody);
-        setMessage(successReg); //token?
+        const newToken = post(signUpUrl, registerBody, "registration");
+        console.log(newToken);
+        saveUser(registerBody);
       } catch (err) {
         setError("Sign up failed, hold on a second");
       }
@@ -67,7 +69,6 @@ const RegisterForm = () => {
         changeValue={setUsername}
         secure={false}
       />
-
       <FormItem
         title="email"
         newValue={email}

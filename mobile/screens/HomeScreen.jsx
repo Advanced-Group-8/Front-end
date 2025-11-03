@@ -2,15 +2,15 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useTheme } from "../theme/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import getUser from "../utils/fetch/getUser";
-import { url } from "../utils/base-url";
+import get from "../utils/fetch/get";
+import { getProfUrl } from "../utils/base-url";
 
 const HomeScreen = () => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
   const TOKEN =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjciLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJuYW1lIjoiUmViZWNjYSIsInJvbGUiOiJzZW5kZXIiLCJjb21wYW55TmFtZSI6Ikh1bGEgSG9vcHMgQUIiLCJjcmVhdGVkQXQiOiIyMDI1LTEwLTIwVDEzOjU1OjU3LjkwMVoiLCJ1cGRhdGVkQXQiOiIyMDI1LTEwLTIwVDEzOjU1OjU3LjkwMVoiLCJpYXQiOjE3NjA5ODgwODEsImV4cCI6MTc2MTU5Mjg4MX0.vPf00WmCgvL6Sm0xxqnHv3CLBhlwlI2QKKaJVJLaj1g";
-  const user = getUser(url, TOKEN);
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkiLCJlbWFpbCI6InJlYmVjY2FAdGVzdC5jb20iLCJuYW1lIjoiUmViZWNjYSIsInJvbGUiOiJzZW5kZXIiLCJjb21wYW55TmFtZSI6IlRlc3RhcmUgQUIiLCJjcmVhdGVkQXQiOiIyMDI1LTEwLTIxVDExOjQ1OjIxLjIwOVoiLCJ1cGRhdGVkQXQiOiIyMDI1LTEwLTIxVDExOjQ1OjIxLjIwOVoiLCJpYXQiOjE3NjEwNTI4OTcsImV4cCI6MTc2MTY1NzY5N30.jpEVRcozifN9RABMqDGTEnrXGoFWjJRnoo9Z0mlG88U";
+  const user = get(getProfUrl, TOKEN, "user");
   console.log(user);
   const driver = {
     name: "Erik Torres Puente",

@@ -2,30 +2,36 @@ import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import FormItem from "./FormItem";
 import login from "../utils/fetch/login";
+import post from "../utils/fetch/post";
+import { getProfUrl, signInUrl } from "../utils/base-url";
+import get from "../utils/fetch/get";
+import * as SecureStore from "expo-secure-store";
+import { saveUser } from "../utils/saveSecure";
 
-// **** STYLING?????
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState("");
   //   const { login, loading, setLoading } = useAuth(); // Hämta login-funktionen från context
 
   const handleLogin = async () => {
     // setLoading(true);
-    setMessage("Button pressed");
-    setError("");
+    setError(null);
     if (email !== "" && username !== "" && password !== "") {
       const loginBody = {
         email: email,
         name: username,
         password: password,
       };
-      setMessage(loginBody.email);
+
       try {
-        const successLogin = login(loginBody);
-        setMessage(successLogin);
+        const newToken = post(signInUrl, loginBody, "login");
+        console.log(newToken);
+        const userInfo = get(getProfUrl, newToken, "user");
+        console.log(userInfo);
+        saveUser(userInfo);
       } catch (err) {
         setError(
           "Login failed. Please check your name, email and password and try again."
@@ -66,7 +72,7 @@ const LoginForm = () => {
         <Text>Log In</Text>
       </Pressable>
       <Text>Message: {message}</Text>
-      {error !== "" && <Text style={{ color: "red" }}>Error: {error}</Text>}
+      {error !== null && <Text style={{ color: "red" }}>Error: {error}</Text>}
     </View>
   );
 };
