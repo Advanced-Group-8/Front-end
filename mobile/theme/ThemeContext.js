@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "./colors";
 import { buildCustomTheme } from "./customTheme";
-import { StatusBar } from "react-native";
+import { StatusBar, Platform } from "react-native";
 
 const ThemeContext = createContext();
 
@@ -12,10 +12,15 @@ export const ThemeProvider = ({ children }) => {
   const customTheme = buildCustomTheme(theme, isDark);
   const toggleTheme = () => setIsDark((prev) => !prev);
 
-  useEffect(() => {
-    StatusBar.setBarStyle(isDark? 'light' : 'dark');
-    StatusBar.setBackgroundColor(isDark? darkTheme.headerBackground : lightTheme.headerBackground);
-  }, [isDark, darkTheme.headerBackground, lightTheme.headerBackground])
+useEffect(() => {
+  StatusBar.setBarStyle(isDark ? "light-content" : "dark-content");
+
+  if (Platform.OS === "android") {
+    StatusBar.setBackgroundColor(
+      isDark ? darkTheme.headerBackground : lightTheme.headerBackground
+    );
+  }
+}, [isDark]);
 
   return (
     <ThemeContext.Provider value={{ isDark, theme, customTheme, toggleTheme }}>

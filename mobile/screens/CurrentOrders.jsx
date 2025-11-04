@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+/*import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -145,4 +145,21 @@ const createStyles = (theme) =>
       fontWeight: "bold",
       color: theme.textSecondary,
     },
-  });
+  }); 
+
+  */
+
+  import { StyleSheet, Text, View } from 'react-native'
+  import React from 'react'
+  
+  const CurrentOrders = () => {
+    return (
+      <View>
+        <Text>CurrentOrders</Text>
+      </View>
+    )
+  }
+  
+  export default CurrentOrders
+  
+  const styles = StyleSheet.create({})
