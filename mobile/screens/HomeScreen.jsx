@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useTheme } from "../theme/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import getUser from "../utils/fetch/getUser";
+import AppHeader from "../components/AppHeader"; // ✅ ADD
 
 const HomeScreen = () => {
   const { theme } = useTheme();
@@ -35,18 +36,11 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* === HEADER === */}
-      <View style={styles.header}>
-        <Image source={require("../assets/favicon.png")} style={styles.profileImage} />
-        <Text style={styles.headerTitle}>HOME</Text>
-        <TouchableOpacity onPress={() => alert("Notifications clicked!")}>
-          <MaterialCommunityIcons
-            name="bell-outline"
-            size={28}
-            color={theme.textAccentSecondary}
-          />
-        </TouchableOpacity>
-      </View>
+      {/* ✅ REPLACED HEADER */}
+      <AppHeader
+        title="Home"
+        onBellPress={() => alert("Notifications clicked!")}
+      />
 
       {/* === PROFILE SECTION === */}
       <View style={styles.card}>
@@ -142,24 +136,12 @@ const createStyles = (theme) =>
     container: {
       flex: 1,
       backgroundColor: theme.backgroundPrimary,
-      paddingTop: 50,
+      paddingTop: 55,
       paddingHorizontal: 16,
     },
-    header: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      marginBottom: 20,
-    },
-    headerTitle: {
-      position: "absolute",
-      left: 0,
-      right: 0,
-      textAlign: "center",
-      color: theme.textAccentPrimary,
-      fontSize: 20,
-      fontWeight: "700",
-    },
+    // ✅ original styles remain untouched below
+    header: { display: "none" }, // (not used anymore)
+    headerTitle: { display: "none" },
     profileImage: {
       width: 60,
       height: 60,
@@ -197,9 +179,6 @@ const createStyles = (theme) =>
     },
     driverSub: {
       color: theme.textSecondary,
-    },
-    cardDetails: {
-      marginTop: 5,
     },
     detail: {
       color: theme.textSecondary,
@@ -245,7 +224,6 @@ const createStyles = (theme) =>
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      marginBottom: 0,
     },
     cargoTextContainer: {
       flex: 1,

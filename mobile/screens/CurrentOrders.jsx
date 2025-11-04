@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "../theme/ThemeContext";
-import { useNavigation } from "@react-navigation/native"; // ✅ navigation-hook
+import AppHeader from "../components/AppHeader"; // ✅ ADD
 
 const API =
   process.env.EXPO_PUBLIC_API_URL ||
@@ -22,7 +22,6 @@ const TOKEN =
 const CurrentOrders = () => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
-  const navigation = useNavigation(); 
 
   const [orders, setOrders] = useState([]);
   const [search, setSearch] = useState("");
@@ -54,17 +53,11 @@ const CurrentOrders = () => {
 
   return (
     <View style={styles.container}>
-      {/* HEADER */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Orders</Text>
-        <TouchableOpacity>
-          <MaterialCommunityIcons
-            name="bell-outline"
-            size={28}
-            color={theme.textAccentSecondary}
-          />
-        </TouchableOpacity>
-      </View>
+      {/* ✅ REPLACED HEADER */}
+      <AppHeader
+        title="Orders"
+        onBellPress={() => alert("Notifications clicked!")}
+      />
 
       {/* SEARCH */}
       <View style={styles.searchBox}>
@@ -84,12 +77,7 @@ const CurrentOrders = () => {
           <TouchableOpacity
             key={order.id}
             style={styles.orderCard}
-            onPress={() =>
-              navigation.navigate("Tracking", {
-                packageId: order.deviceId,
-                token: TOKEN,
-              })
-            }
+            onPress={() => alert(`Order clicked: ${order.id}`)}
           >
             <View style={styles.orderLeft}>
               <Image
@@ -104,7 +92,6 @@ const CurrentOrders = () => {
               </View>
             </View>
 
-            {/* STATUS TAG */}
             <View
               style={[
                 styles.statusTag,
@@ -136,17 +123,7 @@ const createStyles = (theme) =>
       paddingTop: 55,
       paddingHorizontal: 16,
     },
-    header: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 16,
-    },
-    headerTitle: {
-      color: theme.textAccentPrimary,
-      fontSize: 22,
-      fontWeight: "700",
-    },
+
     searchBox: {
       flexDirection: "row",
       alignItems: "center",
@@ -161,6 +138,7 @@ const createStyles = (theme) =>
       color: theme.textPrimary,
       flex: 1,
     },
+
     orderCard: {
       backgroundColor: theme.surface,
       padding: 14,

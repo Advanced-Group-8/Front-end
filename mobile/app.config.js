@@ -6,7 +6,7 @@ export default {
     orientation: "portrait",
     icon: "./assets/icon.png",
     userInterfaceStyle: "light",
-    newArchEnabled: true,
+    newArchEnabled: false,     // ← FIX
     splash: {
       image: "./assets/splash-icon.png",
       resizeMode: "contain",
@@ -25,5 +25,6 @@ export default {
     web: {
       favicon: "./assets/favicon.png",
     },
+    plugins: ["expo-barcode-scanner"], // ← REQUIRED
   },
 };

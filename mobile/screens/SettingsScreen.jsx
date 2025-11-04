@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import AppHeader from "../components/AppHeader";
 import { useTheme } from "../theme/ThemeContext";
 
 const SettingsScreen = () => {
@@ -8,7 +9,10 @@ const SettingsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Settings Screen</Text>
+      <AppHeader
+        title="Settings"
+        onBellPress={() => alert("Notifications clicked!")}
+      />
     </View>
   );
 };
@@ -17,13 +21,19 @@ const createStyles = (theme) =>
   StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor: theme.backgroundPrimary,
+      paddingTop: 55,
+      paddingHorizontal: 16,
+    },
+    center: {
+      flex: 1,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: theme.backgroundPrimary,
     },
     text: {
       color: theme.textPrimary,
-      fontSize: 20,
+      fontSize: 18,
+      fontWeight: "600",
     },
   });
 
