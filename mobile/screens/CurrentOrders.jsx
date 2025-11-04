@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "../theme/ThemeContext";
-import AppHeader from "../components/AppHeader"; // ✅ ADD
+import AppHeader from "../components/AppHeader"; 
 
 const API =
   process.env.EXPO_PUBLIC_API_URL ||
@@ -53,7 +53,7 @@ const CurrentOrders = () => {
 
   return (
     <View style={styles.container}>
-      {/* ✅ REPLACED HEADER */}
+      {/* HEADER */}
       <AppHeader
         title="Orders"
         onBellPress={() => alert("Notifications clicked!")}
@@ -87,7 +87,7 @@ const CurrentOrders = () => {
               <View>
                 <Text style={styles.orderId}>ID: {order.id}</Text>
                 <Text style={styles.orderDate}>
-                  From: {order?.sender?.city || "—"} → To: {order?.receiver?.city || "—"}
+                  From: {order?.sender?.city || "—"}  To: {order?.receiver?.city || "—"}
                 </Text>
               </View>
             </View>

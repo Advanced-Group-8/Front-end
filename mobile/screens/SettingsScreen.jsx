@@ -13,6 +13,10 @@ const SettingsScreen = () => {
         title="Settings"
         onBellPress={() => alert("Notifications clicked!")}
       />
+
+      <View style={styles.center}>
+        <Text style={styles.text}>To be Updated</Text>
+      </View>
     </View>
   );
 };
@@ -32,6 +36,7 @@ const createStyles = (theme) =>
     },
     text: {
       color: theme.textPrimary,
+      marginTop: -30,
       fontSize: 18,
       fontWeight: "600",
     },

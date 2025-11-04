@@ -11,7 +11,7 @@ const AppHeader = ({ title, onBellPress }) => {
      <View style={styles.header}>
         {/* Left logo */}
         <Image 
-          source={require("../assets/favicon.png")} 
+          source={require("../assets/Logistics-icon.png")} 
           style={styles.logo}
         />
 
@@ -22,7 +22,7 @@ const AppHeader = ({ title, onBellPress }) => {
         <TouchableOpacity onPress={onBellPress}>
           <MaterialCommunityIcons
             name="bell-outline"
-            size={28}
+            size={32}
             color={theme.textAccentSecondary}
           />
         </TouchableOpacity>
@@ -50,9 +50,9 @@ const createStyles = (theme) =>
       fontWeight: "700",
     },
     logo: {
-      width: 40,
-      height: 40,
-      borderRadius: 20,
+      width: 55,
+      height: 55,
+      borderRadius: 40,
       backgroundColor: theme.accentMutedGreen,
     },
   });

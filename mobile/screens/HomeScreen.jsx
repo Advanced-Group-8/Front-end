@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useTheme } from "../theme/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import getUser from "../utils/fetch/getUser";
-import AppHeader from "../components/AppHeader"; // ✅ ADD
+import AppHeader from "../components/AppHeader"; 
 
 const HomeScreen = () => {
   const { theme } = useTheme();
@@ -36,7 +36,7 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* ✅ REPLACED HEADER */}
+      {/* REPLACED HEADER */}
       <AppHeader
         title="Home"
         onBellPress={() => alert("Notifications clicked!")}
@@ -46,7 +46,7 @@ const HomeScreen = () => {
       <View style={styles.card}>
         <Text style={styles.signedIn}>Signed in as</Text>
         <View style={styles.cardHeader}>
-          <Image source={require("../assets/favicon.png")} style={styles.profileImage} />
+          <Image source={require("../assets/User-icon.png")} style={styles.profileImage} />
           
           <View style={{ flex: 1 }}>
             <Text style={styles.driverName}>
@@ -139,9 +139,6 @@ const createStyles = (theme) =>
       paddingTop: 55,
       paddingHorizontal: 16,
     },
-    // ✅ original styles remain untouched below
-    header: { display: "none" }, // (not used anymore)
-    headerTitle: { display: "none" },
     profileImage: {
       width: 60,
       height: 60,
