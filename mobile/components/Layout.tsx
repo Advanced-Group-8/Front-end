@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useTheme } from "../theme/ThemeContext";
-import Header from "./Header";
+import AppHeader from "./AppHeader";
 
 const Layout = ({ title, children }) => {
   const { theme } = useTheme();
@@ -9,7 +9,7 @@ const Layout = ({ title, children }) => {
 
   return (
     <View style={styles.container}>
-      <Header title={title} showBack={true} />
+      <AppHeader title={title} showBack={true} />
       {children}
     </View>
   );

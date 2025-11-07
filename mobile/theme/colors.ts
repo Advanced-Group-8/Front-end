@@ -1,5 +1,41 @@
-// LIGHT THEME
-export const lightTheme = {
+export interface ThemeColors {
+  primary: string;
+  secondary: string;
+
+  accentGreen: string;
+  accentOrange: string;
+  accentRed: string;
+  accentMutedGreen: string;
+
+  backgroundPrimary: string;
+  backgroundSecondary: string;
+  surface: string;
+  border: string;
+
+  textPrimary: string;
+  textSecondary: string;
+  textAccentPrimary: string;
+  textAccentSecondary: string;
+  iconAccent: string;
+
+  headerBackground: string;
+  tabBar: string;
+  tabBarIcon: string;
+  tabBarIconActive: string;
+  themeButton: string;
+  modalBackground: string;
+
+  notification: string;
+  shadow: string;
+
+  dotPrimary?: string;
+  dotSecondary?: string;
+  circleBackground?: string;
+  textBox?: string;
+  infoIcon?: string;
+}
+
+export const lightTheme: ThemeColors = {
   // Primary colors
   primary: "#26408B",   // blå
   secondary: "#507255", // grön
@@ -30,15 +66,13 @@ export const lightTheme = {
   tabBarIconActive: "#FFA630",
   themeButton: "#507255",
   modalBackground: "#FFFFFF",
-  
+
   // Feedback
   notification: "#D32F2F",
   shadow: "#00000029",
 };
 
-
-// DARK THEME
-export const darkTheme = {
+export const darkTheme: ThemeColors = {
   // Primary colors
   primary: "#26408B",   // blå
   secondary: "#507255", // grön
@@ -69,7 +103,7 @@ export const darkTheme = {
   tabBarIconActive: "#FFA630",
   themeButton: "#507255",
   modalBackground: "#1C1C1C",
-  
+
   // Feedback
   notification: "#D32F2F",
   shadow: "#00000099",

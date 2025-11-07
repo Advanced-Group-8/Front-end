@@ -36,8 +36,8 @@ const QRScannerScreen: React.FC = () => {
 
   const [permission, requestPermission] = useCameraPermissions();
   const [scannerActive, setScannerActive] = useState<boolean>(false);
+  const [lastScanned, setLastScanned] = useState<number>(0);
 
-  // ✅ Typed list
   const [orders, setOrders] = useState<OrderItem[]>([]);
   const [showQRSelector, setShowQRSelector] = useState<boolean>(false);
   const [currentQR, setCurrentQR] = useState<OrderItem | null>(null);
@@ -66,9 +66,15 @@ const QRScannerScreen: React.FC = () => {
   };
 
   const handleScan = ({ data }: BarcodeScanningResult) => {
-    const match = orders.find((o) => o.id.toString() === data.toString());
+  const now = Date.now();
+  if (now - lastScanned < 1200) return; 
+  setLastScanned(now);
+
+  const match = orders.find((o) => o.id.toString() === data.toString());
+  if (match) {
     setScannerActive(false);
-    if (match) setInfoPopup(match);
+    setInfoPopup(match);
+  }
   };
 
   if (!permission) return null;
@@ -115,7 +121,7 @@ const QRScannerScreen: React.FC = () => {
           <CameraView
             style={styles.camera}
             facing="back"
-            onBarcodeScanned={handleScan}
+            onBarcodeScanned={scannerActive ? handleScan : undefined}
           />
 
           {/* Scanner focus frame */}
@@ -306,15 +312,15 @@ const createStyles = (theme: any) =>
       marginBottom: 10,
     },
     centerScreen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
     },
     requestText: {
-    color: theme.textPrimary,
-    fontSize: 16,
-    marginBottom: 12,
-    textAlign: "center",
+      color: theme.textPrimary,
+      fontSize: 16,
+      marginBottom: 12,
+      textAlign: "center",
     },
     infoBox: {
       backgroundColor: theme.surface,
