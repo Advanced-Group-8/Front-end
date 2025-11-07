@@ -1,60 +1,78 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
 import { useTheme } from "../theme/ThemeContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import getUser from "../utils/fetch/getUser";
-import AppHeader from "../components/AppHeader"; 
+import AppHeader from "../components/AppHeader";
 
-const HomeScreen = () => {
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  companyName: string;
+  createdAt: string;
+}
+
+const HomeScreen: React.FC = () => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
 
   const TOKEN =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5IiwiZW1haWwiOiJyZWJlY2NhQHRlc3QuYWIiLCJuYW1lIjoiQmV4Iiwicm9sZSI6InNlbmRlciIsImNvbXBhbnlOYW1lIjoiVGVzdCBBQiIsImNyZWF0ZWRBdCI6IjIwMjUtMTEtMDJUMTg6Mjc6MjMuNzkzWiIsInVwZGF0ZWRBdCI6IjIwMjUtMTEtMDJUMTg6Mjc6MjMuNzkzWiIsImlhdCI6MTc2MjEwODA1MiwiZXhwIjoxNzYyNzEyODUyfQ.DwQT_U-bZezbZrtcD9I1Zn4WbTac0KOQjK7xlkMjZ2Q";
 
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
-  const [selectedCargo, setSelectedCargo] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedCargo, setSelectedCargo] = useState<number | null>(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchUserData = async () => {
       try {
         const response = await getUser(TOKEN);
 
         if (response && response.data) {
-          setUser(response.data);
+          setUser(response.data as User);
         } else {
           setError("No user data received");
         }
       } catch (err) {
-        console.error("❌ Fetch error:", err);
+        console.error("Fetch error:", err);
         setError("Failed to fetch user");
       }
     };
-    fetchUser();
+
+    fetchUserData();
   }, []);
 
   return (
     <View style={styles.container}>
-      {/* REPLACED HEADER */}
       <AppHeader
         title="Home"
         onBellPress={() => alert("Notifications clicked!")}
       />
 
-      {/* === PROFILE SECTION === */}
       <View style={styles.card}>
         <Text style={styles.signedIn}>Signed in as</Text>
+
         <View style={styles.cardHeader}>
-          <Image source={require("../assets/User-icon.png")} style={styles.profileImage} />
-          
+          <Image
+            source={require("../assets/User-icon.png")}
+            style={styles.profileImage}
+          />
+
           <View style={{ flex: 1 }}>
             <Text style={styles.driverName}>
               {user ? user.name : "Loading..."}
             </Text>
-            <Text style={styles.driverSub}>
-              {user ? user.role : ""}
-            </Text>
+            <Text style={styles.driverSub}>{user ? user.role : ""}</Text>
           </View>
 
           <View style={styles.cardDetailsRight}>
@@ -68,7 +86,7 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      {/* === STATUS SECTION === */}
+      {/* STATUS */}
       <View style={styles.statusContainer}>
         {[
           { icon: "check-decagram", count: 12, label: "Deliveries" },
@@ -78,7 +96,7 @@ const HomeScreen = () => {
         ].map((item, index) => (
           <View key={index} style={styles.statusBox}>
             <MaterialCommunityIcons
-              name={item.icon}
+              name={item.icon as any}
               size={28}
               color={theme.textAccentSecondary}
             />
@@ -88,35 +106,40 @@ const HomeScreen = () => {
         ))}
       </View>
 
-      {/* === AVAILABLE CARGOS === */}
+      {/* CARGOS */}
       <View style={styles.cargoCard}>
         <Text style={styles.cargoTitle}>Available Cargos</Text>
-        
+
         {[
           { name: "Volvo FH", price: "₹6000", weight: "10 Ton" },
           { name: "Scania R520", price: "₹5500", weight: "8 Ton" },
           { name: "MAN TGX", price: "₹7000", weight: "12 Ton" },
         ].map((truck, index) => {
           const isActive = selectedCargo === index;
+
           return (
             <TouchableOpacity
               key={index}
-              onPress={() => setSelectedCargo(isActive ? null : index)} 
+              onPress={() => setSelectedCargo(isActive ? null : index)}
               style={[
                 styles.cargoBox,
                 isActive && {
-                  backgroundColor: theme.accentGreen + "22", 
+                  backgroundColor: theme.accentGreen + "22",
                   borderColor: theme.accentGreen,
                   borderWidth: 1,
                 },
-                index !== 0 && { marginTop: 12 } 
+                index !== 0 && { marginTop: 12 },
               ]}
             >
               <View style={styles.cargoTextContainer}>
                 <Text style={styles.cargoName}>Truck: {truck.name}</Text>
                 <Text style={styles.cargoPrice}>Per day: {truck.price}</Text>
                 <Text style={styles.cargoWeight}>Weight: {truck.weight}</Text>
-                {isActive && <Text style={{ color: theme.textAccentSecondary }}>Active</Text>}
+                {isActive && (
+                  <Text style={{ color: theme.textAccentSecondary }}>
+                    Active
+                  </Text>
+                )}
               </View>
               <Image
                 source={require("../assets/favicon.png")}
@@ -126,12 +149,11 @@ const HomeScreen = () => {
           );
         })}
       </View>
-
     </View>
   );
 };
 
-const createStyles = (theme) =>
+const createStyles = (theme: any) =>
   StyleSheet.create({
     container: {
       flex: 1,

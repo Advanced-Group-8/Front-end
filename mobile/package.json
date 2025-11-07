@@ -37,6 +37,7 @@
     "@babel/plugin-syntax-flow": "^7.27.1",
     "@babel/preset-flow": "^7.27.1",
     "@types/react": "~19.1.10",
+    "@types/react-native": "^0.72.8",
     "babel-preset-expo": "^54.0.4",
     "typescript": "~5.9.2"
   }

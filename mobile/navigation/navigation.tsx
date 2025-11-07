@@ -1,5 +1,10 @@
 import React from "react";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  GestureResponderEvent,
+} from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -15,7 +20,13 @@ import QRScannerScreen from "../screens/QRScannerScreen";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-function CustomTabBarButton({ children, onPress, theme }) {
+interface CustomTabButtonProps {
+  children: React.ReactNode;
+  onPress?: (event: GestureResponderEvent) => void;
+  theme: any;
+}
+
+function CustomTabBarButton({ children, onPress, theme }: CustomTabButtonProps) {
   return (
     <TouchableOpacity
       style={{
@@ -50,7 +61,7 @@ function Tabs() {
   const theme = customTheme.colors;
   const styles = createStyles(theme);
 
-return (
+  return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
@@ -60,29 +71,35 @@ return (
         tabBarInactiveTintColor: theme.tabBarIcon,
       }}
     >
-      {/* HOME */}
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home-outline" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="home-outline"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
 
-      {/* ORDERS */}
       <Tab.Screen
         name="Orders"
         component={CurrentOrders}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="clipboard-list-outline" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="clipboard-list-outline"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
 
-      {/* QR SCAN - center button */}
+      {/* Center QR Button */}
       <Tab.Screen
         name="Scan"
         component={QRScannerScreen}
@@ -94,28 +111,36 @@ return (
               size={28}
             />
           ),
-          tabBarButton: (props) => <CustomTabBarButton {...props} theme={theme} />,
+          tabBarButton: (props) => (
+            <CustomTabBarButton {...props} theme={theme} />
+          ),
         }}
       />
 
-      {/* TRACKING */}
       <Tab.Screen
         name="Tracking"
         component={OrderTracking}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="map-marker-outline" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="map-marker-outline"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
 
-      {/* SETTINGS */}
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account-cog-outline" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="account-cog-outline"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
@@ -123,9 +148,7 @@ return (
   );
 }
 
-const Navigation = () => {
-  const { customTheme } = useTheme();
-
+const Navigation: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -135,7 +158,7 @@ const Navigation = () => {
   );
 };
 
-const createStyles = (theme) =>
+const createStyles = (theme: any) =>
   StyleSheet.create({
     tabBar: {
       backgroundColor: theme.tabBar,
