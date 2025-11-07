@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "../theme/ThemeContext";
-import AppHeader from "../components/AppHeader"; 
+import AppHeader from "../components/AppHeader";
 
 const API =
   process.env.EXPO_PUBLIC_API_URL ||
@@ -19,12 +19,19 @@ const API =
 const TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5IiwiZW1haWwiOiJyZWJlY2NhQHRlc3QuYWIiLCJuYW1lIjoiQmV4Iiwicm9sZSI6InNlbmRlciIsImNvbXBhbnlOYW1lIjoiVGVzdCBBQiIsImNyZWF0ZWRBdCI6IjIwMjUtMTEtMDJUMTg6Mjc6MjMuNzkzWiIsInVwZGF0ZWRBdCI6IjIwMjUtMTEtMDJUMTg6Mjc6MjMuNzkzWiIsImlhdCI6MTc2MjEwODA1MiwiZXhwIjoxNzYyNzEyODUyfQ.DwQT_U-bZezbZrtcD9I1Zn4WbTac0KOQjK7xlkMjZ2Q";
 
-const CurrentOrders = () => {
+interface Order {
+  id: number;
+  status: string;
+  sender?: { city?: string };
+  receiver?: { city?: string };
+}
+
+const CurrentOrders: React.FC = () => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
 
-  const [orders, setOrders] = useState([]);
-  const [search, setSearch] = useState("");
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     fetchOrders();
@@ -47,9 +54,7 @@ const CurrentOrders = () => {
     }
   };
 
-  const filtered = orders.filter((o) =>
-    o.id.toString().includes(search)
-  );
+  const filtered = orders.filter((o) => o.id.toString().includes(search));
 
   return (
     <View style={styles.container}>
@@ -115,7 +120,7 @@ const CurrentOrders = () => {
   );
 };
 
-const createStyles = (theme) =>
+const createStyles = (theme: any) =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -123,7 +128,6 @@ const createStyles = (theme) =>
       paddingTop: 55,
       paddingHorizontal: 16,
     },
-
     searchBox: {
       flexDirection: "row",
       alignItems: "center",
@@ -138,7 +142,6 @@ const createStyles = (theme) =>
       color: theme.textPrimary,
       flex: 1,
     },
-
     orderCard: {
       backgroundColor: theme.surface,
       padding: 14,

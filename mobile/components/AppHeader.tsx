@@ -3,7 +3,12 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "../theme/ThemeContext";
 
-const AppHeader = ({ title, onBellPress }) => {
+type AppHeaderProps = {
+  title: string;
+  onBellPress?: () => void;
+};
+
+const AppHeader: React.FC<AppHeaderProps> = ({ title, onBellPress }) => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
 
@@ -30,7 +35,7 @@ const AppHeader = ({ title, onBellPress }) => {
   );
 };
 
-const createStyles = (theme) =>
+const createStyles = (theme: any) =>
   StyleSheet.create({
     header: {
       flexDirection: "row",

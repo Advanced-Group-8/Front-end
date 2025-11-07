@@ -7,11 +7,12 @@ import {
   FlatList,
   Modal,
 } from "react-native";
-import { CameraView, useCameraPermissions } from "expo-camera";
+import { CameraView, useCameraPermissions, BarcodeScanningResult } from "expo-camera";
 import QRCode from "react-native-qrcode-svg";
 import { useTheme } from "../theme/ThemeContext";
 import AppHeader from "../components/AppHeader";
 
+// API + TOKEN stay exactly as they are ✅
 const API =
   process.env.EXPO_PUBLIC_API_URL ||
   "https://t8-server-d2fee2awcybjcqch.swedencentral-01.azurewebsites.net";
@@ -19,18 +20,29 @@ const API =
 const TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5IiwiZW1haWwiOiJyZWJlY2NhQHRlc3QuYWIiLCJuYW1lIjoiQmV4Iiwicm9sZSI6InNlbmRlciIsImNvbXBhbnlOYW1lIjoiVGVzdCBBQiIsImNyZWF0ZWRBdCI6IjIwMjUtMTEtMDJUMTg6Mjc6MjMuNzkzWiIsInVwZGF0ZWRBdCI6IjIwMjUtMTEtMDJUMTg6Mjc6MjMuNzkzWiIsImlhdCI6MTc2MjEwODA1MiwiZXhwIjoxNzYyNzEyODUyfQ.DwQT_U-bZezbZrtcD9I1Zn4WbTac0KOQjK7xlkMjZ2Q";
 
-const QRScannerScreen = () => {
+interface OrderItem {
+  id: number;
+  receiver?: {
+    name?: string;
+    city?: string;
+  };
+  temperature?: number;
+  humidity?: number;
+}
+
+const QRScannerScreen: React.FC = () => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
 
   const [permission, requestPermission] = useCameraPermissions();
-  const [scannerActive, setScannerActive] = useState(false);
+  const [scannerActive, setScannerActive] = useState<boolean>(false);
 
-  const [orders, setOrders] = useState([]);
-  const [showQRSelector, setShowQRSelector] = useState(false);
-  const [currentQR, setCurrentQR] = useState(null);
+  // ✅ Typed list
+  const [orders, setOrders] = useState<OrderItem[]>([]);
+  const [showQRSelector, setShowQRSelector] = useState<boolean>(false);
+  const [currentQR, setCurrentQR] = useState<OrderItem | null>(null);
 
-  const [infoPopup, setInfoPopup] = useState(null);
+  const [infoPopup, setInfoPopup] = useState<OrderItem | null>(null);
 
   useEffect(() => {
     fetchOrders();
@@ -53,7 +65,7 @@ const QRScannerScreen = () => {
     }
   };
 
-  const handleScan = ({ data }) => {
+  const handleScan = ({ data }: BarcodeScanningResult) => {
     const match = orders.find((o) => o.id.toString() === data.toString());
     setScannerActive(false);
     if (match) setInfoPopup(match);
@@ -75,7 +87,7 @@ const QRScannerScreen = () => {
   return (
     <View style={styles.container}>
 
-      {/* UNIVERSAL HEADER (logga - titel - notis) */}
+      {/* UNIVERSAL HEADER (log - title - notification) */}
       <AppHeader title="QR Scanner" onBellPress={() => alert("Notifications clicked!")} />
 
       {/* ===== BUTTONS BEFORE SCANNING ===== */}
@@ -166,7 +178,7 @@ const QRScannerScreen = () => {
           <View style={styles.modalBoxCenter}>
             <Text style={styles.modalTitle}>Scan this QR</Text>
             <View style={styles.qrBox}>
-              <QRCode value={currentQR?.id.toString()} size={200} />
+              <QRCode value={currentQR?.id?.toString() || ""} size={200} />
             </View>
             <Text style={styles.orderText}>Order ID: {currentQR?.id}</Text>
           </View>
@@ -207,7 +219,7 @@ const QRScannerScreen = () => {
   );
 };
 
-const createStyles = (theme) =>
+const createStyles = (theme: any) =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -292,6 +304,17 @@ const createStyles = (theme) =>
       borderRadius: 10,
       alignSelf: "center",
       marginBottom: 10,
+    },
+    centerScreen: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    },
+    requestText: {
+    color: theme.textPrimary,
+    fontSize: 16,
+    marginBottom: 12,
+    textAlign: "center",
     },
     infoBox: {
       backgroundColor: theme.surface,

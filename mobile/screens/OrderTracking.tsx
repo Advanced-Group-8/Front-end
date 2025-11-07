@@ -1,9 +1,17 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
-import MapView, { Polyline, Marker } from "react-native-maps";
+import MapView, { Polyline, Marker, LatLng } from "react-native-maps";
 import AppHeader from "../components/AppHeader";
 import { useTheme } from "../theme/ThemeContext";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+type OrderTrackingProps = {
+  route?: {
+    params?: {
+      packageId?: string | number;
+    };
+  };
+};
 
 const darkMapStyle = [
   { elementType: "geometry", stylers: [{ color: "#1F1F1F" }] },
@@ -11,7 +19,7 @@ const darkMapStyle = [
   { elementType: "labels.text.stroke", stylers: [{ color: "#000000" }] },
 ];
 
-const OrderTracking = ({ route }) => {
+const OrderTracking: React.FC<OrderTrackingProps> = ({ route }) => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
 
@@ -19,7 +27,7 @@ const OrderTracking = ({ route }) => {
   const packageId = route?.params?.packageId || "Unknown";
 
   // Fake route centered on Stockholm
-  const fakeRoute = [
+  const fakeRoute: LatLng[] = [
     { latitude: 59.3293, longitude: 18.0686 },
     { latitude: 59.3430, longitude: 18.0710 },
     { latitude: 59.3540, longitude: 18.0765 },
@@ -117,7 +125,7 @@ const OrderTracking = ({ route }) => {
   );
 };
 
-const createStyles = (theme) =>
+const createStyles = (theme: any) =>
   StyleSheet.create({
     container: {
       flex: 1,

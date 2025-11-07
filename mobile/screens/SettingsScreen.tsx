@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import AppHeader from "../components/AppHeader";
 import { useTheme } from "../theme/ThemeContext";
 
-const SettingsScreen = () => {
+const SettingsScreen: React.FC = () => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
 
@@ -21,7 +21,7 @@ const SettingsScreen = () => {
   );
 };
 
-const createStyles = (theme) =>
+const createStyles = (theme: any) =>
   StyleSheet.create({
     container: {
       flex: 1,
